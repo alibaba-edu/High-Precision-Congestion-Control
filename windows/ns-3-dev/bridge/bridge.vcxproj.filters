@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="model">
+      <UniqueIdentifier>{97ba8d65-057f-48bf-a688-ac7294f951a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="helper">
+      <UniqueIdentifier>{c108a3f6-9034-48e4-b86e-a601c30b678a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\bridge\model\bridge-channel.cc">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\bridge\model\bridge-net-device.cc">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\bridge\helper\bridge-helper.cc">
+      <Filter>helper</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\bridge\model\bridge-channel.h">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\bridge\model\bridge-net-device.h">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\bridge\helper\bridge-helper.h">
+      <Filter>helper</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

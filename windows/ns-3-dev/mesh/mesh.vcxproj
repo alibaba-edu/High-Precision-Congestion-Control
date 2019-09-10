@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{8B381BEA-93FD-4076-ACF9-D1B18C6A2F7F}</ProjectGuid>
+    <RootNamespace>mesh</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32</PreprocessorDefinitions>
+      <AdditionalOptions>/D "NS3_LOG_ENABLE" %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\mesh\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mesh\helper\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32</PreprocessorDefinitions>
+      <AdditionalOptions>/D "NS3_LOG_ENABLE" %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\mesh\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mesh\helper\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\mesh\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mesh\helper\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32</PreprocessorDefinitions>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <ExceptionHandling>false</ExceptionHandling>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\mesh\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mesh\helper\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\mesh\helper\dot11s\dot11s-installer.h" />
+    <ClInclude Include="..\..\..\src\mesh\helper\flame\flame-installer.h" />
+    <ClInclude Include="..\..\..\src\mesh\helper\mesh-helper.h" />
+    <ClInclude Include="..\..\..\src\mesh\helper\mesh-stack-installer.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\airtime-metric.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\dot11s-mac-header.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\dot11s.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\hwmp-protocol-mac.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\hwmp-protocol.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\hwmp-rtable.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\hwmp-tag.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-beacon-timing.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-configuration.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-id.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-metric-report.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-peer-management.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-peering-protocol.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-perr.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-prep.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-preq.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-rann.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\peer-link-frame.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\peer-link.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\peer-management-protocol-mac.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\dot11s\peer-management-protocol.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\flame\flame-header.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\flame\flame-protocol-mac.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\flame\flame-protocol.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\flame\flame-rtable.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\mesh-information-element-vector.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\mesh-information-element.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\mesh-l2-routing-protocol.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\mesh-point-device.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\mesh-wifi-beacon.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\mesh-wifi-interface-mac-plugin.h" />
+    <ClInclude Include="..\..\..\src\mesh\model\mesh-wifi-interface-mac.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\mesh\helper\dot11s\dot11s-installer.cc" />
+    <ClCompile Include="..\..\..\src\mesh\helper\flame\flame-installer.cc" />
+    <ClCompile Include="..\..\..\src\mesh\helper\mesh-helper.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\airtime-metric.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\dot11s-mac-header.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\hwmp-protocol-mac.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\hwmp-protocol.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\hwmp-rtable.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\hwmp-tag.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-beacon-timing.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-configuration.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-id.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-metric-report.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-peer-management.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-peering-protocol.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-perr.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-prep.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-preq.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\ie-dot11s-rann.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\peer-link-frame.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\peer-link.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\peer-management-protocol-mac.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\dot11s\peer-management-protocol.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\flame\flame-header.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\flame\flame-protocol-mac.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\flame\flame-protocol.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\flame\flame-rtable.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\mesh-information-element-vector.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\mesh-l2-routing-protocol.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\mesh-point-device.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\mesh-wifi-beacon.cc" />
+    <ClCompile Include="..\..\..\src\mesh\model\mesh-wifi-interface-mac.cc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

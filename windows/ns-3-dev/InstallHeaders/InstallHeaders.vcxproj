@@ -1,0 +1,530 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{FCAE684C-D6B0-4D31-8836-1D0875A98D65}</ProjectGuid>
+    <RootNamespace>InstallHeaders</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+copy "$(SolutionDir)\..\..\src\core\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\core\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\applications\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\applications\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\internet\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\internet\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\utils\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mpi\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\bridge\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\config-store\model\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\mobility\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mobility\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\propagation\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\propagation\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\antenna\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\antenna\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\aodv\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\aodv\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\buildings\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\buildings\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\csma\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\csma\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\point-to-point\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\point-to-point\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\csma-layout\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\csma-layout\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\point-to-point-layout\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\point-to-point-layout\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\dsdv\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\dsdv\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\dsr\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\dsr\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\energy\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\energy\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\flow-monitor\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\flow-monitor\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\lte\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\lte\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\spectrum\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\spectrum\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\virtual-net-device\model\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\stats\model\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\winport\*.h"  "$(SolutionDir)\headers"
+
+
+copy "$(SolutionDir)\..\..\src\mesh\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mesh\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\mesh\model\flame\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mesh\helper\flame\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\mesh\model\dot11s\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mesh\helper\dot11s\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\wifi\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\wifi\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\netanim\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\netanim\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\uan\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\uan\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\wimax\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\wimax\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\nix-vector-routing\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\nix-vector-routing\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\olsr\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\olsr\helper\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+copy "$(SolutionDir)\..\..\src\core\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\core\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\applications\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\applications\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\internet\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\internet\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\utils\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mpi\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\bridge\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\config-store\model\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\mobility\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mobility\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\propagation\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\propagation\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\antenna\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\antenna\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\aodv\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\aodv\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\buildings\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\buildings\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\csma\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\csma\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\point-to-point\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\point-to-point\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\csma-layout\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\csma-layout\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\point-to-point-layout\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\point-to-point-layout\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\dsdv\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\dsdv\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\dsr\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\dsr\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\energy\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\energy\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\flow-monitor\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\flow-monitor\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\lte\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\lte\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\spectrum\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\spectrum\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\virtual-net-device\model\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\stats\model\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\winport\*.h"  "$(SolutionDir)\headers"
+
+
+copy "$(SolutionDir)\..\..\src\mesh\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mesh\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\mesh\model\flame\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mesh\helper\flame\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\mesh\model\dot11s\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mesh\helper\dot11s\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\wifi\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\wifi\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\netanim\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\netanim\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\uan\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\uan\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\wimax\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\wimax\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\nix-vector-routing\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\nix-vector-routing\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\olsr\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\olsr\helper\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+copy "$(SolutionDir)\..\..\src\core\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\core\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\applications\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\applications\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\internet\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\internet\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\utils\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mpi\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\bridge\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\config-store\model\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\mobility\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mobility\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\propagation\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\propagation\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\antenna\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\antenna\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\aodv\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\aodv\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\buildings\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\buildings\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\csma\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\csma\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\point-to-point\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\point-to-point\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\csma-layout\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\csma-layout\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\point-to-point-layout\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\point-to-point-layout\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\dsdv\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\dsdv\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\dsr\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\dsr\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\energy\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\energy\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\flow-monitor\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\flow-monitor\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\lte\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\lte\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\spectrum\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\spectrum\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\virtual-net-device\model\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\stats\model\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\winport\*.h"  "$(SolutionDir)\headers"
+
+
+copy "$(SolutionDir)\..\..\src\mesh\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mesh\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\mesh\model\flame\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mesh\helper\flame\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\mesh\model\dot11s\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mesh\helper\dot11s\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\wifi\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\wifi\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\netanim\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\netanim\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\uan\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\uan\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\wimax\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\wimax\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\nix-vector-routing\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\nix-vector-routing\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\olsr\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\olsr\helper\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+copy "$(SolutionDir)\..\..\src\core\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\core\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\applications\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\applications\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\internet\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\internet\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\utils\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mpi\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\bridge\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\config-store\model\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\mobility\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mobility\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\propagation\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\propagation\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\antenna\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\antenna\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\aodv\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\aodv\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\buildings\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\buildings\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\csma\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\csma\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\point-to-point\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\point-to-point\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\csma-layout\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\csma-layout\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\point-to-point-layout\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\point-to-point-layout\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\dsdv\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\dsdv\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\dsr\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\dsr\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\energy\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\energy\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\flow-monitor\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\flow-monitor\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\lte\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\lte\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+
+copy "$(SolutionDir)\..\..\src\spectrum\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\spectrum\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\virtual-net-device\model\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\stats\model\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\winport\*.h"  "$(SolutionDir)\headers"
+
+
+copy "$(SolutionDir)\..\..\src\mesh\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mesh\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\mesh\model\flame\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mesh\helper\flame\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\mesh\model\dot11s\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\mesh\helper\dot11s\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\wifi\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\wifi\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\netanim\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\netanim\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\uan\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\uan\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\wimax\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\wimax\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\nix-vector-routing\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\nix-vector-routing\helper\*.h"  "$(SolutionDir)\headers\ns3"
+
+copy "$(SolutionDir)\..\..\src\olsr\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\olsr\helper\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

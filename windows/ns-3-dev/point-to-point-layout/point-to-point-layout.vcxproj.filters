@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="model">
+      <UniqueIdentifier>{429a8f30-1b8e-4846-9593-e56518c59658}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="helper">
+      <UniqueIdentifier>{d864c68a-ef64-4919-a744-a893bc5cee2f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\point-to-point-layout\model\point-to-point-dumbbell.cc">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\point-to-point-layout\model\point-to-point-grid.cc">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\point-to-point-layout\model\point-to-point-star.cc">
+      <Filter>model</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\point-to-point-layout\model\point-to-point-dumbbell.h">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\point-to-point-layout\model\point-to-point-grid.h">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\point-to-point-layout\model\point-to-point-star.h">
+      <Filter>model</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,610 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="tests">
+      <UniqueIdentifier>{8c3f96b9-7cca-44a9-8c6d-222978150aec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="model">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="tests\antenna">
+      <UniqueIdentifier>{d86d8f86-fd6a-490c-b7ee-029fbc1bac2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\aodv">
+      <UniqueIdentifier>{a743dbe2-6a46-4e3d-8ff5-ee167aea5f38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\applications">
+      <UniqueIdentifier>{c94d9cc1-87e5-4413-a0a5-9d06bce4b05d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\core">
+      <UniqueIdentifier>{cb3a1dce-36c1-4e44-86c6-29f1c4d37c9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\dsdv">
+      <UniqueIdentifier>{5138a122-b127-4688-84fb-ebd448bfb4da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\dsr">
+      <UniqueIdentifier>{050cb048-58c0-47a1-af6b-f74b7313f1ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\energy">
+      <UniqueIdentifier>{e31d3a0d-0144-446c-b67e-15b46609f277}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\flow-monitor">
+      <UniqueIdentifier>{07125a44-248e-4ad8-89b0-acee680aaa7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\internet">
+      <UniqueIdentifier>{fb2a47e7-0faf-46d3-a438-c0f26c483162}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\mesh">
+      <UniqueIdentifier>{4a7fcfa5-aeef-4b8c-b57a-2da856458e08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\mesh\dot11">
+      <UniqueIdentifier>{c55cd61f-9216-47a9-955c-4d6354ea1ae5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\mesh\flame">
+      <UniqueIdentifier>{f1b9d403-f1e3-487b-bf6a-a72501ab6c42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\mobility">
+      <UniqueIdentifier>{a0d9e20e-fff3-4589-a11d-5a110add45fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\network">
+      <UniqueIdentifier>{8905f555-39f1-4240-b54d-3044391a4aeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\lte">
+      <UniqueIdentifier>{fb612091-81e3-4c3d-aed8-199fddc8deff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\olsr">
+      <UniqueIdentifier>{09e6f87d-eb65-4c5f-bef5-502a1adb4c46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\propagation">
+      <UniqueIdentifier>{44fbc790-9f66-4a96-81d5-dbe316202016}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\spectrum">
+      <UniqueIdentifier>{2bf83339-1fcf-4ad9-9faa-6ea70e7170e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\stats">
+      <UniqueIdentifier>{87bae1e0-0a5d-4000-bd7c-8ae2aa32fee8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\uan">
+      <UniqueIdentifier>{dc44bb82-6191-476b-a17f-1b59fa682394}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\wifi">
+      <UniqueIdentifier>{77ef3ccb-726a-49a3-ba84-d445fd0df866}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\wimax">
+      <UniqueIdentifier>{832307c0-ea1a-4444-92a7-9ca3910b3414}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\point-to-point">
+      <UniqueIdentifier>{f24b7048-693a-4542-93e9-82de275437c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\netanim">
+      <UniqueIdentifier>{672d6f72-d55f-44cf-9aaf-22771748a19b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\utils\test-runner.cc">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\internet\test\ipv6-address-helper-test-suite.cc">
+      <Filter>tests\internet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\internet\test\ipv4-header-test.cc">
+      <Filter>tests\internet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\antenna\test\test-angles.cc">
+      <Filter>tests\antenna</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\antenna\test\test-cosine-antenna.cc">
+      <Filter>tests\antenna</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\antenna\test\test-degrees-radians.cc">
+      <Filter>tests\antenna</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\antenna\test\test-isotropic-antenna.cc">
+      <Filter>tests\antenna</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\antenna\test\test-parabolic-antenna.cc">
+      <Filter>tests\antenna</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\aodv\test\aodv-id-cache-test-suite.cc">
+      <Filter>tests\aodv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\aodv\test\aodv-regression.cc">
+      <Filter>tests\aodv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\aodv\test\aodv-test-suite.cc">
+      <Filter>tests\aodv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\aodv\test\bug-772.cc">
+      <Filter>tests\aodv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\aodv\test\loopback.cc">
+      <Filter>tests\aodv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\applications\test\udp-client-server-test.cc">
+      <Filter>tests\applications</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\test\attribute-test-suite.cc">
+      <Filter>tests\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\test\callback-test-suite.cc">
+      <Filter>tests\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\test\command-line-test-suite.cc">
+      <Filter>tests\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\test\config-test-suite.cc">
+      <Filter>tests\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\test\event-garbage-collector-test-suite.cc">
+      <Filter>tests\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\test\global-value-test-suite.cc">
+      <Filter>tests\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\test\many-uniform-random-variables-one-get-value-call-test-suite.cc">
+      <Filter>tests\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\test\names-test-suite.cc">
+      <Filter>tests\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\test\object-test-suite.cc">
+      <Filter>tests\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\test\one-uniform-random-variable-many-get-value-calls-test-suite.cc">
+      <Filter>tests\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\test\ptr-test-suite.cc">
+      <Filter>tests\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\test\random-variable-test-suite.cc">
+      <Filter>tests\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\test\sample-test-suite.cc">
+      <Filter>tests\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\test\simulator-test-suite.cc">
+      <Filter>tests\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\test\timer-test-suite.cc">
+      <Filter>tests\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\test\time-test-suite.cc">
+      <Filter>tests\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\test\traced-callback-test-suite.cc">
+      <Filter>tests\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\test\type-id-test-suite.cc">
+      <Filter>tests\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\test\type-traits-test-suite.cc">
+      <Filter>tests\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\dsdv\test\dsdv-testcase.cc">
+      <Filter>tests\dsdv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\dsr\test\dsr-test-suite.cc">
+      <Filter>tests\dsr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\energy\test\basic-energy-model-test.cc">
+      <Filter>tests\energy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\energy\test\li-ion-energy-source-test.cc">
+      <Filter>tests\energy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\energy\test\rv-battery-model-test.cc">
+      <Filter>tests\energy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\flow-monitor\test\histogram-test-suite.cc">
+      <Filter>tests\flow-monitor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\epc-test-gtpu.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\epc-test-s1u-uplink.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-simple-helper.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-simple-net-device.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-downlink-sinr.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-earfcn.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-entities.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-fdbet-ff-mac-scheduler.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-fdmt-ff-mac-scheduler.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-fdtbfq-ff-mac-scheduler.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-harq.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-interference.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-link-adaptation.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-mimo.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-pathloss-model.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-pf-ff-mac-scheduler.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-phy-error-model.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-pss-ff-mac-scheduler.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-rlc-am-e2e.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-rlc-am-transmitter.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-rlc-um-e2e.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-rlc-um-transmitter.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-rr-ff-mac-scheduler.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-sinr-chunk-processor.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-spectrum-value-helper.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-tdbet-ff-mac-scheduler.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-tdmt-ff-mac-scheduler.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-tdtbfq-ff-mac-scheduler.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-tta-ff-mac-scheduler.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-ue-phy.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-uplink-sinr.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\test-asn1-encoding.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\test-epc-tft-classifier.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\test-lte-antenna.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\test-lte-epc-e2e-data.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\test-lte-handover-delay.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\test-lte-rrc.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lte\test\test-lte-x2-handover.cc">
+      <Filter>tests\lte</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\test\dot11s\dot11s-test-suite.cc">
+      <Filter>tests\mesh\dot11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\test\dot11s\d-regression.cc">
+      <Filter>tests\mesh\dot11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\test\dot11s\hwmp-proactive-regression.cc">
+      <Filter>tests\mesh\dot11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\test\dot11s\hwmp-reactive-regression.cc">
+      <Filter>tests\mesh\dot11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\test\dot11s\hwmp-simplest-regression.cc">
+      <Filter>tests\mesh\dot11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\test\dot11s\hwmp-target-flags-regression.cc">
+      <Filter>tests\mesh\dot11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\test\dot11s\pmp-regression.cc">
+      <Filter>tests\mesh\dot11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\test\mesh-information-element-vector-test-suite.cc">
+      <Filter>tests\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\test\flame\flame-regression.cc">
+      <Filter>tests\mesh\flame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\test\flame\flame-test-suite.cc">
+      <Filter>tests\mesh\flame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\test\flame\f-regression.cc">
+      <Filter>tests\mesh\flame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mobility\test\mobility-trace-test-suite.cc">
+      <Filter>tests\mobility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mobility\test\ns2-mobility-helper-test-suite.cc">
+      <Filter>tests\mobility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mobility\test\steady-state-random-waypoint-mobility-model-test.cc">
+      <Filter>tests\mobility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mobility\test\waypoint-mobility-model-test.cc">
+      <Filter>tests\mobility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\netanim\test\netanim-test.cc">
+      <Filter>tests\netanim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\network\test\buffer-test.cc">
+      <Filter>tests\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\network\test\drop-tail-queue-test-suite.cc">
+      <Filter>tests\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\network\test\error-model-test-suite.cc">
+      <Filter>tests\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\network\test\ipv6-address-test-suite.cc">
+      <Filter>tests\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\network\test\packetbb-test-suite.cc">
+      <Filter>tests\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\network\test\packet-metadata-test.cc">
+      <Filter>tests\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\network\test\packet-test-suite.cc">
+      <Filter>tests\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\network\test\pcap-file-test-suite.cc">
+      <Filter>tests\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\network\test\red-queue-test-suite.cc">
+      <Filter>tests\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\network\test\sequence-number-test-suite.cc">
+      <Filter>tests\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\olsr\test\bug780-test.cc">
+      <Filter>tests\olsr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\olsr\test\hello-regression-test.cc">
+      <Filter>tests\olsr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\olsr\test\olsr-header-test-suite.cc">
+      <Filter>tests\olsr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\olsr\test\olsr-routing-protocol-test-suite.cc">
+      <Filter>tests\olsr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\olsr\test\regression-test-suite.cc">
+      <Filter>tests\olsr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\olsr\test\tc-regression-test.cc">
+      <Filter>tests\olsr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\point-to-point\test\point-to-point-test.cc">
+      <Filter>tests\point-to-point</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\propagation\test\itu-r-1411-los-test-suite.cc">
+      <Filter>tests\propagation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\propagation\test\itu-r-1411-nlos-over-rooftop-test-suite.cc">
+      <Filter>tests\propagation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\propagation\test\kun-2600-mhz-test-suite.cc">
+      <Filter>tests\propagation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\propagation\test\okumura-hata-test-suite.cc">
+      <Filter>tests\propagation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\propagation\test\propagation-loss-model-test-suite.cc">
+      <Filter>tests\propagation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\spectrum\test\spectrum-ideal-phy-test.cc">
+      <Filter>tests\spectrum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\spectrum\test\spectrum-interference-test.cc">
+      <Filter>tests\spectrum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\spectrum\test\spectrum-value-test.cc">
+      <Filter>tests\spectrum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\stats\test\average-test-suite.cc">
+      <Filter>tests\stats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\stats\test\basic-data-calculators-test-suite.cc">
+      <Filter>tests\stats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\uan\test\uan-energy-model-test.cc">
+      <Filter>tests\uan</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\uan\test\uan-test.cc">
+      <Filter>tests\uan</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\wifi\test\block-ack-test-suite.cc">
+      <Filter>tests\wifi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\wifi\test\dcf-manager-test.cc">
+      <Filter>tests\wifi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\wifi\test\tx-duration-test.cc">
+      <Filter>tests\wifi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\wifi\test\wifi-test.cc">
+      <Filter>tests\wifi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\wimax\test\mac-messages-test.cc">
+      <Filter>tests\wimax</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\wimax\test\phy-test.cc">
+      <Filter>tests\wimax</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\wimax\test\qos-test.cc">
+      <Filter>tests\wimax</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\wimax\test\ss-mac-test.cc">
+      <Filter>tests\wimax</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\wimax\test\wimax-fragmentation-test.cc">
+      <Filter>tests\wimax</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\wimax\test\wimax-service-flow-test.cc">
+      <Filter>tests\wimax</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\wimax\test\wimax-tlv-test.cc">
+      <Filter>tests\wimax</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\aodv\test\aodv-regression.h">
+      <Filter>tests\aodv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\aodv\test\bug-772.h">
+      <Filter>tests\aodv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\aodv\test\loopback.h">
+      <Filter>tests\aodv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\epc-test-gtpu.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-simple-helper.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-simple-net-device.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-downlink-sinr.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-entities.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-fdbet-ff-mac-scheduler.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-fdmt-ff-mac-scheduler.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-fdtbfq-ff-mac-scheduler.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-harq.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-interference.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-link-adaptation.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-mimo.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-pathloss-model.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-pf-ff-mac-scheduler.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-phy-error-model.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-pss-ff-mac-scheduler.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-rlc-am-e2e.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-rlc-am-transmitter.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-rlc-um-e2e.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-rlc-um-transmitter.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-rr-ff-mac-scheduler.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-sinr-chunk-processor.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-tdbet-ff-mac-scheduler.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-tdmt-ff-mac-scheduler.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-tdtbfq-ff-mac-scheduler.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-tta-ff-mac-scheduler.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-ue-phy.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-uplink-sinr.h">
+      <Filter>tests\lte</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mesh\test\dot11s\hwmp-proactive-regression.h">
+      <Filter>tests\mesh\dot11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mesh\test\dot11s\hwmp-reactive-regression.h">
+      <Filter>tests\mesh\dot11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mesh\test\dot11s\hwmp-simplest-regression.h">
+      <Filter>tests\mesh\dot11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mesh\test\dot11s\hwmp-target-flags-regression.h">
+      <Filter>tests\mesh\dot11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mesh\test\dot11s\pmp-regression.h">
+      <Filter>tests\mesh\dot11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mesh\test\flame\flame-regression.h">
+      <Filter>tests\mesh\flame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\olsr\test\bug780-test.h">
+      <Filter>tests\olsr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\olsr\test\hello-regression-test.h">
+      <Filter>tests\olsr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\olsr\test\tc-regression-test.h">
+      <Filter>tests\olsr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\spectrum\test\spectrum-test.h">
+      <Filter>tests\spectrum</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

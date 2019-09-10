@@ -1,0 +1,58 @@
+## -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
+
+
+def build(bld):
+    module = bld.create_ns3_module('point-to-point', ['internet','network', 'mpi'])
+    module.source = [
+        'model/point-to-point-net-device.cc',
+        'model/point-to-point-channel.cc',
+        'model/point-to-point-remote-channel.cc',
+        'model/ppp-header.cc',
+        'helper/point-to-point-helper.cc',
+        'helper/qbb-helper.cc',
+        'model/qbb-net-device.cc',
+        'model/pause-header.cc',
+        'model/cn-header.cc',
+        'model/qbb-header.cc',
+        'model/qbb-channel.cc',
+        'model/qbb-remote-channel.cc',
+		'model/rdma-driver.cc',
+		'model/rdma-queue-pair.cc',
+		'model/rdma-hw.cc',
+		'model/switch-node.cc',
+		'model/switch-mmu.cc',
+        ]
+
+    module_test = bld.create_ns3_module_test_library('point-to-point')
+    module_test.source = [
+        'test/point-to-point-test.cc',
+        ]
+
+    headers = bld(features='ns3header')
+    headers.module = 'point-to-point'
+    headers.source = [
+        'model/point-to-point-net-device.h',
+        'model/point-to-point-channel.h',
+        'model/point-to-point-remote-channel.h',
+        'model/ppp-header.h',
+        'helper/point-to-point-helper.h',
+        'helper/qbb-helper.h',
+		'model/trace-format.h',
+        'model/qbb-net-device.h',
+        'model/pause-header.h',
+        'model/cn-header.h',
+        'model/qbb-header.h',
+        'model/qbb-channel.h',
+        'model/qbb-remote-channel.h',
+		'model/rdma-driver.h',
+		'model/rdma-queue-pair.h',
+		'model/rdma-hw.h',
+		'model/switch-node.h',
+		'model/switch-mmu.h',
+		'helper/sim-setting.h',
+        ]
+
+    if (bld.env['ENABLE_EXAMPLES']):
+        bld.recurse('examples')
+
+    bld.ns3_python_bindings()

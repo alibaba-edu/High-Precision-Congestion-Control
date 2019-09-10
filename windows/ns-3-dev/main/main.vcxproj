@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\examples\tutorial\third.cc" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E295EBA9-1ACD-4583-B9C8-16C7FDD1E35A}</ProjectGuid>
+    <RootNamespace>main</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32;NS3_LOG_ENABLE</PreprocessorDefinitions>
+      <AdditionalOptions>/D "NS3_LOG_ENABLE" %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)\core\Debug\*.obj;$(SolutionDir)\applications\Debug\*.obj;$(SolutionDir)\aodv\Debug\*.obj;$(SolutionDir)\antenna\Debug\*.obj;$(SolutionDir)\bridge\Debug\*.obj;$(SolutionDir)\tools\Debug\*.obj;$(SolutionDir)\buildings\Debug\*.obj;$(SolutionDir)\csma\Debug\*.obj;$(SolutionDir)\csma-layout\Debug\*.obj;$(SolutionDir)\dsdn\Debug\*.obj;$(SolutionDir)\dsr\Debug\*.obj;$(SolutionDir)\energy\Debug\*.obj;$(SolutionDir)\flow-monitor\Debug\*.obj;$(SolutionDir)\internet\Debug\*.obj;$(SolutionDir)\lte\Debug\*.obj;$(SolutionDir)\mesh\Debug\*.obj;$(SolutionDir)\mobility\Debug\*.obj;$(SolutionDir)\network\Debug\*.obj;$(SolutionDir)\propagation\Debug\*.obj;$(SolutionDir)\stats\Debug\*.obj;$(SolutionDir)\wifi\Debug\*.obj;$(SolutionDir)\winport\Debug\*.obj;$(SolutionDir)\point-to-point\Debug\*.obj;$(SolutionDir)\point-to-point-layout\Debug\*.obj;$(SolutionDir)\nix-vector-routing\Debug\*.obj;$(SolutionDir)\olsr\Debug\*.obj;$(SolutionDir)\mpi\Debug\*.obj;$(SolutionDir)\netanim\Debug\*.obj;$(SolutionDir)\spectrum\Debug\*.obj;$(SolutionDir)\uan\Debug\*.obj;$(SolutionDir)\wimax\Debug\*.obj;$(SolutionDir)\virtual-net-device\Debug\*.obj;$(SolutionDir)\config-store\Debug\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32;NS3_LOG_ENABLE</PreprocessorDefinitions>
+      <AdditionalOptions>/D "NS3_LOG_ENABLE" %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)\core\x64\Debug\*.obj;$(SolutionDir)\applications\x64\Debug\*.obj;$(SolutionDir)\aodv\x64\Debug\*.obj;$(SolutionDir)\antenna\x64\Debug\*.obj;$(SolutionDir)\bridge\x64\Debug\*.obj;$(SolutionDir)\tools\x64\Debug\*.obj;$(SolutionDir)\buildings\x64\Debug\*.obj;$(SolutionDir)\csma\x64\Debug\*.obj;$(SolutionDir)\csma-layout\x64\Debug\*.obj;$(SolutionDir)\dsdn\x64\Debug\*.obj;$(SolutionDir)\dsr\x64\Debug\*.obj;$(SolutionDir)\energy\x64\Debug\*.obj;$(SolutionDir)\flow-monitor\x64\Debug\*.obj;$(SolutionDir)\internet\x64\Debug\*.obj;$(SolutionDir)\lte\x64\Debug\*.obj;$(SolutionDir)\mesh\x64\Debug\*.obj;$(SolutionDir)\mobility\x64\Debug\*.obj;$(SolutionDir)\network\x64\Debug\*.obj;$(SolutionDir)\propagation\x64\Debug\*.obj;$(SolutionDir)\stats\x64\Debug\*.obj;$(SolutionDir)\wifi\x64\Debug\*.obj;$(SolutionDir)\winport\x64\Debug\*.obj;$(SolutionDir)\point-to-point\x64\Debug\*.obj;$(SolutionDir)\point-to-point-layout\x64\Debug\*.obj;$(SolutionDir)\nix-vector-routing\x64\Debug\*.obj;$(SolutionDir)\olsr\x64\Debug\*.obj;$(SolutionDir)\mpi\x64\Debug\*.obj;$(SolutionDir)\netanim\x64\Debug\*.obj;$(SolutionDir)\spectrum\x64\Debug\*.obj;$(SolutionDir)\uan\x64\Debug\*.obj;$(SolutionDir)\wimax\x64\Debug\*.obj;$(SolutionDir)\virtual-net-device\x64\Debug\*.obj;$(SolutionDir)\config-store\x64\Debug\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32;_USE_MATH_DEFINES</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>$(SolutionDir)\core\Release\*.obj;$(SolutionDir)\applications\Release\*.obj;$(SolutionDir)\aodv\Release\*.obj;$(SolutionDir)\antenna\Release\*.obj;$(SolutionDir)\bridge\Release\*.obj;$(SolutionDir)\tools\Release\*.obj;$(SolutionDir)\buildings\Release\*.obj;$(SolutionDir)\csma\Release\*.obj;$(SolutionDir)\csma-layout\Release\*.obj;$(SolutionDir)\dsdn\Release\*.obj;$(SolutionDir)\dsr\Release\*.obj;$(SolutionDir)\energy\Release\*.obj;$(SolutionDir)\flow-monitor\Release\*.obj;$(SolutionDir)\internet\Release\*.obj;$(SolutionDir)\lte\Release\*.obj;$(SolutionDir)\mesh\Release\*.obj;$(SolutionDir)\mobility\Release\*.obj;$(SolutionDir)\network\Release\*.obj;$(SolutionDir)\propagation\Release\*.obj;$(SolutionDir)\stats\Release\*.obj;$(SolutionDir)\wifi\Release\*.obj;$(SolutionDir)\winport\Release\*.obj;$(SolutionDir)\point-to-point\Release\*.obj;$(SolutionDir)\point-to-point-layout\Release\*.obj;$(SolutionDir)\nix-vector-routing\Release\*.obj;$(SolutionDir)\olsr\Release\*.obj;$(SolutionDir)\mpi\Release\*.obj;$(SolutionDir)\netanim\Release\*.obj;$(SolutionDir)\spectrum\Release\*.obj;$(SolutionDir)\uan\Release\*.obj;$(SolutionDir)\wimax\Release\*.obj;$(SolutionDir)\virtual-net-device\Release\*.obj;$(SolutionDir)\config-store\Release\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32;_USE_MATH_DEFINES</PreprocessorDefinitions>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <ExceptionHandling>false</ExceptionHandling>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>$(SolutionDir)\core\x64\Release\*.obj;$(SolutionDir)\applications\x64\Release\*.obj;$(SolutionDir)\aodv\x64\Release\*.obj;$(SolutionDir)\antenna\x64\Release\*.obj;$(SolutionDir)\bridge\x64\Release\*.obj;$(SolutionDir)\tools\x64\Release\*.obj;$(SolutionDir)\buildings\x64\Release\*.obj;$(SolutionDir)\csma\x64\Release\*.obj;$(SolutionDir)\csma-layout\x64\Release\*.obj;$(SolutionDir)\dsdn\x64\Release\*.obj;$(SolutionDir)\dsr\x64\Release\*.obj;$(SolutionDir)\energy\x64\Release\*.obj;$(SolutionDir)\flow-monitor\x64\Release\*.obj;$(SolutionDir)\internet\x64\Release\*.obj;$(SolutionDir)\lte\x64\Release\*.obj;$(SolutionDir)\mesh\x64\Release\*.obj;$(SolutionDir)\mobility\x64\Release\*.obj;$(SolutionDir)\network\x64\Release\*.obj;$(SolutionDir)\propagation\x64\Release\*.obj;$(SolutionDir)\stats\x64\Release\*.obj;$(SolutionDir)\wifi\x64\Release\*.obj;$(SolutionDir)\winport\x64\Release\*.obj;$(SolutionDir)\point-to-point\x64\Release\*.obj;$(SolutionDir)\point-to-point-layout\x64\Release\*.obj;$(SolutionDir)\nix-vector-routing\x64\Release\*.obj;$(SolutionDir)\olsr\x64\Release\*.obj;$(SolutionDir)\mpi\x64\Release\*.obj;$(SolutionDir)\netanim\x64\Release\*.obj;$(SolutionDir)\spectrum\x64\Release\*.obj;$(SolutionDir)\uan\x64\Release\*.obj;$(SolutionDir)\wimax\x64\Release\*.obj;$(SolutionDir)\virtual-net-device\x64\Release\*.obj;$(SolutionDir)\config-store\x64\Release\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

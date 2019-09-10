@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B7820E24-D8E4-463F-BF3E-204B9D8114B4}</ProjectGuid>
+    <RootNamespace>core</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32;NS3_LOG_ENABLE;NS3_ASSERT_ENABLE</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/D "NS3_LOG_ENABLE" %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\core\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\core\helper\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32;NS3_LOG_ENABLE;NS3_ASSERT_ENABLE</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/D "NS3_LOG_ENABLE" %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "$(SolutionDir)\..\..\src\core\model\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32;NS3_LOG_ENABLE;NS3_ASSERT_ENABLE</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\core\model\*.h"  "$(SolutionDir)\headers\ns3"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32;NS3_LOG_ENABLE;NS3_ASSERT_ENABLE</PreprocessorDefinitions>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <ExceptionHandling>false</ExceptionHandling>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\core\model\*.h"  "$(SolutionDir)\headers\ns3"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\core\model\abort.h" />
+    <ClInclude Include="..\..\..\src\core\model\assert.h" />
+    <ClInclude Include="..\..\..\src\core\model\attribute-accessor-helper.h" />
+    <ClInclude Include="..\..\..\src\core\model\attribute-construction-list.h" />
+    <ClInclude Include="..\..\..\src\core\model\attribute-helper.h" />
+    <ClInclude Include="..\..\..\src\core\model\attribute.h" />
+    <ClInclude Include="..\..\..\src\core\model\boolean.h" />
+    <ClInclude Include="..\..\..\src\core\model\breakpoint.h" />
+    <ClInclude Include="..\..\..\src\core\model\cairo-wideint-private.h" />
+    <ClInclude Include="..\..\..\src\core\model\calendar-scheduler.h" />
+    <ClInclude Include="..\..\..\src\core\model\callback.h" />
+    <ClInclude Include="..\..\..\src\core\model\command-line.h" />
+    <ClInclude Include="..\..\..\src\core\model\config.h" />
+    <ClInclude Include="..\..\..\src\core\model\default-deleter.h" />
+    <ClInclude Include="..\..\..\src\core\model\default-simulator-impl.h" />
+    <ClInclude Include="..\..\..\src\core\model\deprecated.h" />
+    <ClInclude Include="..\..\..\src\core\model\double.h" />
+    <ClInclude Include="..\..\..\src\core\model\empty.h" />
+    <ClInclude Include="..\..\..\src\core\model\enum.h" />
+    <ClInclude Include="..\..\..\src\core\model\event-id.h" />
+    <ClInclude Include="..\..\..\src\core\model\event-impl.h" />
+    <ClInclude Include="..\..\..\src\core\model\fatal-error.h" />
+    <ClInclude Include="..\..\..\src\core\model\fatal-impl.h" />
+    <ClInclude Include="..\..\..\src\core\model\global-value.h" />
+    <ClInclude Include="..\..\..\src\core\model\hash-fnv.h" />
+    <ClInclude Include="..\..\..\src\core\model\hash-function.h" />
+    <ClInclude Include="..\..\..\src\core\model\hash-murmur3.h" />
+    <ClInclude Include="..\..\..\src\core\model\hash.h" />
+    <ClInclude Include="..\..\..\src\core\model\heap-scheduler.h" />
+    <ClInclude Include="..\..\..\src\core\model\int-to-type.h" />
+    <ClInclude Include="..\..\..\src\core\model\int64x64-128.h" />
+    <ClInclude Include="..\..\..\src\core\model\int64x64-cairo.h" />
+    <ClInclude Include="..\..\..\src\core\model\int64x64-double.h" />
+    <ClInclude Include="..\..\..\src\core\model\int64x64.h" />
+    <ClInclude Include="..\..\..\src\core\model\integer.h" />
+    <ClInclude Include="..\..\..\src\core\model\list-scheduler.h" />
+    <ClInclude Include="..\..\..\src\core\model\log.h" />
+    <ClInclude Include="..\..\..\src\core\model\make-event.h" />
+    <ClInclude Include="..\..\..\src\core\model\map-scheduler.h" />
+    <ClInclude Include="..\..\..\src\core\model\math.h" />
+    <ClInclude Include="..\..\..\src\core\model\names.h" />
+    <ClInclude Include="..\..\..\src\core\model\nstime.h" />
+    <ClInclude Include="..\..\..\src\core\model\object-base.h" />
+    <ClInclude Include="..\..\..\src\core\model\object-factory.h" />
+    <ClInclude Include="..\..\..\src\core\model\object-map.h" />
+    <ClInclude Include="..\..\..\src\core\model\object-ptr-container.h" />
+    <ClInclude Include="..\..\..\src\core\model\object-vector.h" />
+    <ClInclude Include="..\..\..\src\core\model\object.h" />
+    <ClInclude Include="..\..\..\src\core\model\pointer.h" />
+    <ClInclude Include="..\..\..\src\core\model\ptr.h" />
+    <ClInclude Include="..\..\..\src\core\model\random-variable-stream.h" />
+    <ClInclude Include="..\..\..\src\core\model\random-variable.h" />
+    <ClInclude Include="..\..\..\src\core\model\realtime-simulator-impl.h" />
+    <ClInclude Include="..\..\..\src\core\model\ref-count-base.h" />
+    <ClInclude Include="..\..\..\src\core\model\rng-seed-manager.h" />
+    <ClInclude Include="..\..\..\src\core\model\rng-stream.h" />
+    <ClInclude Include="..\..\..\src\core\model\scheduler.h" />
+    <ClInclude Include="..\..\..\src\core\model\simple-ref-count.h" />
+    <ClInclude Include="..\..\..\src\core\model\simulation-singleton.h" />
+    <ClInclude Include="..\..\..\src\core\model\simulator-impl.h" />
+    <ClInclude Include="..\..\..\src\core\model\simulator.h" />
+    <ClInclude Include="..\..\..\src\core\model\singleton.h" />
+    <ClInclude Include="..\..\..\src\core\model\string.h" />
+    <ClInclude Include="..\..\..\src\core\model\synchronizer.h" />
+    <ClInclude Include="..\..\..\src\core\model\system-condition.h" />
+    <ClInclude Include="..\..\..\src\core\model\system-mutex.h" />
+    <ClInclude Include="..\..\..\src\core\model\system-path.h" />
+    <ClInclude Include="..\..\..\src\core\model\system-thread.h" />
+    <ClInclude Include="..\..\..\src\core\model\system-wall-clock-ms.h" />
+    <ClInclude Include="..\..\..\src\core\model\test.h" />
+    <ClInclude Include="..\..\..\src\core\model\timer-impl.h" />
+    <ClInclude Include="..\..\..\src\core\model\timer.h" />
+    <ClInclude Include="..\..\..\src\core\model\trace-source-accessor.h" />
+    <ClInclude Include="..\..\..\src\core\model\traced-callback.h" />
+    <ClInclude Include="..\..\..\src\core\model\traced-value.h" />
+    <ClInclude Include="..\..\..\src\core\model\type-id.h" />
+    <ClInclude Include="..\..\..\src\core\model\type-name.h" />
+    <ClInclude Include="..\..\..\src\core\model\type-traits.h" />
+    <ClInclude Include="..\..\..\src\core\model\uinteger.h" />
+    <ClInclude Include="..\..\..\src\core\model\unused.h" />
+    <ClInclude Include="..\..\..\src\core\model\vector.h" />
+    <ClInclude Include="..\..\..\src\core\model\wall-clock-synchronizer.h" />
+    <ClInclude Include="..\..\..\src\core\model\watchdog.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\core\model\attribute-construction-list.cc" />
+    <ClCompile Include="..\..\..\src\core\model\attribute.cc" />
+    <ClCompile Include="..\..\..\src\core\model\boolean.cc" />
+    <ClCompile Include="..\..\..\src\core\model\breakpoint.cc" />
+    <ClCompile Include="..\..\..\src\core\model\calendar-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\core\model\callback.cc" />
+    <ClCompile Include="..\..\..\src\core\model\command-line.cc" />
+    <ClCompile Include="..\..\..\src\core\model\config.cc" />
+    <ClCompile Include="..\..\..\src\core\model\default-simulator-impl.cc" />
+    <ClCompile Include="..\..\..\src\core\model\double.cc" />
+    <ClCompile Include="..\..\..\src\core\model\enum.cc" />
+    <ClCompile Include="..\..\..\src\core\model\event-id.cc" />
+    <ClCompile Include="..\..\..\src\core\model\event-impl.cc" />
+    <ClCompile Include="..\..\..\src\core\model\fatal-impl.cc" />
+    <ClCompile Include="..\..\..\src\core\model\global-value.cc" />
+    <ClCompile Include="..\..\..\src\core\model\hash-fnv.cc" />
+    <ClCompile Include="..\..\..\src\core\model\hash-function.cc" />
+    <ClCompile Include="..\..\..\src\core\model\hash-murmur3.cc" />
+    <ClCompile Include="..\..\..\src\core\model\hash.cc" />
+    <ClCompile Include="..\..\..\src\core\model\heap-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\core\model\int64x64.cc" />
+    <ClCompile Include="..\..\..\src\core\model\integer.cc" />
+    <ClCompile Include="..\..\..\src\core\model\list-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\core\model\log.cc" />
+    <ClCompile Include="..\..\..\src\core\model\make-event.cc" />
+    <ClCompile Include="..\..\..\src\core\model\map-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\core\model\names.cc" />
+    <ClCompile Include="..\..\..\src\core\model\object-base.cc" />
+    <ClCompile Include="..\..\..\src\core\model\object-factory.cc" />
+    <ClCompile Include="..\..\..\src\core\model\object-ptr-container.cc" />
+    <ClCompile Include="..\..\..\src\core\model\object.cc" />
+    <ClCompile Include="..\..\..\src\core\model\pointer.cc" />
+    <ClCompile Include="..\..\..\src\core\model\random-variable-stream.cc" />
+    <ClCompile Include="..\..\..\src\core\model\random-variable.cc" />
+    <ClCompile Include="..\..\..\src\core\model\ref-count-base.cc" />
+    <ClCompile Include="..\..\..\src\core\model\rng-seed-manager.cc" />
+    <ClCompile Include="..\..\..\src\core\model\rng-stream.cc" />
+    <ClCompile Include="..\..\..\src\core\model\scheduler.cc" />
+    <ClCompile Include="..\..\..\src\core\model\simulator-impl.cc" />
+    <ClCompile Include="..\..\..\src\core\model\simulator.cc" />
+    <ClCompile Include="..\..\..\src\core\model\string.cc" />
+    <ClCompile Include="..\..\..\src\core\model\synchronizer.cc" />
+    <ClCompile Include="..\..\..\src\core\model\system-path.cc" />
+    <ClCompile Include="..\..\..\src\core\model\test.cc" />
+    <ClCompile Include="..\..\..\src\core\model\time.cc" />
+    <ClCompile Include="..\..\..\src\core\model\timer.cc" />
+    <ClCompile Include="..\..\..\src\core\model\trace-source-accessor.cc" />
+    <ClCompile Include="..\..\..\src\core\model\type-id.cc" />
+    <ClCompile Include="..\..\..\src\core\model\type-name.cc" />
+    <ClCompile Include="..\..\..\src\core\model\uinteger.cc" />
+    <ClCompile Include="..\..\..\src\core\model\unix-system-mutex.cc" />
+    <ClCompile Include="..\..\..\src\core\model\vector.cc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{823C041E-23A4-4820-9C81-EF13E438F962}</ProjectGuid>
+    <RootNamespace>wimax</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32</PreprocessorDefinitions>
+      <AdditionalOptions>/D "NS3_LOG_ENABLE" %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\wimax\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\wimax\helper\*.h"  "$(SolutionDir)\headers\ns3"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32</PreprocessorDefinitions>
+      <AdditionalOptions>/D "NS3_LOG_ENABLE" %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\wimax\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\wimax\helper\*.h"  "$(SolutionDir)\headers\ns3"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\wimax\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\wimax\helper\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32</PreprocessorDefinitions>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <ExceptionHandling>false</ExceptionHandling>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\wimax\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\wimax\helper\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\wimax\helper\wimax-helper.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\bandwidth-manager.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\bs-link-manager.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\bs-net-device.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\bs-scheduler-rtps.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\bs-scheduler-simple.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\bs-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\bs-service-flow-manager.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\bs-uplink-scheduler-mbqos.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\bs-uplink-scheduler-rtps.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\bs-uplink-scheduler-simple.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\bs-uplink-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\burst-profile-manager.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\cid-factory.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\cid.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\connection-manager.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\crc8.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\cs-parameters.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\dl-mac-messages.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\ipcs-classifier-record.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\ipcs-classifier.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\mac-messages.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\ofdm-downlink-frame-prefix.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\send-params.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\service-flow-manager.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\service-flow-record.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\service-flow.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\simple-ofdm-send-param.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\simple-ofdm-wimax-channel.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\simple-ofdm-wimax-phy.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\snr-to-block-error-rate-manager.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\snr-to-block-error-rate-record.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\ss-link-manager.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\ss-manager.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\ss-net-device.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\ss-record.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\ss-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\ss-service-flow-manager.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\ul-job.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\ul-mac-messages.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\wimax-channel.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\wimax-connection.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\wimax-mac-header.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\wimax-mac-queue.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\wimax-mac-to-mac-header.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\wimax-net-device.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\wimax-phy.cc" />
+    <ClCompile Include="..\..\..\src\wimax\model\wimax-tlv.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\wimax\helper\wimax-helper.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\bandwidth-manager.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\bs-link-manager.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\bs-net-device.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\bs-scheduler-rtps.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\bs-scheduler-simple.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\bs-scheduler.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\bs-service-flow-manager.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\bs-uplink-scheduler-mbqos.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\bs-uplink-scheduler-rtps.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\bs-uplink-scheduler-simple.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\bs-uplink-scheduler.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\burst-profile-manager.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\bvec.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\cid-factory.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\cid.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\connection-manager.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\crc8.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\cs-parameters.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\default-traces.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\dl-mac-messages.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\ipcs-classifier-record.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\ipcs-classifier.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\mac-messages.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\ofdm-downlink-frame-prefix.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\send-params.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\service-flow-manager.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\service-flow-record.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\service-flow.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\simple-ofdm-send-param.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\simple-ofdm-wimax-channel.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\simple-ofdm-wimax-phy.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\snr-to-block-error-rate-manager.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\snr-to-block-error-rate-record.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\ss-link-manager.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\ss-manager.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\ss-net-device.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\ss-record.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\ss-scheduler.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\ss-service-flow-manager.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\ul-job.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\ul-mac-messages.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\wimax-channel.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\wimax-connection.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\wimax-mac-header.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\wimax-mac-queue.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\wimax-mac-to-mac-header.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\wimax-net-device.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\wimax-phy.h" />
+    <ClInclude Include="..\..\..\src\wimax\model\wimax-tlv.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\antenna\test\test-angles.cc" />
+    <ClCompile Include="..\..\..\src\antenna\test\test-cosine-antenna.cc" />
+    <ClCompile Include="..\..\..\src\antenna\test\test-degrees-radians.cc" />
+    <ClCompile Include="..\..\..\src\antenna\test\test-isotropic-antenna.cc" />
+    <ClCompile Include="..\..\..\src\antenna\test\test-parabolic-antenna.cc" />
+    <ClCompile Include="..\..\..\src\aodv\test\aodv-id-cache-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\aodv\test\aodv-regression.cc" />
+    <ClCompile Include="..\..\..\src\aodv\test\aodv-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\aodv\test\bug-772.cc" />
+    <ClCompile Include="..\..\..\src\aodv\test\loopback.cc" />
+    <ClCompile Include="..\..\..\src\applications\test\udp-client-server-test.cc" />
+    <ClCompile Include="..\..\..\src\core\test\attribute-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\core\test\callback-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\core\test\command-line-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\core\test\config-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\core\test\event-garbage-collector-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\core\test\global-value-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\core\test\many-uniform-random-variables-one-get-value-call-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\core\test\names-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\core\test\object-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\core\test\one-uniform-random-variable-many-get-value-calls-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\core\test\ptr-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\core\test\random-variable-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\core\test\sample-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\core\test\simulator-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\core\test\time-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\core\test\timer-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\core\test\traced-callback-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\core\test\type-id-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\core\test\type-traits-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\dsdv\test\dsdv-testcase.cc" />
+    <ClCompile Include="..\..\..\src\dsr\test\dsr-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\energy\test\basic-energy-model-test.cc" />
+    <ClCompile Include="..\..\..\src\energy\test\li-ion-energy-source-test.cc" />
+    <ClCompile Include="..\..\..\src\energy\test\rv-battery-model-test.cc" />
+    <ClCompile Include="..\..\..\src\flow-monitor\test\histogram-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\internet\test\ipv4-header-test.cc" />
+    <ClCompile Include="..\..\..\src\internet\test\ipv6-address-helper-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\epc-test-gtpu.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\epc-test-s1u-uplink.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-simple-helper.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-simple-net-device.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-downlink-sinr.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-earfcn.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-entities.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-fdbet-ff-mac-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-fdmt-ff-mac-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-fdtbfq-ff-mac-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-harq.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-interference.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-link-adaptation.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-mimo.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-pathloss-model.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-pf-ff-mac-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-phy-error-model.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-pss-ff-mac-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-rlc-am-e2e.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-rlc-am-transmitter.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-rlc-um-e2e.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-rlc-um-transmitter.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-rr-ff-mac-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-sinr-chunk-processor.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-spectrum-value-helper.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-tdbet-ff-mac-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-tdmt-ff-mac-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-tdtbfq-ff-mac-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-tta-ff-mac-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-ue-phy.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\lte-test-uplink-sinr.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\test-asn1-encoding.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\test-epc-tft-classifier.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\test-lte-antenna.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\test-lte-epc-e2e-data.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\test-lte-handover-delay.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\test-lte-rrc.cc" />
+    <ClCompile Include="..\..\..\src\lte\test\test-lte-x2-handover.cc" />
+    <ClCompile Include="..\..\..\src\mesh\test\dot11s\d-regression.cc" />
+    <ClCompile Include="..\..\..\src\mesh\test\dot11s\dot11s-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\mesh\test\dot11s\hwmp-proactive-regression.cc" />
+    <ClCompile Include="..\..\..\src\mesh\test\dot11s\hwmp-reactive-regression.cc" />
+    <ClCompile Include="..\..\..\src\mesh\test\dot11s\hwmp-simplest-regression.cc" />
+    <ClCompile Include="..\..\..\src\mesh\test\dot11s\hwmp-target-flags-regression.cc" />
+    <ClCompile Include="..\..\..\src\mesh\test\dot11s\pmp-regression.cc" />
+    <ClCompile Include="..\..\..\src\mesh\test\flame\f-regression.cc" />
+    <ClCompile Include="..\..\..\src\mesh\test\flame\flame-regression.cc" />
+    <ClCompile Include="..\..\..\src\mesh\test\flame\flame-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\mesh\test\mesh-information-element-vector-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\mobility\test\mobility-trace-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\mobility\test\ns2-mobility-helper-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\mobility\test\steady-state-random-waypoint-mobility-model-test.cc" />
+    <ClCompile Include="..\..\..\src\mobility\test\waypoint-mobility-model-test.cc" />
+    <ClCompile Include="..\..\..\src\netanim\test\netanim-test.cc" />
+    <ClCompile Include="..\..\..\src\network\test\buffer-test.cc" />
+    <ClCompile Include="..\..\..\src\network\test\drop-tail-queue-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\network\test\error-model-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\network\test\ipv6-address-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\network\test\packet-metadata-test.cc" />
+    <ClCompile Include="..\..\..\src\network\test\packet-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\network\test\packetbb-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\network\test\pcap-file-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\network\test\red-queue-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\network\test\sequence-number-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\olsr\test\bug780-test.cc" />
+    <ClCompile Include="..\..\..\src\olsr\test\hello-regression-test.cc" />
+    <ClCompile Include="..\..\..\src\olsr\test\olsr-header-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\olsr\test\olsr-routing-protocol-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\olsr\test\regression-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\olsr\test\tc-regression-test.cc" />
+    <ClCompile Include="..\..\..\src\point-to-point\test\point-to-point-test.cc" />
+    <ClCompile Include="..\..\..\src\propagation\test\itu-r-1411-los-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\propagation\test\itu-r-1411-nlos-over-rooftop-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\propagation\test\kun-2600-mhz-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\propagation\test\okumura-hata-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\propagation\test\propagation-loss-model-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\spectrum\test\spectrum-ideal-phy-test.cc" />
+    <ClCompile Include="..\..\..\src\spectrum\test\spectrum-interference-test.cc" />
+    <ClCompile Include="..\..\..\src\spectrum\test\spectrum-value-test.cc" />
+    <ClCompile Include="..\..\..\src\stats\test\average-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\stats\test\basic-data-calculators-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\uan\test\uan-energy-model-test.cc" />
+    <ClCompile Include="..\..\..\src\uan\test\uan-test.cc" />
+    <ClCompile Include="..\..\..\src\wifi\test\block-ack-test-suite.cc" />
+    <ClCompile Include="..\..\..\src\wifi\test\dcf-manager-test.cc" />
+    <ClCompile Include="..\..\..\src\wifi\test\tx-duration-test.cc" />
+    <ClCompile Include="..\..\..\src\wifi\test\wifi-test.cc" />
+    <ClCompile Include="..\..\..\src\wimax\test\mac-messages-test.cc" />
+    <ClCompile Include="..\..\..\src\wimax\test\phy-test.cc" />
+    <ClCompile Include="..\..\..\src\wimax\test\qos-test.cc" />
+    <ClCompile Include="..\..\..\src\wimax\test\ss-mac-test.cc" />
+    <ClCompile Include="..\..\..\src\wimax\test\wimax-fragmentation-test.cc" />
+    <ClCompile Include="..\..\..\src\wimax\test\wimax-service-flow-test.cc" />
+    <ClCompile Include="..\..\..\src\wimax\test\wimax-tlv-test.cc" />
+    <ClCompile Include="..\..\..\utils\test-runner.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\aodv\test\aodv-regression.h" />
+    <ClInclude Include="..\..\..\src\aodv\test\bug-772.h" />
+    <ClInclude Include="..\..\..\src\aodv\test\loopback.h" />
+    <ClInclude Include="..\..\..\src\lte\test\epc-test-gtpu.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-simple-helper.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-simple-net-device.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-downlink-sinr.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-entities.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-fdbet-ff-mac-scheduler.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-fdmt-ff-mac-scheduler.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-fdtbfq-ff-mac-scheduler.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-harq.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-interference.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-link-adaptation.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-mimo.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-pathloss-model.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-pf-ff-mac-scheduler.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-phy-error-model.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-pss-ff-mac-scheduler.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-rlc-am-e2e.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-rlc-am-transmitter.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-rlc-um-e2e.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-rlc-um-transmitter.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-rr-ff-mac-scheduler.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-sinr-chunk-processor.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-tdbet-ff-mac-scheduler.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-tdmt-ff-mac-scheduler.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-tdtbfq-ff-mac-scheduler.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-tta-ff-mac-scheduler.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-ue-phy.h" />
+    <ClInclude Include="..\..\..\src\lte\test\lte-test-uplink-sinr.h" />
+    <ClInclude Include="..\..\..\src\mesh\test\dot11s\hwmp-proactive-regression.h" />
+    <ClInclude Include="..\..\..\src\mesh\test\dot11s\hwmp-reactive-regression.h" />
+    <ClInclude Include="..\..\..\src\mesh\test\dot11s\hwmp-simplest-regression.h" />
+    <ClInclude Include="..\..\..\src\mesh\test\dot11s\hwmp-target-flags-regression.h" />
+    <ClInclude Include="..\..\..\src\mesh\test\dot11s\pmp-regression.h" />
+    <ClInclude Include="..\..\..\src\mesh\test\flame\flame-regression.h" />
+    <ClInclude Include="..\..\..\src\olsr\test\bug780-test.h" />
+    <ClInclude Include="..\..\..\src\olsr\test\hello-regression-test.h" />
+    <ClInclude Include="..\..\..\src\olsr\test\tc-regression-test.h" />
+    <ClInclude Include="..\..\..\src\spectrum\test\spectrum-test.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0716C5EF-C020-4A50-8A16-67C43024869E}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>testrunner</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers;</AdditionalIncludeDirectories>
+      <AdditionalOptions>/D "NS3_LOG_ENABLE"</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)\core\Debug\*.obj;$(SolutionDir)\applications\Debug\*.obj;$(SolutionDir)\aodv\Debug\*.obj;$(SolutionDir)\antenna\Debug\*.obj;$(SolutionDir)\bridge\Debug\*.obj;$(SolutionDir)\tools\Debug\*.obj;$(SolutionDir)\buildings\Debug\*.obj;$(SolutionDir)\csma\Debug\*.obj;$(SolutionDir)\csma-layout\Debug\*.obj;$(SolutionDir)\dsdn\Debug\*.obj;$(SolutionDir)\dsr\Debug\*.obj;$(SolutionDir)\energy\Debug\*.obj;$(SolutionDir)\flow-monitor\Debug\*.obj;$(SolutionDir)\internet\Debug\*.obj;$(SolutionDir)\lte\Debug\*.obj;$(SolutionDir)\mesh\Debug\*.obj;$(SolutionDir)\mobility\Debug\*.obj;$(SolutionDir)\network\Debug\*.obj;$(SolutionDir)\propagation\Debug\*.obj;$(SolutionDir)\stats\Debug\*.obj;$(SolutionDir)\wifi\Debug\*.obj;$(SolutionDir)\winport\Debug\*.obj;$(SolutionDir)\point-to-point\Debug\*.obj;$(SolutionDir)\point-to-point-layout\Debug\*.obj;$(SolutionDir)\nix-vector-routing\Debug\*.obj;$(SolutionDir)\olsr\Debug\*.obj;$(SolutionDir)\mpi\Debug\*.obj;$(SolutionDir)\netanim\Debug\*.obj;$(SolutionDir)\spectrum\Debug\*.obj;$(SolutionDir)\uan\Debug\*.obj;$(SolutionDir)\wimax\Debug\*.obj;$(SolutionDir)\virtual-net-device\Debug\*.obj;$(SolutionDir)\config-store\Debug\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\spectrum\test\spectrum-test.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\lte\test\lte-test-ue-phy.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\lte\test\lte-test-fading.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_CONSOLE;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>$(SolutionDir)\core\Release\*.obj;$(SolutionDir)\applications\Release\*.obj;$(SolutionDir)\aodv\Release\*.obj;$(SolutionDir)\antenna\Release\*.obj;$(SolutionDir)\bridge\Release\*.obj;$(SolutionDir)\tools\Release\*.obj;$(SolutionDir)\buildings\Release\*.obj;$(SolutionDir)\csma\Release\*.obj;$(SolutionDir)\csma-layout\Release\*.obj;$(SolutionDir)\dsdn\Release\*.obj;$(SolutionDir)\dsr\Release\*.obj;$(SolutionDir)\energy\Release\*.obj;$(SolutionDir)\flow-monitor\Release\*.obj;$(SolutionDir)\internet\Release\*.obj;$(SolutionDir)\lte\Release\*.obj;$(SolutionDir)\mesh\Release\*.obj;$(SolutionDir)\mobility\Release\*.obj;$(SolutionDir)\network\Release\*.obj;$(SolutionDir)\propagation\Release\*.obj;$(SolutionDir)\stats\Release\*.obj;$(SolutionDir)\wifi\Release\*.obj;$(SolutionDir)\winport\Release\*.obj;$(SolutionDir)\point-to-point\Release\*.obj;$(SolutionDir)\point-to-point-layout\Release\*.obj;$(SolutionDir)\nix-vector-routing\Release\*.obj;$(SolutionDir)\olsr\Release\*.obj;$(SolutionDir)\mpi\Release\*.obj;$(SolutionDir)\netanim\Release\*.obj;$(SolutionDir)\spectrum\Release\*.obj;$(SolutionDir)\uan\Release\*.obj;$(SolutionDir)\wimax\Release\*.obj;$(SolutionDir)\virtual-net-device\Release\*.obj;$(SolutionDir)\config-store\Release\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

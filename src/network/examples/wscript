@@ -1,0 +1,17 @@
+## -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
+
+def build(bld):
+    if not bld.env['ENABLE_EXAMPLES']:
+        return;
+
+    obj = bld.create_ns3_program('main-packet-header', ['network'])
+    obj.source = 'main-packet-header.cc'
+
+    obj = bld.create_ns3_program('main-packet-tag', ['network'])
+    obj.source = 'main-packet-tag.cc'
+
+    obj = bld.create_ns3_program('red-tests', ['point-to-point', 'internet', 'applications', 'flow-monitor'])
+    obj.source = 'red-tests.cc'
+
+    obj = bld.create_ns3_program('droptail_vs_red', ['point-to-point', 'point-to-point-layout', 'internet', 'applications'])
+    obj.source = 'droptail_vs_red.cc'

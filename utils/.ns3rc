@@ -1,0 +1,13 @@
+#! /usr/bin/env python
+
+# A list of the modules that will be enabled when ns-3 is run.
+# Modules that depend on the listed modules will be enabled also.
+#
+# All modules can be enabled by choosing 'all_modules'.
+modules_enabled = ['all_modules']
+
+# Set this equal to true if you want examples to be run.
+examples_enabled = False
+
+# Set this equal to true if you want tests to be run.
+tests_enabled = False

@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{205A52BB-E7B8-4328-AAF2-7F88D4546FDA}</ProjectGuid>
+    <RootNamespace>lte</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)headers;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32</PreprocessorDefinitions>
+      <AdditionalOptions>/D "NS3_LOG_ENABLE" %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\lte\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\lte\helper\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)headers;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32</PreprocessorDefinitions>
+      <AdditionalOptions>/D "NS3_LOG_ENABLE" %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\lte\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\lte\helper\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\lte\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\lte\helper\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32</PreprocessorDefinitions>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <ExceptionHandling>false</ExceptionHandling>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\lte\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\lte\helper\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\lte\helper\epc-helper.cc" />
+    <ClCompile Include="..\..\..\src\lte\helper\lte-helper.cc" />
+    <ClCompile Include="..\..\..\src\lte\helper\lte-hex-grid-enb-topology-helper.cc" />
+    <ClCompile Include="..\..\..\src\lte\helper\lte-stats-calculator.cc" />
+    <ClCompile Include="..\..\..\src\lte\helper\mac-stats-calculator.cc" />
+    <ClCompile Include="..\..\..\src\lte\helper\radio-bearer-stats-calculator.cc" />
+    <ClCompile Include="..\..\..\src\lte\helper\radio-environment-map-helper.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\epc-enb-application.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\epc-gtpu-header.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\epc-sgw-pgw-application.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\epc-tft-classifier.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\epc-tft.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\eps-bearer.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\ff-mac-csched-sap.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\ff-mac-sched-sap.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\ff-mac-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\ideal-control-messages.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-amc.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-common.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-enb-cmac-sap.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-enb-mac.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-enb-net-device.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-enb-phy-sap.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-enb-phy.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-enb-rrc.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-interference.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-mac-sap.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-mi-error-model.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-net-device.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-pdcp-header.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-pdcp-sap.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-pdcp-tag.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-pdcp.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-phy-tag.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-phy.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-radio-bearer-info.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-radio-bearer-tag.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-rlc-am-header.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-rlc-am.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-rlc-header.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-rlc-sap.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-rlc-sdu-status-tag.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-rlc-sequence-number.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-rlc-tag.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-rlc-um.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-rlc.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-sinr-chunk-processor.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-spectrum-phy.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-spectrum-signal-parameters.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-spectrum-value-helper.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-ue-cmac-sap.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-ue-mac.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-ue-net-device.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-ue-phy-sap.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-ue-phy.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\lte-ue-rrc.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\pf-ff-mac-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\rem-spectrum-phy.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\rr-ff-mac-scheduler.cc" />
+    <ClCompile Include="..\..\..\src\lte\model\trace-fading-loss-model.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\lte\helper\epc-helper.h" />
+    <ClInclude Include="..\..\..\src\lte\helper\lte-helper.h" />
+    <ClInclude Include="..\..\..\src\lte\helper\lte-hex-grid-enb-topology-helper.h" />
+    <ClInclude Include="..\..\..\src\lte\helper\lte-stats-calculator.h" />
+    <ClInclude Include="..\..\..\src\lte\helper\mac-stats-calculator.h" />
+    <ClInclude Include="..\..\..\src\lte\helper\radio-bearer-stats-calculator.h" />
+    <ClInclude Include="..\..\..\src\lte\helper\radio-environment-map-helper.h" />
+    <ClInclude Include="..\..\..\src\lte\model\epc-enb-application.h" />
+    <ClInclude Include="..\..\..\src\lte\model\epc-gtpu-header.h" />
+    <ClInclude Include="..\..\..\src\lte\model\epc-sgw-pgw-application.h" />
+    <ClInclude Include="..\..\..\src\lte\model\epc-tft-classifier.h" />
+    <ClInclude Include="..\..\..\src\lte\model\epc-tft.h" />
+    <ClInclude Include="..\..\..\src\lte\model\eps-bearer.h" />
+    <ClInclude Include="..\..\..\src\lte\model\ff-mac-common.h" />
+    <ClInclude Include="..\..\..\src\lte\model\ff-mac-csched-sap.h" />
+    <ClInclude Include="..\..\..\src\lte\model\ff-mac-sched-sap.h" />
+    <ClInclude Include="..\..\..\src\lte\model\ff-mac-scheduler.h" />
+    <ClInclude Include="..\..\..\src\lte\model\ideal-control-messages.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-amc.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-common.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-enb-cmac-sap.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-enb-mac.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-enb-net-device.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-enb-phy-sap.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-enb-phy.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-enb-rrc.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-interference.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-mac-sap.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-mi-error-model.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-net-device.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-pdcp-header.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-pdcp-sap.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-pdcp-tag.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-pdcp.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-phy-tag.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-phy.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-radio-bearer-info.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-radio-bearer-tag.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-rlc-am-header.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-rlc-am.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-rlc-header.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-rlc-sap.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-rlc-sdu-status-tag.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-rlc-sequence-number.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-rlc-tag.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-rlc-um.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-rlc.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-sinr-chunk-processor.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-spectrum-phy.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-spectrum-signal-parameters.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-spectrum-value-helper.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-ue-cmac-sap.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-ue-mac.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-ue-net-device.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-ue-phy-sap.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-ue-phy.h" />
+    <ClInclude Include="..\..\..\src\lte\model\lte-ue-rrc.h" />
+    <ClInclude Include="..\..\..\src\lte\model\pf-ff-mac-scheduler.h" />
+    <ClInclude Include="..\..\..\src\lte\model\rem-spectrum-phy.h" />
+    <ClInclude Include="..\..\..\src\lte\model\rr-ff-mac-scheduler.h" />
+    <ClInclude Include="..\..\..\src\lte\model\trace-fading-loss-model.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,26 @@
+#Do
+
+
+Create core-config.h
+
+#Remove
+
+watchdog.cc
+unix-fd-reader.cc
+unix-system-condition.cc
+unix-system-mutex.cc
+unix-system-wall-clock-ms.cc
+wall-clock-synchronizer.cc
+system-path.cc
+real-time-simulator.cc
+cairo-wideint.cc
+int64x64-cairo.cc
+int64x64-128.cc
+win32-wallclock
+test.cc
+config-store (due to libxml dependency)
+sqlite-data-output.cc
+
+#Add
+
+hgignore list

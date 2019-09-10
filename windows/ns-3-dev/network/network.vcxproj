@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{23A7B35C-D931-486C-A9D9-B1918EDC9031}</ProjectGuid>
+    <RootNamespace>network</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32</PreprocessorDefinitions>
+      <AdditionalOptions>/D "NS3_LOG_ENABLE" %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\network\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\utils\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32</PreprocessorDefinitions>
+      <AdditionalOptions>/D "NS3_LOG_ENABLE" %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\network\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\utils\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\network\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\utils\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\headers</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);WIN32</PreprocessorDefinitions>
+      <ExceptionHandling>false</ExceptionHandling>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\..\..\src\network\model\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\helper\*.h"  "$(SolutionDir)\headers\ns3"
+copy "$(SolutionDir)\..\..\src\network\utils\*.h"  "$(SolutionDir)\headers\ns3"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\network\helper\application-container.cc" />
+    <ClCompile Include="..\..\..\src\network\helper\net-device-container.cc" />
+    <ClCompile Include="..\..\..\src\network\helper\node-container.cc" />
+    <ClCompile Include="..\..\..\src\network\helper\packet-socket-helper.cc" />
+    <ClCompile Include="..\..\..\src\network\helper\trace-helper.cc" />
+    <ClCompile Include="..\..\..\src\network\model\address.cc" />
+    <ClCompile Include="..\..\..\src\network\model\application.cc" />
+    <ClCompile Include="..\..\..\src\network\model\broadcom-node.cc" />
+    <ClCompile Include="..\..\..\src\network\model\buffer.cc" />
+    <ClCompile Include="..\..\..\src\network\model\byte-tag-list.cc" />
+    <ClCompile Include="..\..\..\src\network\model\channel-list.cc" />
+    <ClCompile Include="..\..\..\src\network\model\channel.cc" />
+    <ClCompile Include="..\..\..\src\network\model\chunk.cc" />
+    <ClCompile Include="..\..\..\src\network\model\header.cc" />
+    <ClCompile Include="..\..\..\src\network\model\net-device.cc" />
+    <ClCompile Include="..\..\..\src\network\model\nix-vector.cc" />
+    <ClCompile Include="..\..\..\src\network\model\node-list.cc" />
+    <ClCompile Include="..\..\..\src\network\model\node.cc" />
+    <ClCompile Include="..\..\..\src\network\model\packet-metadata.cc" />
+    <ClCompile Include="..\..\..\src\network\model\packet-tag-list.cc" />
+    <ClCompile Include="..\..\..\src\network\model\packet.cc" />
+    <ClCompile Include="..\..\..\src\network\model\socket-factory.cc" />
+    <ClCompile Include="..\..\..\src\network\model\socket.cc" />
+    <ClCompile Include="..\..\..\src\network\model\tag-buffer.cc" />
+    <ClCompile Include="..\..\..\src\network\model\tag.cc" />
+    <ClCompile Include="..\..\..\src\network\model\trailer.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\address-utils.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\broadcom-egress-queue.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\data-rate.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\drop-tail-queue.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\error-model.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\ethernet-header.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\ethernet-trailer.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\flow-id-tag.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\inet-socket-address.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\inet6-socket-address.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\ipv4-address.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\ipv6-address.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\llc-snap-header.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\mac48-address.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\mac64-address.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\output-stream-wrapper.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\packet-burst.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\packet-socket-address.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\packet-socket-factory.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\packet-socket.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\packetbb.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\pcap-file-wrapper.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\pcap-file.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\queue.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\radiotap-header.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\red-queue.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\simple-channel.cc" />
+    <ClCompile Include="..\..\..\src\network\utils\simple-net-device.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\network\helper\application-container.h" />
+    <ClInclude Include="..\..\..\src\network\helper\net-device-container.h" />
+    <ClInclude Include="..\..\..\src\network\helper\node-container.h" />
+    <ClInclude Include="..\..\..\src\network\helper\packet-socket-helper.h" />
+    <ClInclude Include="..\..\..\src\network\helper\trace-helper.h" />
+    <ClInclude Include="..\..\..\src\network\model\address.h" />
+    <ClInclude Include="..\..\..\src\network\model\application.h" />
+    <ClInclude Include="..\..\..\src\network\model\broadcom-node.h" />
+    <ClInclude Include="..\..\..\src\network\model\buffer.h" />
+    <ClInclude Include="..\..\..\src\network\model\byte-tag-list.h" />
+    <ClInclude Include="..\..\..\src\network\model\channel-list.h" />
+    <ClInclude Include="..\..\..\src\network\model\channel.h" />
+    <ClInclude Include="..\..\..\src\network\model\chunk.h" />
+    <ClInclude Include="..\..\..\src\network\model\header.h" />
+    <ClInclude Include="..\..\..\src\network\model\net-device.h" />
+    <ClInclude Include="..\..\..\src\network\model\nix-vector.h" />
+    <ClInclude Include="..\..\..\src\network\model\node-list.h" />
+    <ClInclude Include="..\..\..\src\network\model\node.h" />
+    <ClInclude Include="..\..\..\src\network\model\packet-metadata.h" />
+    <ClInclude Include="..\..\..\src\network\model\packet-tag-list.h" />
+    <ClInclude Include="..\..\..\src\network\model\packet.h" />
+    <ClInclude Include="..\..\..\src\network\model\socket-factory.h" />
+    <ClInclude Include="..\..\..\src\network\model\socket.h" />
+    <ClInclude Include="..\..\..\src\network\model\tag-buffer.h" />
+    <ClInclude Include="..\..\..\src\network\model\tag.h" />
+    <ClInclude Include="..\..\..\src\network\model\trailer.h" />
+    <ClInclude Include="..\..\..\src\network\utils\address-utils.h" />
+    <ClInclude Include="..\..\..\src\network\utils\broadcom-egress-queue.h" />
+    <ClInclude Include="..\..\..\src\network\utils\data-rate.h" />
+    <ClInclude Include="..\..\..\src\network\utils\drop-tail-queue.h" />
+    <ClInclude Include="..\..\..\src\network\utils\error-model.h" />
+    <ClInclude Include="..\..\..\src\network\utils\ethernet-header.h" />
+    <ClInclude Include="..\..\..\src\network\utils\ethernet-trailer.h" />
+    <ClInclude Include="..\..\..\src\network\utils\flow-id-tag.h" />
+    <ClInclude Include="..\..\..\src\network\utils\generic-phy.h" />
+    <ClInclude Include="..\..\..\src\network\utils\inet-socket-address.h" />
+    <ClInclude Include="..\..\..\src\network\utils\inet6-socket-address.h" />
+    <ClInclude Include="..\..\..\src\network\utils\ipv4-address.h" />
+    <ClInclude Include="..\..\..\src\network\utils\ipv6-address.h" />
+    <ClInclude Include="..\..\..\src\network\utils\llc-snap-header.h" />
+    <ClInclude Include="..\..\..\src\network\utils\mac48-address.h" />
+    <ClInclude Include="..\..\..\src\network\utils\mac64-address.h" />
+    <ClInclude Include="..\..\..\src\network\utils\output-stream-wrapper.h" />
+    <ClInclude Include="..\..\..\src\network\utils\packet-burst.h" />
+    <ClInclude Include="..\..\..\src\network\utils\packet-socket-address.h" />
+    <ClInclude Include="..\..\..\src\network\utils\packet-socket-factory.h" />
+    <ClInclude Include="..\..\..\src\network\utils\packet-socket.h" />
+    <ClInclude Include="..\..\..\src\network\utils\packetbb.h" />
+    <ClInclude Include="..\..\..\src\network\utils\pcap-file-wrapper.h" />
+    <ClInclude Include="..\..\..\src\network\utils\pcap-file.h" />
+    <ClInclude Include="..\..\..\src\network\utils\pcap-test.h" />
+    <ClInclude Include="..\..\..\src\network\utils\queue.h" />
+    <ClInclude Include="..\..\..\src\network\utils\radiotap-header.h" />
+    <ClInclude Include="..\..\..\src\network\utils\red-queue.h" />
+    <ClInclude Include="..\..\..\src\network\utils\sequence-number.h" />
+    <ClInclude Include="..\..\..\src\network\utils\sgi-hashmap.h" />
+    <ClInclude Include="..\..\..\src\network\utils\simple-channel.h" />
+    <ClInclude Include="..\..\..\src\network\utils\simple-net-device.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
