@@ -748,7 +748,7 @@ int main(int argc, char *argv[])
 		if (n.Get(i)->GetNodeType() == 1){ // is switch
 			Ptr<SwitchNode> sw = DynamicCast<SwitchNode>(n.Get(i));
 			uint32_t shift = 3; // by default 1/8
-			for (uint32_t j = 1; j < sw->GetNDevices(); j++){
+			for (uint32_t j = 1; j < sw->m_mmu->pCnt; j++){
 				Ptr<QbbNetDevice> dev = DynamicCast<QbbNetDevice>(sw->GetDevice(j));
 				// set ecn
 				uint64_t rate = dev->GetDataRate().GetBitRate();
