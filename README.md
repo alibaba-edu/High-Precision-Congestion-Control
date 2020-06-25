@@ -5,9 +5,10 @@ We have update this simulator to support HPCC-PINT, which reduces the INT header
 
 It is based on NS-3 version 3.17.
 
-If you have any technical questions, please create an issue in this repo. We will respond soon.
+For technical questions, please create an issue in this repo, so other people can benefit from your questions. 
+You may also check the issue list first to see if people have already asked the questions you have :)
 
-If you have other questions, please contact Rui Miao (miao.rui@alibaba-inc.com).
+For other questions, please contact Rui Miao (miao.rui@alibaba-inc.com).
 
 ## Quick Start
 
