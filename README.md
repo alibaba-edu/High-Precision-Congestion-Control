@@ -43,7 +43,7 @@ The major ones are listed here. There could be some files not listed here that a
 
 `point-to-point/model/cn-header.cc/h`: the header of CNP
 
-`point-to-point/model/pint.cc/h`: the PINT module
+`point-to-point/model/pint.cc/h`: the PINT encoding/decoding algorithms
 
 `point-to-point/model/qbb-header.cc/h`: the header of ACK
 
