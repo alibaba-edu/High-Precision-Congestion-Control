@@ -1,11 +1,13 @@
 # HPCC NS-3 simulator
 This is an NS-3 simulator for [HPCC: High Precision Congestion Control (SIGCOMM' 19)](https://rmiao.github.io/publications/hpcc-li.pdf). It also includes the implementation of DCQCN, TIMELY, DCTCP, PFC, ECN and Broadcom shared buffer switch.
 
-We have update this simulator to support HPCC-PINT. See [PINT: Probabilistic In-band Network Telemetry](https://liyuliang001.github.io/publications/pint.pdf) in SIGCOMM 2020.
+We have update this simulator to support HPCC-PINT, which reduces the INT header overhead to just 1 byte. This improves the long flows completion time. See [PINT: Probabilistic In-band Network Telemetry](https://liyuliang001.github.io/publications/pint.pdf) in SIGCOMM 2020.
 
 It is based on NS-3 version 3.17.
 
-If you have any questions, please contact Rui Miao (miao.rui@alibaba-inc.com).
+If you have any technical questions, please create an issue in this repo. We will respond soon.
+
+If you have other questions, please contact Rui Miao (miao.rui@alibaba-inc.com).
 
 ## Quick Start
 
