@@ -19,7 +19,7 @@ Please see `mix/config.txt` for example.
 
 `mix/config_doc.txt` is a explanation of the example (texts in {..} are explanations).
 
-`mix/fat.txt` is the topology used in HPCC paper's evaluation.
+`mix/fat.txt` is the topology used in HPCC paper's evaluation, and also in PINT paper's HPCC-PINT evaluation.
 
 ### Run
 The direct command to run is:
