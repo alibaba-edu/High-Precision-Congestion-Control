@@ -4,7 +4,7 @@ This is the simulator for [HPCC: High Precision Congestion Control (SIGCOMM' 201
 We have update this simulator to support HPCC-PINT, which reduces the INT header overhead to just 1 byte. This improves the long flow completion time. See [PINT: Probabilistic In-band Network Telemetry (SIGCOMM' 2020)](https://liyuliang001.github.io/publications/pint.pdf).
 
 ## NS-3 simulation
-The ns-3 simulation is under `simulation`.
+The ns-3 simulation is under `simulation/`.
 
 ## Questions
 For technical questions, please create an issue in this repo, so other people can benefit from your questions. 
