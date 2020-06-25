@@ -7,6 +7,7 @@
 #include <ns3/custom-header.h>
 #include "qbb-net-device.h"
 #include <unordered_map>
+#include "pint.h"
 
 namespace ns3 {
 
@@ -139,6 +140,14 @@ public:
 	 *********************/
 	DataRate m_dctcp_rai;
 	void HandleAckDctcp(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch);
+
+	/*********************
+	 * HPCC-PINT
+	 ********************/
+	uint32_t pint_smpl_thresh;
+	void SetPintSmplThresh(double p);
+	void HandleAckHpPint(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch);
+	void UpdateRateHpPint(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch, bool fast_react);
 };
 
 } /* namespace ns3 */

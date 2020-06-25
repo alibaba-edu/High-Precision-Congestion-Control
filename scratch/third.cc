@@ -64,6 +64,8 @@ uint32_t mi_thresh = 5;
 bool var_win = false, fast_react = true;
 bool multi_rate = true;
 bool sample_feedback = false;
+double pint_log_base = 1.05;
+double pint_prob = 1.0;
 double u_target = 0.95;
 uint32_t int_multi = 1;
 bool rate_bound = true;
@@ -580,6 +582,12 @@ int main(int argc, char *argv[])
 				conf >> v;
 				sample_feedback = v;
 				std::cout << "SAMPLE_FEEDBACK\t\t\t\t" << sample_feedback << '\n';
+			}else if(key.compare("PINT_LOG_BASE") == 0){
+				conf >> pint_log_base;
+				std::cout << "PINT_LOG_BASE\t\t\t\t" << pint_log_base << '\n';
+			}else if (key.compare("PINT_PROB") == 0){
+				conf >> pint_prob;
+				std::cout << "PINT_PROB\t\t\t\t" << pint_prob << '\n';
 			}
 			fflush(stdout);
 		}
@@ -603,11 +611,16 @@ int main(int argc, char *argv[])
 	IntHop::multi = int_multi;
 	// IntHeader::mode
 	if (cc_mode == 7) // timely, use ts
-		IntHeader::mode = 1;
+		IntHeader::mode = IntHeader::TS;
 	else if (cc_mode == 3) // hpcc, use int
-		IntHeader::mode = 0;
+		IntHeader::mode = IntHeader::NORMAL;
+	else if (cc_mode == 10) // hpcc-pint
+		IntHeader::mode = IntHeader::PINT;
 	else // others, no extra header
-		IntHeader::mode = 5;
+		IntHeader::mode = IntHeader::NONE;
+
+	// Set Pint
+	Pint::set_log_base(pint_log_base);
 
 	//SeedManager::SetSeed(time(NULL));
 
@@ -804,6 +817,7 @@ int main(int argc, char *argv[])
 			rdmaHw->SetAttribute("TargetUtil", DoubleValue(u_target));
 			rdmaHw->SetAttribute("RateBound", BooleanValue(rate_bound));
 			rdmaHw->SetAttribute("DctcpRateAI", DataRateValue(DataRate(dctcp_rate_ai)));
+			rdmaHw->SetPintSmplThresh(pint_prob);
 			// create and install RdmaDriver
 			Ptr<RdmaDriver> rdma = CreateObject<RdmaDriver>();
 			Ptr<Node> node = n.Get(i);
@@ -822,16 +836,6 @@ int main(int argc, char *argv[])
 		RdmaEgressQueue::ack_q_idx = 0;
 	else
 		RdmaEgressQueue::ack_q_idx = 3;
-
-	//
-	// setup switch CC
-	//
-	for (uint32_t i = 0; i < node_num; i++){
-		if (n.Get(i)->GetNodeType() == 1){ // switch
-			Ptr<SwitchNode> sw = DynamicCast<SwitchNode>(n.Get(i));
-			sw->SetAttribute("CcMode", UintegerValue(cc_mode));
-		}
-	}
 
 	// setup routing
 	CalculateRoutes(n);
@@ -861,6 +865,17 @@ int main(int argc, char *argv[])
 		}
 	}
 	printf("maxRtt=%lu maxBdp=%lu\n", maxRtt, maxBdp);
+
+	//
+	// setup switch CC
+	//
+	for (uint32_t i = 0; i < node_num; i++){
+		if (n.Get(i)->GetNodeType() == 1){ // switch
+			Ptr<SwitchNode> sw = DynamicCast<SwitchNode>(n.Get(i));
+			sw->SetAttribute("CcMode", UintegerValue(cc_mode));
+			sw->SetAttribute("MaxRtt", UintegerValue(maxRtt));
+		}
+	}
 
 	//
 	// add trace

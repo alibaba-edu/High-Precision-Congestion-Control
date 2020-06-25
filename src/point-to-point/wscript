@@ -21,6 +21,7 @@ def build(bld):
 		'model/rdma-hw.cc',
 		'model/switch-node.cc',
 		'model/switch-mmu.cc',
+		'model/pint.cc',
         ]
 
     module_test = bld.create_ns3_module_test_library('point-to-point')
@@ -49,6 +50,7 @@ def build(bld):
 		'model/rdma-hw.h',
 		'model/switch-node.h',
 		'model/switch-mmu.h',
+		'model/pint.h',
 		'helper/sim-setting.h',
         ]
 

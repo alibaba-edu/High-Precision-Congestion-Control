@@ -82,7 +82,13 @@ public:
 class IntHeader{
 public:
 	static const uint32_t maxHop = 5;
-	static uint32_t mode; // 0: INT, 1: ts, 5:0
+	enum Mode{
+		NORMAL = 0,
+		TS = 1,
+		PINT = 2,
+		NONE
+	};
+	static Mode mode;
 
 	// Note: the structure of IntHeader must have no internal padding, because we will directly transform the part of packet buffer to IntHeader*
 	union{
@@ -91,6 +97,9 @@ public:
 			uint16_t nhop;
 		};
 		uint64_t ts;
+		struct {
+			uint16_t power;
+		}pint;
 	};
 
 	IntHeader();

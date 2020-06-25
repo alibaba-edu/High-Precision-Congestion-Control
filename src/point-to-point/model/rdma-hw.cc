@@ -169,6 +169,11 @@ TypeId RdmaHw::GetTypeId (void)
 				DataRateValue(DataRate("1000Mb/s")),
 				MakeDataRateAccessor(&RdmaHw::m_dctcp_rai),
 				MakeDataRateChecker())
+		.AddAttribute("PintSmplThresh",
+				"PINT's sampling threshold in rand()%65536",
+				UintegerValue(65536),
+				MakeUintegerAccessor(&RdmaHw::pint_smpl_thresh),
+				MakeUintegerChecker<uint32_t>())
 		;
 	return tid;
 }
@@ -244,6 +249,8 @@ void RdmaHw::AddQueuePair(uint64_t size, uint16_t pg, Ipv4Address sip, Ipv4Addre
 		}
 	}else if (m_cc_mode == 7){
 		qp->tmly.m_curRate = m_bps;
+	}else if (m_cc_mode == 10){
+		qp->hpccPint.m_curRate = m_bps;
 	}
 
 	// Notify Nic
@@ -362,6 +369,8 @@ int RdmaHw::ReceiveCnp(Ptr<Packet> p, CustomHeader &ch){
 			}
 		}else if (m_cc_mode == 7){
 			qp->tmly.m_curRate = dev->GetDataRate();
+		}else if (m_cc_mode == 10){
+			qp->hpccPint.m_curRate = dev->GetDataRate();
 		}
 	}
 	return 0;
@@ -410,6 +419,8 @@ int RdmaHw::ReceiveAck(Ptr<Packet> p, CustomHeader &ch){
 		HandleAckTimely(qp, p, ch);
 	}else if (m_cc_mode == 8){
 		HandleAckDctcp(qp, p, ch);
+	}else if (m_cc_mode == 10){
+		HandleAckHpPint(qp, p, ch);
 	}
 	// ACK may advance the on-the-fly window, allowing more packets to send
 	dev->TriggerTransmit();
@@ -1018,6 +1029,60 @@ void RdmaHw::HandleAckDctcp(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &
 	// additive inc
 	if (qp->dctcp.m_caState == 0 && new_batch)
 		qp->m_rate = std::min(qp->m_max_rate, qp->m_rate + m_dctcp_rai);
+}
+
+/*********************
+ * HPCC-PINT
+ ********************/
+void RdmaHw::SetPintSmplThresh(double p){
+       pint_smpl_thresh = (uint32_t)(65536 * p);
+}
+void RdmaHw::HandleAckHpPint(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch){
+       uint32_t ack_seq = ch.ack.seq;
+       if (rand() % 65536 >= pint_smpl_thresh)
+               return;
+       // update rate
+       if (ack_seq > qp->hpccPint.m_lastUpdateSeq){ // if full RTT feedback is ready, do full update
+               UpdateRateHpPint(qp, p, ch, false);
+       }else{ // do fast react
+               UpdateRateHpPint(qp, p, ch, true);
+       }
+}
+
+void RdmaHw::UpdateRateHpPint(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch, bool fast_react){
+       uint32_t next_seq = qp->snd_nxt;
+       if (qp->hpccPint.m_lastUpdateSeq == 0){ // first RTT
+               qp->hpccPint.m_lastUpdateSeq = next_seq;
+       }else {
+               // check packet INT
+               IntHeader &ih = ch.ack.ih;
+               double U = Pint::decode_u(ih.pint.power);
+
+               DataRate new_rate;
+               int32_t new_incStage;
+               double max_c = U / m_targetUtil;
+
+               if (max_c >= 1 || qp->hpccPint.m_incStage >= m_miThresh){
+                       new_rate = qp->hpccPint.m_curRate / max_c + m_rai;
+                       new_incStage = 0;
+               }else{
+                       new_rate = qp->hpccPint.m_curRate + m_rai;
+                       new_incStage = qp->hpccPint.m_incStage+1;
+               }
+               if (new_rate < m_minRate)
+                       new_rate = m_minRate;
+               if (new_rate > qp->m_max_rate)
+                       new_rate = qp->m_max_rate;
+               ChangeRate(qp, new_rate);
+               if (!fast_react){
+                       qp->hpccPint.m_curRate = new_rate;
+                       qp->hpccPint.m_incStage = new_incStage;
+               }
+               if (!fast_react){
+                       if (next_seq > qp->hpccPint.m_lastUpdateSeq)
+                               qp->hpccPint.m_lastUpdateSeq = next_seq; //+ rand() % 2 * m_mtu;
+               }
+       }
 }
 
 }

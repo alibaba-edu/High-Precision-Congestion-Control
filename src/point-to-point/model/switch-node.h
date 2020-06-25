@@ -5,6 +5,7 @@
 #include <ns3/node.h>
 #include "qbb-net-device.h"
 #include "switch-mmu.h"
+#include "pint.h"
 
 namespace ns3 {
 
@@ -21,9 +22,14 @@ class SwitchNode : public Node{
 	
 	uint64_t m_txBytes[pCnt]; // counter of tx bytes
 
+	uint32_t m_lastPktSize[pCnt];
+	uint64_t m_lastPktTs[pCnt]; // ns
+	double m_u[pCnt];
+
 protected:
 	bool m_ecnEnabled;
 	uint32_t m_ccMode;
+	uint64_t m_maxRtt;
 
 	uint32_t m_ackHighPrio; // set high priority for ACK/NACK
 
@@ -43,6 +49,10 @@ public:
 	void ClearTable();
 	bool SwitchReceiveFromDevice(Ptr<NetDevice> device, Ptr<Packet> packet, CustomHeader &ch);
 	void SwitchNotifyDequeue(uint32_t ifIndex, uint32_t qIndex, Ptr<Packet> p);
+
+	// for approximate calc in PINT
+	int logres_shift(int b, int l);
+	int log2apprx(int x, int b, int m, int l); // given x of at most b bits, use most significant m bits of x, calc the result in l bits
 };
 
 } /* namespace ns3 */

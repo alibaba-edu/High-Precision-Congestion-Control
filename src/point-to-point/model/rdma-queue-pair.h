@@ -73,6 +73,11 @@ public:
 		uint32_t m_ecnCnt;
 		uint32_t m_batchSizeOfAlpha;
 	} dctcp;
+	struct{
+		uint32_t m_lastUpdateSeq;
+		DataRate m_curRate;
+		uint32_t m_incStage;
+	}hpccPint;
 
 	/***********
 	 * methods

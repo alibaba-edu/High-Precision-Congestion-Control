@@ -10,6 +10,7 @@
 #include "qbb-net-device.h"
 #include "ppp-header.h"
 #include "ns3/int-header.h"
+#include <cmath>
 
 namespace ns3 {
 
@@ -33,6 +34,11 @@ TypeId SwitchNode::GetTypeId (void)
 			UintegerValue(0),
 			MakeUintegerAccessor(&SwitchNode::m_ackHighPrio),
 			MakeUintegerChecker<uint32_t>())
+	.AddAttribute("MaxRtt",
+			"Max Rtt of the network",
+			UintegerValue(9000),
+			MakeUintegerAccessor(&SwitchNode::m_maxRtt),
+			MakeUintegerChecker<uint32_t>())
   ;
   return tid;
 }
@@ -47,6 +53,10 @@ SwitchNode::SwitchNode(){
 				m_bytes[i][j][k] = 0;
 	for (uint32_t i = 0; i < pCnt; i++)
 		m_txBytes[i] = 0;
+	for (uint32_t i = 0; i < pCnt; i++)
+		m_lastPktSize[i] = m_lastPktTs[i] = 0;
+	for (uint32_t i = 0; i < pCnt; i++)
+		m_u[i] = 0;
 }
 
 int SwitchNode::GetOutDev(Ptr<const Packet> p, CustomHeader &ch){
@@ -212,10 +222,107 @@ void SwitchNode::SwitchNotifyDequeue(uint32_t ifIndex, uint32_t qIndex, Ptr<Pack
 			Ptr<QbbNetDevice> dev = DynamicCast<QbbNetDevice>(m_devices[ifIndex]);
 			if (m_ccMode == 3){ // HPCC
 				ih->PushHop(Simulator::Now().GetTimeStep(), m_txBytes[ifIndex], dev->GetQueue()->GetNBytesTotal(), dev->GetDataRate().GetBitRate());
+			}else if (m_ccMode == 10){ // HPCC-PINT
+				uint64_t t = Simulator::Now().GetTimeStep();
+				uint64_t dt = t - m_lastPktTs[ifIndex];
+				if (dt > m_maxRtt)
+					dt = m_maxRtt;
+				uint64_t B = dev->GetDataRate().GetBitRate() / 8; //Bps
+				uint64_t qlen = dev->GetQueue()->GetNBytesTotal();
+				double newU;
+
+				/**************************
+				 * approximate calc
+				 *************************/
+				int b = 20, m = 9, l = 20; // see log2apprx's paremeters
+				int sft = logres_shift(b,l);
+				double fct = 1<<sft; // (multiplication factor corresponding to sft)
+				double log_T = log2(m_maxRtt)*fct; // log2(T)*fct
+				double log_B = log2(B)*fct; // log2(B)*fct
+				double log_1e9 = log2(1e9)*fct; // log2(1e9)*fct
+				double qterm = 0;
+				double byteTerm = 0;
+				double uTerm = 0;
+				if ((qlen >> 8) > 0){
+					int log_dt = log2apprx(dt, b, m, l); // ~log2(dt)*fct
+					int log_qlen = log2apprx(qlen >> 8, b, m, l); // ~log2(qlen / 256)*fct
+					qterm = pow(2, (
+								log_dt + log_qlen + log_1e9 - log_B - 2*log_T
+								)/fct
+							) * 256;
+					// 2^((log2(dt)*fct+log2(qlen/256)*fct+log2(1e9)*fct-log2(B)*fct-2*log2(T)*fct)/fct)*256 ~= dt*qlen*1e9/(B*T^2)
+				}
+				if (m_lastPktSize[ifIndex] > 0){
+					int byte = m_lastPktSize[ifIndex];
+					int log_byte = log2apprx(byte, b, m, l);
+					byteTerm = pow(2, (
+								log_byte + log_1e9 - log_B - log_T
+								)/fct
+							);
+					// 2^((log2(byte)*fct+log2(1e9)*fct-log2(B)*fct-log2(T)*fct)/fct) ~= byte*1e9 / (B*T)
+				}
+				if (m_maxRtt > dt && m_u[ifIndex] > 0){
+					int log_T_dt = log2apprx(m_maxRtt - dt, b, m, l); // ~log2(T-dt)*fct
+					int log_u = log2apprx(int(round(m_u[ifIndex] * 8192)), b, m, l); // ~log2(u*512)*fct
+					uTerm = pow(2, (
+								log_T_dt + log_u - log_T
+								)/fct
+							) / 8192;
+					// 2^((log2(T-dt)*fct+log2(u*512)*fct-log2(T)*fct)/fct)/512 = (T-dt)*u/T
+				}
+				newU = qterm+byteTerm+uTerm;
+
+				#if 0
+				/**************************
+				 * accurate calc
+				 *************************/
+				double weight_ewma = double(dt) / m_maxRtt;
+				double u;
+				if (m_lastPktSize[ifIndex] == 0)
+					u = 0;
+				else{
+					double txRate = m_lastPktSize[ifIndex] / double(dt); // B/ns
+					u = (qlen / m_maxRtt + txRate) * 1e9 / B;
+				}
+				newU = m_u[ifIndex] * (1 - weight_ewma) + u * weight_ewma;
+				printf(" %lf\n", newU);
+				#endif
+
+				/************************
+				 * update PINT header
+				 ***********************/
+				uint16_t p = Pint::encode_u(newU);
+				if (p > ih->pint.power)
+					ih->pint.power = p;
+
+				m_u[ifIndex] = newU;
 			}
 		}
 	}
 	m_txBytes[ifIndex] += p->GetSize();
+	m_lastPktSize[ifIndex] = p->GetSize();
+	m_lastPktTs[ifIndex] = Simulator::Now().GetTimeStep();
+}
+
+int SwitchNode::logres_shift(int b, int l){
+	static int data[] = {0,0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5};
+	return l - data[b];
+}
+
+int SwitchNode::log2apprx(int x, int b, int m, int l){
+	int x0 = x;
+	int msb = int(log2(x)) + 1;
+	if (msb > m){
+		x = (x >> (msb - m) << (msb - m));
+		#if 0
+		x += + (1 << (msb - m - 1));
+		#else
+		int mask = (1 << (msb-m)) - 1;
+		if ((x0 & mask) > (rand() & mask))
+			x += 1<<(msb-m);
+		#endif
+	}
+	return int(log2(x) * (1<<logres_shift(b, l)));
 }
 
 } /* namespace ns3 */
