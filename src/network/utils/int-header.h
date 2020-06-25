@@ -89,6 +89,7 @@ public:
 		NONE
 	};
 	static Mode mode;
+	static int pint_bytes;
 
 	// Note: the structure of IntHeader must have no internal padding, because we will directly transform the part of packet buffer to IntHeader*
 	union{

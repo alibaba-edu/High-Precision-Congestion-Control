@@ -620,7 +620,11 @@ int main(int argc, char *argv[])
 		IntHeader::mode = IntHeader::NONE;
 
 	// Set Pint
-	Pint::set_log_base(pint_log_base);
+	if (cc_mode == 10){
+		Pint::set_log_base(pint_log_base);
+		IntHeader::pint_bytes = Pint::get_n_bytes();
+		printf("PINT bits: %d bytes: %d\n", Pint::get_n_bits(), Pint::get_n_bytes());
+	}
 
 	//SeedManager::SetSeed(time(NULL));
 

@@ -6,6 +6,7 @@ const uint64_t IntHop::lineRateValues[8] = {25000000000lu,50000000000lu,10000000
 uint32_t IntHop::multi = 1;
 
 IntHeader::Mode IntHeader::mode = NONE;
+int IntHeader::pint_bytes = 2;
 
 IntHeader::IntHeader() : nhop(0) {
 	for (uint32_t i = 0; i < maxHop; i++)
@@ -44,7 +45,10 @@ void IntHeader::Serialize (Buffer::Iterator start) const{
 	}else if (mode == TS){
 		i.WriteU64(ts);
 	}else if (mode == PINT){
-		i.WriteU16(pint.power);
+		if (pint_bytes == 1)
+			i.WriteU8((uint8_t)pint.power);
+		else if (pint_bytes == 2)
+			i.WriteU16(pint.power);
 	}
 }
 
@@ -59,7 +63,10 @@ uint32_t IntHeader::Deserialize (Buffer::Iterator start){
 	}else if (mode == TS){
 		ts = i.ReadU64();
 	}else if (mode == PINT){
-		pint.power = i.ReadU16();
+		if (pint_bytes == 1)
+			pint.power = i.ReadU8();
+		else if (pint_bytes == 2)
+			pint.power = i.ReadU16();
 	}
 	return GetStaticSize();
 }
