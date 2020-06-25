@@ -65,6 +65,13 @@ The major ones are listed here. There could be some files not listed here that a
 
 `applications/model/rdma-client.cc/h`: the application of generating RDMA traffic
 
+## Notes on other schemes
+The DCQCN implementation is based on [Mellanox's implementation on CX4 and newer version](https://community.mellanox.com/s/article/dcqcn-parameters), which is slightly different from the DCQCN paper version.
+
+The TIMELY implementation is based on our own understanding of the TIMELY paper. We believe we correctly implemented it. We use the parameters in the TIMELY paper. For parameters whose settings are absent in the TIMELY paper, we get from [this paper (footnote 4)](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/09/ecndelay-conext16.pdf).
+
+The DCTCP implementation is a version that we envision DCTCP will be implemented in hardware. It starts at line rate (not slow start) which we believe is necessary in future high-speed network. It also does not delay ACK, because delayed ACk is for saving software overhead. These settings are consistent with other schemes.
+
 ## Questions
 For technical questions, please create an issue in this repo, so other people can benefit from your questions. 
 You may also check the issue list first to see if people have already asked the questions you have :)

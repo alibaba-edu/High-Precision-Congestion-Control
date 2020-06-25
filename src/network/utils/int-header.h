@@ -19,12 +19,6 @@ public:
 					 time: timeWidth,
 					 bytes: bytesWidth,
 					 qlen: qlenWidth;
-			#if 0
-			uint32_t lineRate:32-timeWidth,
-					 time: timeWidth;
-			uint32_t bytes: bytesWidth,
-					 qlen: 32-bytesWidth;
-			#endif
 		};
 		uint32_t buf[2];
 	};
