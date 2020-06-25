@@ -71,7 +71,7 @@ if __name__ == "__main__":
 	parser.add_argument('--utgt', dest='utgt', action='store', type=int, default=95, help="eta of HPCC")
 	parser.add_argument('--mi', dest='mi', action='store', type=int, default=0, help="MI_THRESH")
 	parser.add_argument('--hpai', dest='hpai', action='store', type=int, default=0, help="AI for HPCC")
-	parser.add_argument('--pint_log_base', dest='pint_log_base', action = 'store', type=float, default=1.01, help="log_base, only for PINT")
+	parser.add_argument('--pint_log_base', dest='pint_log_base', action = 'store', type=float, default=1.01, help="PINT's log_base")
 	parser.add_argument('--pint_prob', dest='pint_prob', action = 'store', type=float, default=1.0, help="PINT's sampling probability")
 	args = parser.parse_args()
 
