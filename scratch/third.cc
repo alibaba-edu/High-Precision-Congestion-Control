@@ -28,7 +28,6 @@
 #include "ns3/internet-module.h"
 #include "ns3/global-route-manager.h"
 #include "ns3/ipv4-static-routing-helper.h"
-#include "ns3/broadcom-node.h"
 #include "ns3/packet.h"
 #include "ns3/error-model.h"
 #include <ns3/rdma.h>

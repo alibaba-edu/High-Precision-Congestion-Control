@@ -9,7 +9,6 @@
 #include "ns3/global-value.h"
 #include "ns3/boolean.h"
 #include "ns3/simulator.h"
-#include "ns3/broadcom-node.h"
 #include "ns3/random-variable.h"
 #include "switch-mmu.h"
 

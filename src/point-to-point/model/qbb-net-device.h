@@ -21,7 +21,6 @@
 #define QBB_NET_DEVICE_H
 
 #include "ns3/point-to-point-net-device.h"
-#include "ns3/broadcom-node.h"
 #include "ns3/qbb-channel.h"
 //#include "ns3/fivetuple.h"
 #include "ns3/event-id.h"

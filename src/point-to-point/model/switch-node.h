@@ -34,7 +34,6 @@ private:
 	void CheckAndSendPfc(uint32_t inDev, uint32_t qIndex);
 	void CheckAndSendResume(uint32_t inDev, uint32_t qIndex);
 public:
-	//Ptr<BroadcomNode> m_broadcom;
 	Ptr<SwitchMmu> m_mmu;
 
 	static TypeId GetTypeId (void);

@@ -34,7 +34,7 @@ GLOBAL_T 1 {0: different server pairs use their own RTT as T, 1: use the max bas
 VAR_WIN 1 {0: fixed size of window (alwasy maximum), 1: variable window}
 FAST_REACT 1 {0: react once per RTT, 1: react per ACK}
 U_TARGET 0.95 {for HPCC: eta in paper}
-MI_THRESH 5 {for HPCC: maxStage in paper}
+MI_THRESH 0 {for HPCC: maxStage in paper}
 INT_MULTI 1 {for HPCC: multiply the unit of txBytes and qLen in INT header}
 MULTI_RATE 1 {for HPCC: 0: one rate for all hops, 1: one rate per hop}
 SAMPLE_FEEDBACK 0 {for HPCC: 0: get INT per packet, 1: get INT once per RTT or qlen>0}
