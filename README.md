@@ -7,7 +7,7 @@ We have update this simulator to support HPCC-PINT, which reduces the INT header
 The ns-3 simulation is under `simulation/`. Refer the the README.md under it for more details.
 
 ## Analysis
-We provide a few analysis scripts under `analysis` to view the packet-level events, and analyzing the fct in the same way as [HPCC](https://liyuliang001.github.io/publications/hpcc.pdf) Figure 11.
+We provide a few analysis scripts under `analysis/` to view the packet-level events, and analyzing the fct in the same way as [HPCC](https://liyuliang001.github.io/publications/hpcc.pdf) Figure 11.
 Refer to the README.md under it for more details.
 
 ## Questions
