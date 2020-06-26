@@ -103,13 +103,25 @@ map<Ptr<Node>, map<Ptr<Node>, Interface> > nbr2if;
 map<Ptr<Node>, map<Ptr<Node>, vector<Ptr<Node> > > > nextHop;
 map<Ptr<Node>, map<Ptr<Node>, uint64_t> > pairDelay;
 map<Ptr<Node>, map<Ptr<Node>, uint64_t> > pairTxDelay;
-map<Ptr<Node>, map<Ptr<Node>, uint64_t> > pairBw;
+map<uint32_t, map<uint32_t, uint64_t> > pairBw;
 map<Ptr<Node>, map<Ptr<Node>, uint64_t> > pairBdp;
-map<Ptr<Node>, map<Ptr<Node>, uint64_t> > pairRtt;
+map<uint32_t, map<uint32_t, uint64_t> > pairRtt;
+
+Ipv4Address node_id_to_ip(uint32_t id){
+	return Ipv4Address(0x0b000001 + ((id / 256) * 0x00010000) + ((id % 256) * 0x00000100));
+}
+
+uint32_t ip_to_node_id(Ipv4Address ip){
+	return (ip.Get() >> 8) & 0xffff;
+}
 
 void qp_finish(FILE* fout, Ptr<RdmaQueuePair> q){
-	//fprintf(fout, "%lu QP complete\n", Simulator::Now().GetTimeStep());
-	fprintf(fout, "%08x %08x %u %u %lu %lu %lu\n", q->sip.Get(), q->dip.Get(), q->sport, q->dport, q->m_size, q->startTime.GetTimeStep(), (Simulator::Now() - q->startTime).GetTimeStep());
+	uint32_t sid = ip_to_node_id(q->sip), did = ip_to_node_id(q->dip);
+	uint64_t base_rtt = pairRtt[sid][did], b = pairBw[sid][did];
+	uint32_t total_bytes = q->m_size + ((q->m_size-1) / packet_payload_size + 1) * (CustomHeader::GetStaticWholeHeaderSize() - IntHeader::GetStaticSize()); // translate to the minimum bytes required (with header but no INT)
+	uint64_t standalone_fct = base_rtt + total_bytes * 8000000000lu / b;
+	// sip, dip, sport, dport, size (B), start_time, fct (ns), standalone_fct (ns)
+	fprintf(fout, "%08x %08x %u %u %lu %lu %lu %lu\n", q->sip.Get(), q->dip.Get(), q->sport, q->dport, q->m_size, q->startTime.GetTimeStep(), (Simulator::Now() - q->startTime).GetTimeStep(), standalone_fct);
 	fflush(fout);
 }
 
@@ -202,7 +214,7 @@ void CalculateRoute(Ptr<Node> host){
 	for (auto it : txDelay)
 		pairTxDelay[it.first][host] = it.second;
 	for (auto it : bw)
-		pairBw[it.first][host] = it.second;
+		pairBw[it.first->GetId()][host->GetId()] = it.second;
 }
 
 void CalculateRoutes(NodeContainer &n){
@@ -670,7 +682,7 @@ int main(int argc, char *argv[])
 	for (uint32_t i = 0; i < node_num; i++){
 		if (n.Get(i)->GetNodeType() == 0){ // is server
 			serverAddress.resize(i + 1);
-			serverAddress[i] = Ipv4Address(0x0b000001 + ((i / 256) * 0x00010000) + ((i % 256) * 0x00000100));
+			serverAddress[i] = node_id_to_ip(i);
 		}
 	}
 
@@ -852,16 +864,16 @@ int main(int argc, char *argv[])
 	for (uint32_t i = 0; i < node_num; i++){
 		if (n.Get(i)->GetNodeType() != 0)
 			continue;
-		for (uint32_t j = i+1; j < node_num; j++){
+		for (uint32_t j = 0; j < node_num; j++){
 			if (n.Get(j)->GetNodeType() != 0)
 				continue;
 			uint64_t delay = pairDelay[n.Get(i)][n.Get(j)];
 			uint64_t txDelay = pairTxDelay[n.Get(i)][n.Get(j)];
 			uint64_t rtt = delay * 2 + txDelay;
-			uint64_t bw = pairBw[n.Get(i)][n.Get(j)];
+			uint64_t bw = pairBw[i][j];
 			uint64_t bdp = rtt * bw / 1000000000/8; 
 			pairBdp[n.Get(i)][n.Get(j)] = bdp;
-			pairRtt[n.Get(i)][n.Get(j)] = rtt;
+			pairRtt[i][j] = rtt;
 			if (bdp > maxBdp)
 				maxBdp = bdp;
 			if (rtt > maxRtt)
@@ -935,7 +947,7 @@ int main(int argc, char *argv[])
 		flowf >> src >> dst >> pg >> dport >> maxPacketCount >> start_time;
 		NS_ASSERT(n.Get(src)->GetNodeType() == 0 && n.Get(dst)->GetNodeType() == 0);
 		port = portNumder[src]++; // get a new port number 
-		RdmaClientHelper clientHelper(pg, serverAddress[src], serverAddress[dst], port, dport, maxPacketCount, has_win?(global_t==1?maxBdp:pairBdp[n.Get(src)][n.Get(dst)]):0, global_t==1?maxRtt:pairRtt[n.Get(src)][n.Get(dst)]);
+		RdmaClientHelper clientHelper(pg, serverAddress[src], serverAddress[dst], port, dport, maxPacketCount, has_win?(global_t==1?maxBdp:pairBdp[n.Get(src)][n.Get(dst)]):0, global_t==1?maxRtt:pairRtt[src][dst]);
 		ApplicationContainer appCon = clientHelper.Install(n.Get(src));
 		appCon.Start(Seconds(start_time));
 		appCon.Stop(Seconds(stop_time));

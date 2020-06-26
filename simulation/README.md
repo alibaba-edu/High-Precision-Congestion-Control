@@ -73,9 +73,3 @@ The DCQCN implementation is based on [Mellanox's implementation on CX4 and newer
 The TIMELY implementation is based on our own understanding of the TIMELY paper. We believe we correctly implemented it. We use the parameters in the TIMELY paper. For parameters whose settings are absent in the TIMELY paper, we get from [this paper (footnote 4)](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/09/ecndelay-conext16.pdf).
 
 The DCTCP implementation is a version that we envision DCTCP will be implemented in hardware. It starts at line rate (not slow start) which we believe is necessary in future high-speed network. It also does not delay ACK, because delayed ACk is for saving software overhead. These settings are consistent with other schemes.
-
-## Questions
-For technical questions, please create an issue in this repo, so other people can benefit from your questions. 
-You may also check the issue list first to see if people have already asked the questions you have :)
-
-For other questions, please contact Rui Miao (miao.rui@alibaba-inc.com).

@@ -136,6 +136,7 @@ public:
   uint8_t GetIpv4EcnBits (void) const;
   static uint32_t GetAckSerializedSize(void);
   static uint32_t GetUdpHeaderSize(void); // include udp, seqTs, INT
+  static uint32_t GetStaticWholeHeaderSize(void); // ppp + ip + udp + int
 };
 
 } // namespace ns3

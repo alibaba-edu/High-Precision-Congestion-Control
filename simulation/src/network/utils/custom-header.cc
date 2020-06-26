@@ -336,5 +336,9 @@ uint32_t CustomHeader::GetUdpHeaderSize(void){
 	return 8 + sizeof(udp.pg) + sizeof(udp.seq) + IntHeader::GetStaticSize();
 }
 
+uint32_t CustomHeader::GetStaticWholeHeaderSize(void){
+	return 14 + 20 + GetUdpHeaderSize();
+}
+
 } // namespace ns3
 
