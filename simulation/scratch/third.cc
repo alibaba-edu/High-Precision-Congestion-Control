@@ -85,6 +85,12 @@ string qlen_mon_file;
 unordered_map<uint64_t, uint32_t> rate2kmax, rate2kmin;
 unordered_map<uint64_t, double> rate2pmax;
 
+/************************************************
+ * Runtime varibles
+ ***********************************************/
+std::ifstream topof, flowf, tracef;
+
+NodeContainer n;
 
 uint64_t nic_rate;
 
@@ -106,6 +112,45 @@ map<Ptr<Node>, map<Ptr<Node>, uint64_t> > pairTxDelay;
 map<uint32_t, map<uint32_t, uint64_t> > pairBw;
 map<Ptr<Node>, map<Ptr<Node>, uint64_t> > pairBdp;
 map<uint32_t, map<uint32_t, uint64_t> > pairRtt;
+
+std::vector<Ipv4Address> serverAddress;
+
+// maintain port number for each host
+std::unordered_map<uint32_t, uint16_t> portNumder;
+
+struct FlowInput{
+	uint32_t src, dst, pg, maxPacketCount, port, dport;
+	double start_time;
+	uint32_t idx;
+};
+FlowInput flow_input = {0};
+uint32_t flow_num;
+
+void ReadFlowInput(){
+	if (flow_input.idx < flow_num){
+		flowf >> flow_input.src >> flow_input.dst >> flow_input.pg >> flow_input.dport >> flow_input.maxPacketCount >> flow_input.start_time;
+		NS_ASSERT(n.Get(flow_input.src)->GetNodeType() == 0 && n.Get(flow_input.dst)->GetNodeType() == 0);
+	}
+}
+void ScheduleFlowInputs(){
+	while (flow_input.idx < flow_num && Seconds(flow_input.start_time) == Simulator::Now()){
+		uint32_t port = portNumder[flow_input.src]++; // get a new port number 
+		RdmaClientHelper clientHelper(flow_input.pg, serverAddress[flow_input.src], serverAddress[flow_input.dst], port, flow_input.dport, flow_input.maxPacketCount, has_win?(global_t==1?maxBdp:pairBdp[n.Get(flow_input.src)][n.Get(flow_input.dst)]):0, global_t==1?maxRtt:pairRtt[flow_input.src][flow_input.dst]);
+		ApplicationContainer appCon = clientHelper.Install(n.Get(flow_input.src));
+		appCon.Start(Seconds(flow_input.start_time)-Simulator::Now());
+
+		// get the next flow input
+		flow_input.idx++;
+		ReadFlowInput();
+	}
+
+	// schedule the next time to run this function
+	if (flow_input.idx < flow_num){
+		Simulator::Schedule(Seconds(flow_input.start_time)-Simulator::Now(), ScheduleFlowInputs);
+	}else { // no more flows, close the file
+		flowf.close();
+	}
+}
 
 Ipv4Address node_id_to_ip(uint32_t id){
 	return Ipv4Address(0x0b000001 + ((id / 256) * 0x00010000) + ((id % 256) * 0x00000100));
@@ -640,17 +685,15 @@ int main(int argc, char *argv[])
 
 	//SeedManager::SetSeed(time(NULL));
 
-	std::ifstream topof, flowf, tracef;
 	topof.open(topology_file.c_str());
 	flowf.open(flow_file.c_str());
 	tracef.open(trace_file.c_str());
-	uint32_t node_num, switch_num, link_num, flow_num, trace_num;
+	uint32_t node_num, switch_num, link_num, trace_num;
 	topof >> node_num >> switch_num >> link_num;
 	flowf >> flow_num;
 	tracef >> trace_num;
 
 
-	NodeContainer n;
 	//n.Create(node_num);
 	std::vector<uint32_t> node_type(node_num, 0);
 	for (uint32_t i = 0; i < switch_num; i++)
@@ -678,7 +721,6 @@ int main(int argc, char *argv[])
 	//
 	// Assign IP to each server
 	//
-	std::vector<Ipv4Address> serverAddress;
 	for (uint32_t i = 0; i < node_num; i++){
 		if (n.Get(i)->GetNodeType() == 0){ // is server
 			serverAddress.resize(i + 1);
@@ -934,28 +976,18 @@ int main(int argc, char *argv[])
 	Time interPacketInterval = Seconds(0.0000005 / 2);
 
 	// maintain port number for each host
-	std::unordered_map<uint32_t, uint16_t> portNumder;
 	for (uint32_t i = 0; i < node_num; i++){
 		if (n.Get(i)->GetNodeType() == 0)
 			portNumder[i] = 10000; // each host use port number from 10000
 	}
 
-	for (uint32_t i = 0; i < flow_num; i++)
-	{
-		uint32_t src, dst, pg, maxPacketCount, port, dport;
-		double start_time, stop_time;
-		flowf >> src >> dst >> pg >> dport >> maxPacketCount >> start_time;
-		NS_ASSERT(n.Get(src)->GetNodeType() == 0 && n.Get(dst)->GetNodeType() == 0);
-		port = portNumder[src]++; // get a new port number 
-		RdmaClientHelper clientHelper(pg, serverAddress[src], serverAddress[dst], port, dport, maxPacketCount, has_win?(global_t==1?maxBdp:pairBdp[n.Get(src)][n.Get(dst)]):0, global_t==1?maxRtt:pairRtt[src][dst]);
-		ApplicationContainer appCon = clientHelper.Install(n.Get(src));
-		appCon.Start(Seconds(start_time));
-		appCon.Stop(Seconds(stop_time));
+	flow_input.idx = 0;
+	if (flow_num > 0){
+		ReadFlowInput();
+		Simulator::Schedule(Seconds(flow_input.start_time)-Simulator::Now(), ScheduleFlowInputs);
 	}
 
-
 	topof.close();
-	flowf.close();
 	tracef.close();
 
 	// schedule link down
