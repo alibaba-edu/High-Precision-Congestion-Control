@@ -196,7 +196,6 @@ void RdmaHw::Setup(QpCompleteCallback cb){
 		dev->m_rdmaLinkDownCb = MakeCallback(&RdmaHw::SetLinkDown, this);
 		dev->m_rdmaPktSent = MakeCallback(&RdmaHw::PktSent, this);
 		// config NIC
-		dev->m_rdmaEQ->m_mtu = m_mtu;
 		dev->m_rdmaEQ->m_rdmaGetNxtPkt = MakeCallback(&RdmaHw::GetNxtPacket, this);
 	}
 	// setup qp complete callback

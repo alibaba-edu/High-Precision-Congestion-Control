@@ -70,7 +70,6 @@ namespace ns3 {
 	RdmaEgressQueue::RdmaEgressQueue(){
 		m_rrlast = 0;
 		m_qlast = 0;
-		m_mtu = 1000;
 		m_ackQ = CreateObject<DropTailQueue>();
 		m_ackQ->SetAttribute("MaxBytes", UintegerValue(0xffffffff)); // queue limit is on a higher level, not here
 	}
