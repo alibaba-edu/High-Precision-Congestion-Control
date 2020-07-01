@@ -115,8 +115,8 @@ map<uint32_t, map<uint32_t, uint64_t> > pairRtt;
 
 std::vector<Ipv4Address> serverAddress;
 
-// maintain port number for each host
-std::unordered_map<uint32_t, uint16_t> portNumder;
+// maintain port number for each host pair
+std::unordered_map<uint32_t, unordered_map<uint32_t, uint16_t> > portNumder;
 
 struct FlowInput{
 	uint32_t src, dst, pg, maxPacketCount, port, dport;
@@ -134,7 +134,7 @@ void ReadFlowInput(){
 }
 void ScheduleFlowInputs(){
 	while (flow_input.idx < flow_num && Seconds(flow_input.start_time) == Simulator::Now()){
-		uint32_t port = portNumder[flow_input.src]++; // get a new port number 
+		uint32_t port = portNumder[flow_input.src][flow_input.dst]++; // get a new port number 
 		RdmaClientHelper clientHelper(flow_input.pg, serverAddress[flow_input.src], serverAddress[flow_input.dst], port, flow_input.dport, flow_input.maxPacketCount, has_win?(global_t==1?maxBdp:pairBdp[n.Get(flow_input.src)][n.Get(flow_input.dst)]):0, global_t==1?maxRtt:pairRtt[flow_input.src][flow_input.dst]);
 		ApplicationContainer appCon = clientHelper.Install(n.Get(flow_input.src));
 		appCon.Start(Time(0));
@@ -978,7 +978,9 @@ int main(int argc, char *argv[])
 	// maintain port number for each host
 	for (uint32_t i = 0; i < node_num; i++){
 		if (n.Get(i)->GetNodeType() == 0)
-			portNumder[i] = 10000; // each host use port number from 10000
+			for (uint32_t j = 0; j < node_num; j++){
+				if (n.Get(j)->GetNodeType() == 0)
+					portNumder[i][j] = 10000; // each host pair use port number from 10000
 	}
 
 	flow_input.idx = 0;
