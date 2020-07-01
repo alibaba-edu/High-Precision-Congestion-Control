@@ -92,8 +92,11 @@ public:
 			uint16_t nhop;
 		};
 		uint64_t ts;
-		struct {
+		union {
 			uint16_t power;
+			struct{
+				uint8_t power_lo8, power_hi8;
+			};
 		}pint;
 	};
 
@@ -103,6 +106,8 @@ public:
 	void Serialize (Buffer::Iterator start) const;
 	uint32_t Deserialize (Buffer::Iterator start);
 	uint64_t GetTs(void);
+	uint16_t GetPower(void);
+	void SetPower(uint16_t);
 };
 
 }

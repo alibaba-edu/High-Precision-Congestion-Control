@@ -1055,7 +1055,7 @@ void RdmaHw::UpdateRateHpPint(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader
        }else {
                // check packet INT
                IntHeader &ih = ch.ack.ih;
-               double U = Pint::decode_u(ih.pint.power);
+               double U = Pint::decode_u(ih.GetPower());
 
                DataRate new_rate;
                int32_t new_incStage;

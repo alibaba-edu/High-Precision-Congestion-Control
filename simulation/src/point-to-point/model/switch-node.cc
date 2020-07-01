@@ -291,9 +291,9 @@ void SwitchNode::SwitchNotifyDequeue(uint32_t ifIndex, uint32_t qIndex, Ptr<Pack
 				/************************
 				 * update PINT header
 				 ***********************/
-				uint16_t p = Pint::encode_u(newU);
-				if (p > ih->pint.power)
-					ih->pint.power = p;
+				uint16_t power = Pint::encode_u(newU);
+				if (power > ih->GetPower())
+					ih->SetPower(power);
 
 				m_u[ifIndex] = newU;
 			}

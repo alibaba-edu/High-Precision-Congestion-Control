@@ -46,7 +46,7 @@ void IntHeader::Serialize (Buffer::Iterator start) const{
 		i.WriteU64(ts);
 	}else if (mode == PINT){
 		if (pint_bytes == 1)
-			i.WriteU8((uint8_t)pint.power);
+			i.WriteU8(pint.power_lo8);
 		else if (pint_bytes == 2)
 			i.WriteU16(pint.power);
 	}
@@ -64,7 +64,7 @@ uint32_t IntHeader::Deserialize (Buffer::Iterator start){
 		ts = i.ReadU64();
 	}else if (mode == PINT){
 		if (pint_bytes == 1)
-			pint.power = i.ReadU8();
+			pint.power_lo8 = i.ReadU8();
 		else if (pint_bytes == 2)
 			pint.power = i.ReadU16();
 	}
@@ -75,6 +75,20 @@ uint64_t IntHeader::GetTs(void){
 	if (mode == TS)
 		return ts;
 	return 0;
+}
+
+uint16_t IntHeader::GetPower(void){
+	if (mode == PINT)
+		return pint_bytes == 1 ? pint.power_lo8 : pint.power;
+	return 0;
+}
+void IntHeader::SetPower(uint16_t power){
+	if (mode == PINT){
+		if (pint_bytes == 1)
+			pint.power_lo8 = power;
+		else
+			pint.power = power;
+	}
 }
 
 }
