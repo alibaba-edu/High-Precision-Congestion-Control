@@ -210,11 +210,11 @@ uint32_t RdmaHw::GetNicIdxOfQp(Ptr<RdmaQueuePair> qp){
 		NS_ASSERT_MSG(false, "We assume at least one NIC is alive");
 	}
 }
-uint64_t RdmaHw::GetQpKey(uint16_t sport, uint16_t pg){
-	return ((uint64_t)sport << 16) | (uint64_t)pg;
+uint64_t RdmaHw::GetQpKey(uint32_t dip, uint16_t sport, uint16_t pg){
+	return ((uint64_t)dip << 32) | ((uint64_t)sport << 16) | (uint64_t)pg;
 }
-Ptr<RdmaQueuePair> RdmaHw::GetQp(uint16_t sport, uint16_t pg){
-	uint64_t key = GetQpKey(sport, pg);
+Ptr<RdmaQueuePair> RdmaHw::GetQp(uint32_t dip, uint16_t sport, uint16_t pg){
+	uint64_t key = GetQpKey(dip, sport, pg);
 	auto it = m_qpMap.find(key);
 	if (it != m_qpMap.end())
 		return it->second;
@@ -231,7 +231,7 @@ void RdmaHw::AddQueuePair(uint64_t size, uint16_t pg, Ipv4Address sip, Ipv4Addre
 	// add qp
 	uint32_t nic_idx = GetNicIdxOfQp(qp);
 	m_nic[nic_idx].qpGrp->AddQp(qp);
-	uint64_t key = GetQpKey(sport, pg);
+	uint64_t key = GetQpKey(dip.Get(), sport, pg);
 	m_qpMap[key] = qp;
 
 	// set init variables
@@ -348,7 +348,7 @@ int RdmaHw::ReceiveCnp(Ptr<Packet> p, CustomHeader &ch){
 
 	uint32_t i;
 	// get qp
-	Ptr<RdmaQueuePair> qp = GetQp(udpport, qIndex);
+	Ptr<RdmaQueuePair> qp = GetQp(ch.sip, udpport, qIndex);
 	if (qp == NULL)
 		std::cout << "ERROR: QCN NIC cannot find the flow\n";
 	// get nic
@@ -381,7 +381,7 @@ int RdmaHw::ReceiveAck(Ptr<Packet> p, CustomHeader &ch){
 	uint32_t seq = ch.ack.seq;
 	uint8_t cnp = (ch.ack.flags >> qbbHeader::FLAG_CNP) & 1;
 	int i;
-	Ptr<RdmaQueuePair> qp = GetQp(port, qIndex);
+	Ptr<RdmaQueuePair> qp = GetQp(ch.sip, port, qIndex);
 	if (qp == NULL){
 		std::cout << "ERROR: " << "node:" << m_node->GetId() << ' ' << (ch.l3Prot == 0xFC ? "ACK" : "NACK") << " NIC cannot find the flow\n";
 		return 0;
