@@ -234,7 +234,7 @@ void SwitchNode::SwitchNotifyDequeue(uint32_t ifIndex, uint32_t qIndex, Ptr<Pack
 				/**************************
 				 * approximate calc
 				 *************************/
-				int b = 20, m = 9, l = 20; // see log2apprx's paremeters
+				int b = 20, m = 16, l = 20; // see log2apprx's paremeters
 				int sft = logres_shift(b,l);
 				double fct = 1<<sft; // (multiplication factor corresponding to sft)
 				double log_T = log2(m_maxRtt)*fct; // log2(T)*fct
