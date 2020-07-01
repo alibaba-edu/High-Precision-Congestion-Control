@@ -981,6 +981,7 @@ int main(int argc, char *argv[])
 			for (uint32_t j = 0; j < node_num; j++){
 				if (n.Get(j)->GetNodeType() == 0)
 					portNumder[i][j] = 10000; // each host pair use port number from 10000
+			}
 	}
 
 	flow_input.idx = 0;
