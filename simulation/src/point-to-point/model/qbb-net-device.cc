@@ -97,16 +97,35 @@ namespace ns3 {
 			return -1;
 
 		// no pkt in highest priority queue, do rr for each qp
+		int res = -1024;
 		uint32_t fcount = m_qpGrp->GetN();
+		uint32_t min_finish_id = 0xffffffff;
 		for (qIndex = 1; qIndex <= fcount; qIndex++){
-			Ptr<RdmaQueuePair> qp = m_qpGrp->Get((qIndex + m_rrlast) % fcount);
+			uint32_t idx = (qIndex + m_rrlast) % fcount;
+			Ptr<RdmaQueuePair> qp = m_qpGrp->Get(idx);
 			if (!paused[qp->m_pg] && qp->GetBytesLeft() > 0 && !qp->IsWinBound()){
-				if (m_qpGrp->Get((qIndex + m_rrlast) % fcount)->m_nextAvail.GetTimeStep() > Simulator::Now().GetTimeStep()) //not available now
+				if (m_qpGrp->Get(idx)->m_nextAvail.GetTimeStep() > Simulator::Now().GetTimeStep()) //not available now
 					continue;
-				return (qIndex + m_rrlast) % fcount;
+				res = idx;
+				break;
+			}else if (qp->IsFinished()){
+				min_finish_id = idx < min_finish_id ? idx : min_finish_id;
 			}
 		}
-		return -1024;
+
+		// clear the finished qp
+		if (min_finish_id < 0xffffffff){
+			int nxt = min_finish_id;
+			auto &qps = m_qpGrp->m_qps;
+			for (int i = min_finish_id + 1; i < fcount; i++) if (!qps[i]->IsFinished()){
+				if (i == res) // update res to the idx after removing finished qp
+					res = nxt;
+				qps[nxt] = qps[i];
+				nxt++;
+			}
+			qps.resize(nxt);
+		}
+		return res;
 	}
 
 	int RdmaEgressQueue::GetLastQueue(){
