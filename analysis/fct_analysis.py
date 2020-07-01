@@ -22,7 +22,7 @@ if __name__=="__main__":
 	# For the exact naming, please check ../simulation/mix/fct_*.txt output by the simulation.
 	CCs = [
 		'hpccPint95ai50log1.05p1.000',
-		#'hp95ai50',
+		'hp95ai50',
 	]
 
 	step = int(args.step)
