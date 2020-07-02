@@ -10,7 +10,7 @@ if __name__=="__main__":
 	parser.add_argument('-p', dest='prefix', action='store', default='fct_fat', help="Specify the prefix of the fct file. Usually like fct_<topology>_<trace>")
 	parser.add_argument('-s', dest='step', action='store', default='5')
 	parser.add_argument('-t', dest='type', action='store', type=int, default=0, help="0: normal, 1: incast, 2: all")
-	parser.add_argument('-T', dest='time_limit', action='store', type=int, default=3000000000, help="only consider flows that start before T")
+	parser.add_argument('-T', dest='time_limit', action='store', type=int, default=3000000000, help="only consider flows that finish before T")
 	parser.add_argument('-b', dest='bw', action='store', type=int, default=25, help="bandwidth of edge link (Gbps)")
 	args = parser.parse_args()
 
@@ -31,15 +31,15 @@ if __name__=="__main__":
 		#file = "%s_%s.txt"%(args.prefix, cc)
 		file = "../simulation/mix/%s_%s.txt"%(args.prefix, cc)
 		if type == 0:
-			cmd = "cat %s"%(file)+" | awk '{if ($4==100 && $6<"+"%d"%time_limit+") {slow=$7/$8;print $5, slow<1?1:slow}}' | sort -n | awk '{print $2, $1}'"
+			cmd = "cat %s"%(file)+" | awk '{if ($4==100 && $6+$7<"+"%d"%time_limit+") {slow=$7/$8;print $5, slow<1?1:slow}}' | sort -n | awk '{print $2, $1}'"
 			# print cmd
 			output = subprocess.check_output(cmd, shell=True)
 		elif type == 1:
-			cmd = "cat %s"%(file)+" | awk '{if ($4==200 && $6<"+"%d"%time_limit+") {slow=$7/$8;print $5, slow<1?1:slow}}' | sort -n | awk '{print $2, $1}'"
+			cmd = "cat %s"%(file)+" | awk '{if ($4==200 && $6+$7<"+"%d"%time_limit+") {slow=$7/$8;print $5, slow<1?1:slow}}' | sort -n | awk '{print $2, $1}'"
 			#print cmd
 			output = subprocess.check_output(cmd, shell=True)
 		else:
-			cmd = "cat %s"%(file)+" | awk '{$6<"+"%d"%time_limit+") {slow=$7/$8;print $5, slow<1?1:slow}}' | sort -n | awk '{print $2, $1}'"
+			cmd = "cat %s"%(file)+" | awk '{$6+$7<"+"%d"%time_limit+") {slow=$7/$8;print $5, slow<1?1:slow}}' | sort -n | awk '{print $2, $1}'"
 			#print cmd
 			output = subprocess.check_output(cmd, shell=True)
 
