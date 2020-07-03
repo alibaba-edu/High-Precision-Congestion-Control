@@ -256,6 +256,13 @@ void RdmaHw::AddQueuePair(uint64_t size, uint16_t pg, Ipv4Address sip, Ipv4Addre
 	m_nic[nic_idx].dev->NewQp(qp);
 }
 
+void RdmaHw::DeleteQueuePair(Ptr<RdmaQueuePair> qp){
+	// [ignore] delete qp from NIC
+	// remove qp from the m_qpMap
+	uint64_t key = GetQpKey(qp->dip.Get(), qp->sport, qp->m_pg);
+	m_qpMap.erase(key);
+}
+
 Ptr<RdmaRxQueuePair> RdmaHw::GetRxQp(uint32_t sip, uint32_t dip, uint16_t sport, uint16_t dport, uint16_t pg, bool create){
 	uint64_t key = ((uint64_t)dip << 32) | ((uint64_t)pg << 16) | (uint64_t)dport;
 	auto it = m_rxQpMap.find(key);
@@ -493,6 +500,9 @@ void RdmaHw::QpComplete(Ptr<RdmaQueuePair> qp){
 		Simulator::Cancel(qp->mlx.m_rpTimer);
 	}
 	m_qpCompleteCallback(qp);
+
+	// delete the qp
+	DeleteQueuePair(qp);
 }
 
 void RdmaHw::SetLinkDown(Ptr<QbbNetDevice> dev){
