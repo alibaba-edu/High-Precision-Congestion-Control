@@ -122,6 +122,10 @@ void RdmaClient::SetSize(uint64_t size){
 	m_size = size;
 }
 
+void RdmaClient::Finish(){
+	m_node->DeleteApplication(this);
+}
+
 void RdmaClient::DoDispose (void)
 {
   NS_LOG_FUNCTION_NOARGS ();
@@ -134,7 +138,7 @@ void RdmaClient::StartApplication (void)
   // get RDMA driver and add up queue pair
   Ptr<Node> node = GetNode();
   Ptr<RdmaDriver> rdma = node->GetObject<RdmaDriver>();
-  rdma->AddQueuePair(m_size, m_pg, m_sip, m_dip, m_sport, m_dport, m_win, m_baseRtt);
+  rdma->AddQueuePair(m_size, m_pg, m_sip, m_dip, m_sport, m_dport, m_win, m_baseRtt, MakeCallback(&RdmaClient::Finish, this));
 }
 
 void RdmaClient::StopApplication ()

@@ -28,6 +28,7 @@ public:
 	Time m_nextAvail;	//< Soonest time of next send
 	uint32_t wp; // current window of packets
 	uint32_t lastPktSize;
+	Callback<void> m_notifyAppFinish;
 
 	/******************************
 	 * runtime states
@@ -88,6 +89,7 @@ public:
 	void SetWin(uint32_t win);
 	void SetBaseRtt(uint64_t baseRtt);
 	void SetVarWin(bool v);
+	void SetAppNotifyCallback(Callback<void> notifyAppFinish);
 
 	uint64_t GetBytesLeft();
 	uint32_t GetHash(void);

@@ -168,6 +168,11 @@ void qp_finish(FILE* fout, Ptr<RdmaQueuePair> q){
 	// sip, dip, sport, dport, size (B), start_time, fct (ns), standalone_fct (ns)
 	fprintf(fout, "%08x %08x %u %u %lu %lu %lu %lu\n", q->sip.Get(), q->dip.Get(), q->sport, q->dport, q->m_size, q->startTime.GetTimeStep(), (Simulator::Now() - q->startTime).GetTimeStep(), standalone_fct);
 	fflush(fout);
+
+	// remove rxQp from the receiver
+	Ptr<Node> dstNode = n.Get(did);
+	Ptr<RdmaDriver> rdma = dstNode->GetObject<RdmaDriver> ();
+	rdma->m_rdma->DeleteRxQp(q->sip.Get(), q->m_pg, q->sport);
 }
 
 void get_pfc(FILE* fout, Ptr<QbbNetDevice> dev, uint32_t type){

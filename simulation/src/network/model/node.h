@@ -110,6 +110,12 @@ public:
    */
   uint32_t AddApplication (Ptr<Application> application);
   /**
+   * \param application Application to remove from this node.
+   *
+   * Remove this Application from this Node. 
+   */
+  void DeleteApplication (Ptr<Application> application);
+  /**
    * \param index
    * \returns the application associated to this requested index
    *          within this Node.

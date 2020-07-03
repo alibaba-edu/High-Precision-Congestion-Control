@@ -84,6 +84,10 @@ void RdmaQueuePair::SetVarWin(bool v){
 	m_var_win = v;
 }
 
+void RdmaQueuePair::SetAppNotifyCallback(Callback<void> notifyAppFinish){
+	m_notifyAppFinish = notifyAppFinish;
+}
+
 uint64_t RdmaQueuePair::GetBytesLeft(){
 	return m_size >= snd_nxt ? m_size - snd_nxt : 0;
 }

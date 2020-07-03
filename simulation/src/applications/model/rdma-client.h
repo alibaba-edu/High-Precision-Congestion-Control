@@ -59,6 +59,7 @@ public:
   void SetLocal (Ipv4Address ip, uint16_t port);
   void SetPG (uint16_t pg);
   void SetSize(uint64_t size);
+  void Finish();
 
 protected:
   virtual void DoDispose (void);
