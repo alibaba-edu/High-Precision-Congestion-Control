@@ -31,15 +31,15 @@ if __name__=="__main__":
 		#file = "%s_%s.txt"%(args.prefix, cc)
 		file = "../simulation/mix/%s_%s.txt"%(args.prefix, cc)
 		if type == 0:
-			cmd = "cat %s"%(file)+" | awk '{if ($4==100 && $6+$7<"+"%d"%time_limit+") {slow=$7/$8;print $5, slow<1?1:slow}}' | sort -n | awk '{print $2, $1}'"
+			cmd = "cat %s"%(file)+" | awk '{if ($4==100 && $6+$7<"+"%d"%time_limit+") {slow=$7/$8;print slow<1?1:slow, $5}}' | sort -n -k 2"
 			# print cmd
 			output = subprocess.check_output(cmd, shell=True)
 		elif type == 1:
-			cmd = "cat %s"%(file)+" | awk '{if ($4==200 && $6+$7<"+"%d"%time_limit+") {slow=$7/$8;print $5, slow<1?1:slow}}' | sort -n | awk '{print $2, $1}'"
+			cmd = "cat %s"%(file)+" | awk '{if ($4==200 && $6+$7<"+"%d"%time_limit+") {slow=$7/$8;print slow<1?1:slow, $5}}' | sort -n -k 2"
 			#print cmd
 			output = subprocess.check_output(cmd, shell=True)
 		else:
-			cmd = "cat %s"%(file)+" | awk '{$6+$7<"+"%d"%time_limit+") {slow=$7/$8;print $5, slow<1?1:slow}}' | sort -n | awk '{print $2, $1}'"
+			cmd = "cat %s"%(file)+" | awk '{$6+$7<"+"%d"%time_limit+") {slow=$7/$8;print slow<1?1:slow, $5}}' | sort -n -k 2"
 			#print cmd
 			output = subprocess.check_output(cmd, shell=True)
 
