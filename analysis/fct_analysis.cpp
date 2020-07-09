@@ -89,9 +89,9 @@ int main(int argc, char* argv[]){
 			uint32_t largest_size = tuples[r-1].first;
 			sort(tuples.begin() + l, tuples.begin() + r, compare_second);
 			res[p / step].push_back(largest_size);
-			res[p / step].push_back(tuples[l + (r-l)*0.5].second);
-			res[p / step].push_back(tuples[l + (r-l)*0.95].second);
-			res[p / step].push_back(tuples[l + (r-l)*0.99].second);
+			res[p / step].push_back(tuples[l + uint64_t((r-l)*0.5)].second);
+			res[p / step].push_back(tuples[l + uint64_t((r-l)*0.95)].second);
+			res[p / step].push_back(tuples[l + uint64_t((r-l)*0.99)].second);
 		}
 	}
 
