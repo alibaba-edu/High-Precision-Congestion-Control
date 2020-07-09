@@ -32,7 +32,6 @@ void parse_opt(int argc, char* argv[]){
 			case 'c':
 				for (char *tok = strtok(optarg, ","); tok != NULL; tok = strtok(NULL, ",")){
 					cc.push_back(tok);
-					printf("%s\n", tok);
 				}
 				break;
 			default: /* '?' */
