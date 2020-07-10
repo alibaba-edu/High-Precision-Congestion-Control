@@ -1,9 +1,11 @@
 # HPCC simulation
+[Project page of HPCC](https://liyuliang001.github.io/projects/hpcc/index.html)
+
 This is the simulator for [HPCC: High Precision Congestion Control (SIGCOMM' 2019)](https://rmiao.github.io/publications/hpcc-li.pdf). It also includes the implementation of DCQCN, TIMELY, DCTCP, PFC, ECN and Broadcom shared buffer switch.
 
 We have update this simulator to support HPCC-PINT, which reduces the INT header overhead to just 1 byte. This improves the long flow completion time. See [PINT: Probabilistic In-band Network Telemetry (SIGCOMM' 2020)](https://liyuliang001.github.io/publications/pint.pdf).
 
-We have created a [project page for HPCC](https://liyuliang001.github.io/projects/hpcc/index.html), which includes latest news of HPCC and extensive evaluation results using this simulator.
+Our [Project page of HPCC](https://liyuliang001.github.io/projects/hpcc/index.html) includes latest news of HPCC and extensive evaluation results using this simulator.
 
 ## NS-3 simulation
 The ns-3 simulation is under `simulation/`. Refer to the README.md under it for more details.
