@@ -1,5 +1,5 @@
 # HPCC simulation
-[Project page of HPCC](https://liyuliang001.github.io/projects/hpcc/index.html) includes latest news of HPCC and extensive evaluation results using this simulator.
+[Project page of HPCC](https://hpcc-group.github.io/) includes latest news of HPCC and extensive evaluation results using this simulator.
 
 This is the simulator for [HPCC: High Precision Congestion Control (SIGCOMM' 2019)](https://rmiao.github.io/publications/hpcc-li.pdf). It also includes the implementation of DCQCN, TIMELY, DCTCP, PFC, ECN and Broadcom shared buffer switch.
 
