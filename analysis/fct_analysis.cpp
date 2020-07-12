@@ -75,7 +75,7 @@ int main(int argc, char* argv[]){
 	vector<vector<double> > res;
 	if (steps.size() > 0){
 		for (auto p : steps)
-			res.push_back(vector<double> (1, p.second));
+			res.push_back(vector<double> (1, p.second / 100.));
 	}else{
 		for (int p = 0; p < 100; p += step)
 			res.push_back(vector<double> (1, (p+step) / 100.));
@@ -126,7 +126,7 @@ int main(int argc, char* argv[]){
 	}
 
 	for (int i = 0; i < res.size(); i++){
-		printf("%.3lf %.0lf", res[i][0], res[i][1]);
+		printf("%.6lf %.0lf", res[i][0], res[i][1]);
 		for (int j = 0; j < cc.size(); j++)
 			printf("\t%.3f %.3f %.3f", res[i][j*4 + 2], res[i][j*4+3], res[i][j*4+4]);
 		printf("\n");
