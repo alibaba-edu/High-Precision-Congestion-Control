@@ -12,16 +12,25 @@ using namespace std;
 string prefix="fct_fat";
 uint32_t step = 5, type = 0;
 uint64_t time_limit = 3000000000lu;
+vector<pair<uint32_t, double> > steps;
 vector<string> cc;
 
 void parse_opt(int argc, char* argv[]){
-	for (int opt=0; (opt = getopt(argc, argv, "p:s:t:T:c:")) != -1;) {
+	for (int opt=0; (opt = getopt(argc, argv, "p:s:S:t:T:c:")) != -1;) {
 		switch (opt) {
 			case 'p':
 				prefix = optarg;
 				break;
 			case 's':
 				step = atoi(optarg);
+				break;
+			case 'S':
+				{
+					FILE* step_file = fopen(optarg, "r");
+					for (pair<uint32_t, double> p; fscanf(step_file, "%u%lf", &p.first, &p.second) != EOF;){
+						steps.push_back(p);
+					}
+				}
 				break;
 			case 't':
 				type = atoi(optarg);
@@ -43,6 +52,7 @@ void parse_opt(int argc, char* argv[]){
 						"  -p PREFIX      Specify the prefix of the fct file. Usually like\n"
 						"                 fct_<topology>_<trace>\n"
 						"  -s STEP\n"
+						"  -S STEP_FILE   Specify the file of the steps\n"
 						"  -t TYPE        0: normal, 1: incast, 2: all\n"
 						"  -T TIME_LIMIT  only consider flows that finish before T\n"
 						"  -c CC_LIST     Specify a list of cc\n",
@@ -63,8 +73,13 @@ bool compare_second(pair<uint32_t, float> a, pair<uint32_t, float> b){
 int main(int argc, char* argv[]){
 	parse_opt(argc, argv);
 	vector<vector<double> > res;
-	for (int p = 0; p < 100; p += step)
-		res.push_back(vector<double> (1, (p+step) / 100.));
+	if (steps.size() > 0){
+		for (auto p : steps)
+			res.push_back(vector<double> (1, p.second));
+	}else{
+		for (int p = 0; p < 100; p += step)
+			res.push_back(vector<double> (1, (p+step) / 100.));
+	}
 	for (int i = 0; i < cc.size(); i++){
 		string c = cc[i];
 		vector<pair<uint32_t, float> > tuples;
@@ -82,15 +97,31 @@ int main(int argc, char* argv[]){
 
 		sort(tuples.begin(), tuples.end(), compare);
 
-		for (int p = 0; p < 100; p += step){
-			uint64_t l = p * tuples.size() / 100;
-			uint64_t r = (p + step) * tuples.size() / 100;
-			uint32_t largest_size = tuples[r-1].first;
-			sort(tuples.begin() + l, tuples.begin() + r, compare_second);
-			res[p / step].push_back(largest_size);
-			res[p / step].push_back(tuples[l + uint64_t((r-l)*0.5)].second);
-			res[p / step].push_back(tuples[l + uint64_t((r-l)*0.95)].second);
-			res[p / step].push_back(tuples[l + uint64_t((r-l)*0.99)].second);
+		if (steps.size() > 0){
+			uint64_t l = 0, r = 0;
+			int i = 0;
+			for (auto p : steps){
+				while (r < tuples.size() && tuples[r].first <= p.first)
+					r++;
+				sort(tuples.begin() + l, tuples.begin() + r, compare_second);
+				res[i].push_back(p.first);
+				res[i].push_back(tuples[l + uint64_t((r-l)*0.5)].second);
+				res[i].push_back(tuples[l + uint64_t((r-l)*0.95)].second);
+				res[i].push_back(tuples[l + uint64_t((r-l)*0.99)].second);
+				l = r;
+				i++;
+			}
+		}else{
+			for (int p = 0; p < 100; p += step){
+				uint64_t l = p * tuples.size() / 100;
+				uint64_t r = (p + step) * tuples.size() / 100;
+				uint32_t largest_size = tuples[r-1].first;
+				sort(tuples.begin() + l, tuples.begin() + r, compare_second);
+				res[p / step].push_back(largest_size);
+				res[p / step].push_back(tuples[l + uint64_t((r-l)*0.5)].second);
+				res[p / step].push_back(tuples[l + uint64_t((r-l)*0.95)].second);
+				res[p / step].push_back(tuples[l + uint64_t((r-l)*0.99)].second);
+			}
 		}
 	}
 
