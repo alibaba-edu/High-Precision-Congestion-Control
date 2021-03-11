@@ -786,7 +786,7 @@ void RdmaHw::UpdateRateHp(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch
 			NS_ASSERT(ih.nhop <= IntHeader::maxHop);
 			for (uint32_t i = 0; i < ih.nhop; i++){
 				if (m_sampleFeedback){
-					if (ih.hop[i].GetQlen() == 0 and fast_react)
+					if (ih.hop[i].GetQlen() == 0 && fast_react)
 						continue;
 				}
 				updated[i] = updated_any = true;
