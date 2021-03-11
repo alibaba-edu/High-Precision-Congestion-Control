@@ -347,6 +347,7 @@ Node::GetNodeType()
 
 bool Node::SwitchReceiveFromDevice(Ptr<NetDevice> device, Ptr<Packet> packet, CustomHeader &ch){
 	NS_ASSERT_MSG(false, "Calling SwitchReceiveFromDevice() on a non-switch node or this function is not implemented");
+	return false;
 }
 
 void Node::SwitchNotifyDequeue(uint32_t ifIndex, uint32_t qIndex, Ptr<Packet> p){
