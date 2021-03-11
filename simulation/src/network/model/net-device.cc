@@ -21,6 +21,7 @@
 #include "ns3/object.h"
 #include "ns3/log.h"
 #include "ns3/uinteger.h"
+#include "ns3/packet.h"
 #include "net-device.h"
 #include <iostream>
 
