@@ -316,20 +316,6 @@ namespace ns3 {
 				m_traceDequeue(p, qIndex);
 				TransmitStart(p);
 				return;
-			}else{ //No queue can deliver any packet
-				NS_LOG_INFO("PAUSE prohibits send at node " << m_node->GetId());
-				if (m_node->GetNodeType() == 0 && m_qcnEnabled){ //nothing to send, possibly due to qcn flow control, if so reschedule sending
-					Time t = Simulator::GetMaximumSimulationTime();
-					for (uint32_t i = 0; i < m_rdmaEQ->GetFlowCount(); i++){
-						Ptr<RdmaQueuePair> qp = m_rdmaEQ->GetQp(i);
-						if (qp->GetBytesLeft() == 0)
-							continue;
-						t = Min(qp->m_nextAvail, t);
-					}
-					if (m_nextSend.IsExpired() && t < Simulator::GetMaximumSimulationTime() && t > Simulator::Now()){
-						m_nextSend = Simulator::Schedule(t - Simulator::Now(), &QbbNetDevice::DequeueAndTransmit, this);
-					}
-				}
 			}
 		}
 		return;
