@@ -73,7 +73,7 @@ if __name__ == "__main__":
 	parser.add_argument('--hpai', dest='hpai', action='store', type=int, default=0, help="AI for HPCC")
 	parser.add_argument('--pint_log_base', dest='pint_log_base', action = 'store', type=float, default=1.01, help="PINT's log_base")
 	parser.add_argument('--pint_prob', dest='pint_prob', action = 'store', type=float, default=1.0, help="PINT's sampling probability")
-	parser.add_argument('--enable_tr', dest='enable_tr', action = 'store', type=int, default=0, help="enable packet-level events dump")
+	parser.add_argument('--enable_tr', dest='enable_tr', action = 'store', type=int, default=1, help="enable packet-level events dump")
 	args = parser.parse_args()
 
 	topo=args.topo
