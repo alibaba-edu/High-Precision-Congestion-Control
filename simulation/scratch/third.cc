@@ -132,8 +132,10 @@ void ReadFlowInput(){
 		NS_ASSERT(n.Get(flow_input.src)->GetNodeType() == 0 && n.Get(flow_input.dst)->GetNodeType() == 0);
 	}
 }
+const Time eps = NanoSeconds(1);
 void ScheduleFlowInputs(){
-	while (flow_input.idx < flow_num && Seconds(flow_input.start_time) == Simulator::Now()){
+        while (flow_input.idx < flow_num && (Seconds(flow_input.start_time) - Simulator::Now()) <= eps){
+	//while (flow_input.idx < flow_num && Seconds(flow_input.start_time) == Simulator::Now()){
 		uint32_t port = portNumder[flow_input.src][flow_input.dst]++; // get a new port number 
 		RdmaClientHelper clientHelper(flow_input.pg, serverAddress[flow_input.src], serverAddress[flow_input.dst], port, flow_input.dport, flow_input.maxPacketCount, has_win?(global_t==1?maxBdp:pairBdp[n.Get(flow_input.src)][n.Get(flow_input.dst)]):0, global_t==1?maxRtt:pairRtt[flow_input.src][flow_input.dst]);
 		ApplicationContainer appCon = clientHelper.Install(n.Get(flow_input.src));
@@ -146,7 +148,10 @@ void ScheduleFlowInputs(){
 
 	// schedule the next time to run this function
 	if (flow_input.idx < flow_num){
-		Simulator::Schedule(Seconds(flow_input.start_time)-Simulator::Now(), ScheduleFlowInputs);
+                Time next = Seconds(flow_input.start_time) - Simulator::Now();
+                if (next < eps) next = eps;
+                Simulator::Schedule(next, ScheduleFlowInputs);
+		//Simulator::Schedule(Seconds(flow_input.start_time)-Simulator::Now(), ScheduleFlowInputs);
 	}else { // no more flows, close the file
 		flowf.close();
 	}
@@ -678,6 +683,8 @@ int main(int argc, char *argv[])
 		IntHeader::mode = IntHeader::NORMAL;
 	else if (cc_mode == 10) // hpcc-pint
 		IntHeader::mode = IntHeader::PINT;
+        else if (cc_mode == 12)           // Rttcc
+                IntHeader::mode = IntHeader::TS;   
 	else // others, no extra header
 		IntHeader::mode = IntHeader::NONE;
 

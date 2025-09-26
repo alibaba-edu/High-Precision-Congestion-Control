@@ -456,7 +456,7 @@ WimaxHelper::EnableAsciiInternal (Ptr<OutputStreamWrapper> stream,
   Ptr<WimaxNetDevice> device = nd->GetObject<WimaxNetDevice> ();
   if (device == 0)
     {
-      NS_LOG_INFO ("WimaxHelper::EnableAsciiInternal(): Device " << device << " not of type ns3::WimaxNetDevice");
+      //NS_LOG_INFO ("WimaxHelper::EnableAsciiInternal(): Device " << device << " not of type ns3::WimaxNetDevice");
       return;
     }
 
@@ -569,7 +569,7 @@ WimaxHelper::EnablePcapInternal (std::string prefix, Ptr<NetDevice> nd, bool exp
   Ptr<WimaxNetDevice> device = nd->GetObject<WimaxNetDevice> ();
   if (device == 0)
     {
-      NS_LOG_INFO ("WimaxHelper::EnablePcapInternal(): Device " << &device << " not of type ns3::WimaxNetDevice");
+      //NS_LOG_INFO ("WimaxHelper::EnablePcapInternal(): Device " << &device << " not of type ns3::WimaxNetDevice");
       return;
     }
 
@@ -594,7 +594,7 @@ WimaxHelper::EnablePcapInternal (std::string prefix, Ptr<NetDevice> nd, bool exp
 int64_t
 WimaxHelper::AssignStreams (int64_t stream)
 {
-  NS_LOG_FUNCTION (this << stream);
+  //NS_LOG_FUNCTION (this << stream);
   return m_channel->AssignStreams (stream);
 }
 

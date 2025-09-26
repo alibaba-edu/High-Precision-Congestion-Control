@@ -1,0 +1,727 @@
+# project ns (3.18) configured on Tue Sep  2 08:39:07 2025 by
+# waf 1.7.11 (abi 98, python 20711f0 on linux2)
+# using ./waf configure --build-profile=optimized
+#
+----------------------------------------
+Setting top to
+/home/qqy/Desktop/High-Precision-Congestion-Control/simulation
+----------------------------------------
+Setting out to
+/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build
+----------------------------------------
+Checking for 'gcc' (c compiler)
+find program=['gcc', 'cc'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/snap/bin'] var='CC' -> '/usr/bin/gcc'
+find program=['ar'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/snap/bin'] var='AR' -> '/usr/bin/ar'
+/usr/bin/gcc
+----------------------------------------
+Checking for 'g++' (c++ compiler)
+find program=['g++', 'c++'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/snap/bin'] var='CXX' -> '/usr/bin/g++'
+(tool ar is already loaded, skipping)
+/usr/bin/g++
+------------------------------------------------------
+Checking for compilation flag -march=native... support
+==>
+#include <stdio.h>
+int main() { return 0; }
+
+<==
+[1/2] [32mcxx: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/test.cc -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '../test.cc', '-c', '-o', 'test.cc.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cc.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+ok
+---------------------------------------------------------
+Checking for compilation flag -Wl,--soname=foo... support
+==>
+#include <stdio.h>
+int main() { return 0; }
+
+<==
+[1/2] [32mcxx: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/test.cc -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-Wl,--soname=foo', '../test.cc', '-c', '-o', 'test.cc.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cc.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+ok
+---------------------------------------------------------
+Checking for program python
+/usr/bin/python
+find program=['python'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/snap/bin'] var='PYTHON' -> '/usr/bin/python'
+['/usr/bin/python', '-c', 'import sys\nfor x in sys.version_info: print(str(x))']
+out: 2
+7
+17
+final
+0
+
+['/usr/bin/python', '-c', "from distutils.sysconfig import get_config_var, get_python_lib\n\nprint(repr(get_python_lib(standard_lib=0, prefix='/usr/local') or ''))"]
+out: '/usr/local/lib/python2.7/dist-packages'
+
+'/usr/local/lib/python2.7/dist-packages'
+
+['/usr/bin/python', '-c', "from distutils.sysconfig import get_config_var, get_python_lib\n\nprint(repr(get_python_lib(plat_specific=1, standard_lib=0, prefix='/usr/local') or ''))"]
+out: '/usr/local/lib/python2.7/dist-packages'
+
+'/usr/local/lib/python2.7/dist-packages'
+
+---------------------------------------------------------
+Checking for python version
+(2, 7, 17, 'final', 0)
+['/usr/bin/python', '-c', "from distutils.sysconfig import get_config_var, get_python_lib\n\nprint(repr(get_config_var('prefix') or ''))\nprint(repr(get_config_var('SO') or ''))\nprint(repr(get_config_var('LDFLAGS') or ''))\nprint(repr(get_config_var('LIBDIR') or ''))\nprint(repr(get_config_var('LIBPL') or ''))\nprint(repr(get_config_var('INCLUDEPY') or ''))\nprint(repr(get_config_var('Py_ENABLE_SHARED') or ''))\nprint(repr(get_config_var('MACOSX_DEPLOYMENT_TARGET') or ''))\nprint(repr(get_config_var('LDSHARED') or ''))\nprint(repr(get_config_var('CFLAGS') or ''))"]
+out: '/usr'
+'.so'
+'-Wl,-Bsymbolic-functions -Wl,-z,relro'
+'/usr/lib'
+'/usr/lib/python2.7/config-x86_64-linux-gnu'
+'/usr/include/python2.7'
+1
+''
+'x86_64-linux-gnu-gcc -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-Bsymbolic-functions -Wl,-z,relro -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-D7NSzq/python2.7-2.7.17=. -fstack-protector-strong -Wformat -Werror=format-security  '
+'-fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-D7NSzq/python2.7-2.7.17=. -fstack-protector-strong -Wformat -Werror=format-security  '
+
+'/usr'
+'.so'
+'-Wl,-Bsymbolic-functions -Wl,-z,relro'
+'/usr/lib'
+'/usr/lib/python2.7/config-x86_64-linux-gnu'
+'/usr/include/python2.7'
+1
+''
+'x86_64-linux-gnu-gcc -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-Bsymbolic-functions -Wl,-z,relro -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-D7NSzq/python2.7-2.7.17=. -fstack-protector-strong -Wformat -Werror=format-security  '
+'-fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-D7NSzq/python2.7-2.7.17=. -fstack-protector-strong -Wformat -Werror=format-security  '
+
+Configuration returned from ['/usr/bin/python']:
+"prefix = '/usr'\nSO = '.so'\nLDFLAGS = '-Wl,-Bsymbolic-functions -Wl,-z,relro'\nLIBDIR = '/usr/lib'\nLIBPL = '/usr/lib/python2.7/config-x86_64-linux-gnu'\nINCLUDEPY = '/usr/include/python2.7'\nPy_ENABLE_SHARED = 1\nMACOSX_DEPLOYMENT_TARGET = ''\nLDSHARED = 'x86_64-linux-gnu-gcc -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-Bsymbolic-functions -Wl,-z,relro -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-D7NSzq/python2.7-2.7.17=. -fstack-protector-strong -Wformat -Werror=format-security  '\nCFLAGS = '-fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-D7NSzq/python2.7-2.7.17=. -fstack-protector-strong -Wformat -Werror=format-security  '"
+
+
+
+# try again with -L$python_LIBDIR: ['/usr/lib']
+
+---------------------------------------------------------
+Checking for library python2.7 in LIBDIR
+==>
+
+int main(int argc, char **argv) {
+	(void)argc; (void)argv;
+	return 0;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_3b2479b91ea1f8aedc2bbc867fa4858e/test.cpp -> build/.conf_check_3b2479b91ea1f8aedc2bbc867fa4858e/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-fno-strict-aliasing', '-fwrapv', '-fdebug-prefix-map=/build/python2.7-D7NSzq/python2.7-2.7.17=.', '-fstack-protector-strong', '-DPYTHONDIR="/usr/local/lib/python2.7/dist-packages"', '-DPYTHONARCHDIR="/usr/local/lib/python2.7/dist-packages"', '-DNDEBUG', '-D_FORTIFY_SOURCE=2', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_3b2479b91ea1f8aedc2bbc867fa4858e/testbuild/test.cpp.1.o -> build/.conf_check_3b2479b91ea1f8aedc2bbc867fa4858e/testbuild/testprog
+[0m
+['/usr/bin/g++', '-Wl,-Bsymbolic-functions', '-Wl,-z,relro', 'test.cpp.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_3b2479b91ea1f8aedc2bbc867fa4858e/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-L/usr/lib', '-lpython2.7']
+yes
+------------------------------------------------------------------------------------------------
+Checking for program /usr/bin/python-config,python2.7-config,python-config-2.7,python2.7m-config
+/usr/bin/python-config
+find program=['/usr/bin/python-config', 'python2.7-config', 'python-config-2.7', 'python2.7m-config'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/snap/bin'] var='PYTHON_CONFIG' -> '/usr/bin/python-config'
+['/usr/bin/python-config', '--includes']
+out: -I/usr/include/python2.7 -I/usr/include/x86_64-linux-gnu/python2.7
+
+Include path for Python extensions (found via python-config --includes): ['/usr/include/python2.7', '/usr/include/x86_64-linux-gnu/python2.7']
+
+------------------------------------------------------------------------------------------------
+Checking for header Python.h
+==>
+
+#include <Python.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
+	void Py_Initialize(void);
+	void Py_Finalize(void);
+#ifdef __cplusplus
+}
+#endif
+int main(int argc, char **argv)
+{
+   (void)argc; (void)argv;
+   Py_Initialize();
+   Py_Finalize();
+   return 0;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_1f933b02106127ce3a9f4633a0e368e7/test.cpp -> build/.conf_check_1f933b02106127ce3a9f4633a0e368e7/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-fno-strict-aliasing', '-fwrapv', '-fdebug-prefix-map=/build/python2.7-D7NSzq/python2.7-2.7.17=.', '-fstack-protector-strong', '-fno-strict-aliasing', '-I/usr/include/python2.7', '-I/usr/include/x86_64-linux-gnu/python2.7', '-DPYTHONDIR="/usr/local/lib/python2.7/dist-packages"', '-DPYTHONARCHDIR="/usr/local/lib/python2.7/dist-packages"', '-DNDEBUG', '-D_FORTIFY_SOURCE=2', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_1f933b02106127ce3a9f4633a0e368e7/testbuild/test.cpp.1.o -> build/.conf_check_1f933b02106127ce3a9f4633a0e368e7/testbuild/testprog
+[0m
+['/usr/bin/g++', '-Wl,-Bsymbolic-functions', '-Wl,-z,relro', 'test.cpp.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_1f933b02106127ce3a9f4633a0e368e7/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-L/usr/lib', '-lpython2.7']
+yes
+------------------------------------------------------------------------------------------------
+Checking for compilation flag -fvisibility=hidden... support
+==>
+#include <stdio.h>
+int main() { return 0; }
+
+<==
+[1/2] [32mcxx: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/test.cc -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-fvisibility=hidden', '-DPYTHONDIR="/usr/local/lib/python2.7/dist-packages"', '-DPYTHONARCHDIR="/usr/local/lib/python2.7/dist-packages"', '-DHAVE_PYTHON_H=1', '../test.cc', '-c', '-o', 'test.cc.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cc.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+ok
+------------------------------------------------------------------------------------------------
+Checking for compilation flag -Wno-array-bounds... support
+==>
+#include <stdio.h>
+int main() { return 0; }
+
+<==
+[1/2] [32mcxx: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/test.cc -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-Wno-array-bounds', '-DPYTHONDIR="/usr/local/lib/python2.7/dist-packages"', '-DPYTHONARCHDIR="/usr/local/lib/python2.7/dist-packages"', '-DHAVE_PYTHON_H=1', '../test.cc', '-c', '-o', 'test.cc.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cc.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+ok
+------------------------------------------------------------------------------------------------
+Checking for pybindgen location
+not found
+------------------------------------------------------------------------------------------------
+Python module pybindgen
+['/usr/bin/python', '-c', "\nimport pybindgen as current_module\nversion = getattr(current_module, '__version__', None)\nif version is not None:\n    print(str(version))\nelse:\n    print('unknown version')\n"]
+out: 0.17.0
+
+0.17.0
+------------------------------------------------------------------------------------------------
+Checking for pybindgen version
+0.17.0
+------------------------------------------------------------------------------------------------
+Checking boost includes
+1_65_1
+------------------------------------------------------------------------------------------------
+Checking boost libs
+Found the boost path in /lib64 with the libraries:
+Trying pattern boost_system(-gcc[0-9]{0,3})+(-1_65_1)+
+Trying pattern boost_system(-1_65_1)+
+Trying pattern boost_system(-1_65_1)+
+Trying pattern boost_system(-gcc[0-9]{0,3})+
+Trying pattern boost_system
+Trying pattern boost_system
+from /home/qqy/Desktop/High-Precision-Congestion-Control/simulation/src: lib system not found in /lib64
+not found
+------------------------------------------------------------------------------------------------
+Checking boost includes
+1_65_1
+------------------------------------------------------------------------------------------------
+Checking boost libs
+Found the boost path in /lib64 with the libraries:
+Trying pattern boost_system(-gcc[0-9]{0,3})+(-1_65_1)+
+Trying pattern boost_system(-1_65_1)+
+Trying pattern boost_system(-1_65_1)+
+Trying pattern boost_system(-gcc[0-9]{0,3})+
+Trying pattern boost_system
+Trying pattern boost_system
+from /home/qqy/Desktop/High-Precision-Congestion-Control/simulation/src: lib system not found in /lib64
+not found
+------------------------------------------------------------------------------------------------
+Checking for click location
+not found
+------------------------------------------------------------------------------------------------
+Checking for program pkg-config
+/usr/bin/pkg-config
+find program=['pkg-config'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/snap/bin'] var='PKGCONFIG' -> '/usr/bin/pkg-config'
+------------------------------------------------------------------------------------------------
+Checking for 'gtk+-2.0' >= 2.12
+['/usr/bin/pkg-config', '--atleast-version=2.12', 'gtk+-2.0']
+['/usr/bin/pkg-config', '--cflags', '--libs', 'gtk+-2.0']
+out: -pthread -I/usr/include/gtk-2.0 -I/usr/lib/x86_64-linux-gnu/gtk-2.0/include -I/usr/include/gio-unix-2.0/ -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng16 -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/freetype2 -I/usr/include/libpng16 -lgtk-x11-2.0 -lgdk-x11-2.0 -lpangocairo-1.0 -latk-1.0 -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lpangoft2-1.0 -lpango-1.0 -lgobject-2.0 -lglib-2.0 -lfontconfig -lfreetype
+
+yes
+------------------------------------------------------------------------------------------------
+Checking for 'libxml-2.0' >= 2.7
+['/usr/bin/pkg-config', '--atleast-version=2.7', 'libxml-2.0']
+['/usr/bin/pkg-config', '--cflags', '--libs', 'libxml-2.0']
+out: -I/usr/include/libxml2 -lxml2
+
+yes
+------------------------------------------------------------------------------------------------
+Checking for type uint128_t
+==>
+#include <stdint.h>
+
+int main(int argc, char **argv) {
+	(void)argc; (void)argv;
+	if ((uint128_t *) 0) return 0;
+	if (sizeof (uint128_t)) return 0;
+	return 1;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_656b178ce7442053dff90315b31a1cc5/test.cpp -> build/.conf_check_656b178ce7442053dff90315b31a1cc5/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+err: ../test.cpp: In function ‘int main(int, char**)’:
+../test.cpp:5:7: error: ‘uint128_t’ was not declared in this scope
+  if ((uint128_t *) 0) return 0;
+       ^~~~~~~~~
+../test.cpp:5:7: note: suggested alternative: ‘uint32_t’
+  if ((uint128_t *) 0) return 0;
+       ^~~~~~~~~
+       uint32_t
+../test.cpp:5:18: error: expected primary-expression before ‘)’ token
+  if ((uint128_t *) 0) return 0;
+                  ^
+../test.cpp:5:20: error: expected ‘)’ before numeric constant
+  if ((uint128_t *) 0) return 0;
+                    ^
+../test.cpp:6:14: error: ‘uint128_t’ was not declared in this scope
+  if (sizeof (uint128_t)) return 0;
+              ^~~~~~~~~
+../test.cpp:6:14: note: suggested alternative: ‘uint32_t’
+  if (sizeof (uint128_t)) return 0;
+              ^~~~~~~~~
+              uint32_t
+
+from /home/qqy/Desktop/High-Precision-Congestion-Control/simulation/src/core: Test does not build: Traceback (most recent call last):
+  File "/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Tools/c_config.py", line 459, in run_c_code
+    bld.compile()
+  File "/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Build.py", line 188, in compile
+    raise Errors.BuildError(self.producer.error)
+BuildError: Build failed
+ -> task in 'testprog' failed (exit status 1): 
+	{task 139958194781328: cxx test.cpp -> test.cpp.1.o}
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+
+not found
+from /home/qqy/Desktop/High-Precision-Congestion-Control/simulation/src/core: The configuration failed
+------------------------------------------------------------------------------------------------
+Checking for type __uint128_t
+==>
+#include <stdint.h>
+
+int main(int argc, char **argv) {
+	(void)argc; (void)argv;
+	if ((__uint128_t *) 0) return 0;
+	if (sizeof (__uint128_t)) return 0;
+	return 1;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_ace1886511f08627ee2e4ca020806295/test.cpp -> build/.conf_check_ace1886511f08627ee2e4ca020806295/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_ace1886511f08627ee2e4ca020806295/testbuild/test.cpp.1.o -> build/.conf_check_ace1886511f08627ee2e4ca020806295/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_ace1886511f08627ee2e4ca020806295/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+yes
+------------------------------------------------------------------------------------------------
+Checking high precision time implementation
+128-bit integer
+------------------------------------------------------------------------------------------------
+Checking for header stdint.h
+==>
+#include <stdint.h>
+
+int main(int argc, char **argv) {
+	(void)argc; (void)argv;
+	return 0;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/test.cpp -> build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/test.cpp.1.o -> build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+yes
+------------------------------------------------------------------------------------------------
+Checking for header inttypes.h
+==>
+#include <inttypes.h>
+
+int main(int argc, char **argv) {
+	(void)argc; (void)argv;
+	return 0;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/test.cpp -> build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/test.cpp.1.o -> build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+yes
+------------------------------------------------------------------------------------------------
+Checking for header sys/inttypes.h
+==>
+#include <sys/inttypes.h>
+
+int main(int argc, char **argv) {
+	(void)argc; (void)argv;
+	return 0;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_61ecbfef21667d45a28decabe37fdf64/test.cpp -> build/.conf_check_61ecbfef21667d45a28decabe37fdf64/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+err: ../test.cpp:1:10: fatal error: sys/inttypes.h: No such file or directory
+ #include <sys/inttypes.h>
+          ^~~~~~~~~~~~~~~~
+compilation terminated.
+
+from /home/qqy/Desktop/High-Precision-Congestion-Control/simulation/src/core: Test does not build: Traceback (most recent call last):
+  File "/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Tools/c_config.py", line 459, in run_c_code
+    bld.compile()
+  File "/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Build.py", line 188, in compile
+    raise Errors.BuildError(self.producer.error)
+BuildError: Build failed
+ -> task in 'testprog' failed (exit status 1): 
+	{task 139958194893968: cxx test.cpp -> test.cpp.1.o}
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+
+not found
+from /home/qqy/Desktop/High-Precision-Congestion-Control/simulation/src/core: The configuration failed
+------------------------------------------------------------------------------------------------
+Checking for header sys/types.h
+==>
+#include <sys/types.h>
+
+int main(int argc, char **argv) {
+	(void)argc; (void)argv;
+	return 0;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/test.cpp -> build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/testbuild/test.cpp.1.o -> build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+yes
+------------------------------------------------------------------------------------------------
+Checking for header sys/stat.h
+==>
+#include <sys/stat.h>
+
+int main(int argc, char **argv) {
+	(void)argc; (void)argv;
+	return 0;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/test.cpp -> build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/testbuild/test.cpp.1.o -> build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+yes
+------------------------------------------------------------------------------------------------
+Checking for header dirent.h
+==>
+#include <dirent.h>
+
+int main(int argc, char **argv) {
+	(void)argc; (void)argv;
+	return 0;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_c94d96928742c001335a0559791a93d8/test.cpp -> build/.conf_check_c94d96928742c001335a0559791a93d8/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_c94d96928742c001335a0559791a93d8/testbuild/test.cpp.1.o -> build/.conf_check_c94d96928742c001335a0559791a93d8/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_c94d96928742c001335a0559791a93d8/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+yes
+------------------------------------------------------------------------------------------------
+Checking for header stdlib.h
+==>
+#include <stdlib.h>
+
+int main(int argc, char **argv) {
+	(void)argc; (void)argv;
+	return 0;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/test.cpp -> build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/testbuild/test.cpp.1.o -> build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+yes
+------------------------------------------------------------------------------------------------
+Checking for header signal.h
+==>
+#include <signal.h>
+
+int main(int argc, char **argv) {
+	(void)argc; (void)argv;
+	return 0;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_48955ac54d2136a572805353a7b9b62d/test.cpp -> build/.conf_check_48955ac54d2136a572805353a7b9b62d/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_48955ac54d2136a572805353a7b9b62d/testbuild/test.cpp.1.o -> build/.conf_check_48955ac54d2136a572805353a7b9b62d/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_48955ac54d2136a572805353a7b9b62d/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+yes
+------------------------------------------------------------------------------------------------
+Checking for header pthread.h
+==>
+
+#include <pthread.h>
+int main ()
+{
+   pthread_mutex_t m;
+   pthread_mutex_init (&m, NULL);
+   return 0;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_2be466e82e703a744ee152afe2b58299/test.cpp -> build/.conf_check_2be466e82e703a744ee152afe2b58299/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-pthread', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_2be466e82e703a744ee152afe2b58299/testbuild/test.cpp.1.o -> build/.conf_check_2be466e82e703a744ee152afe2b58299/testbuild/testprog
+[0m
+['/usr/bin/g++', '-pthread', 'test.cpp.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_2be466e82e703a744ee152afe2b58299/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+yes
+------------------------------------------------------------------------------------------------
+Checking for header stdint.h
+==>
+#include <stdint.h>
+
+int main(int argc, char **argv) {
+	(void)argc; (void)argv;
+	return 0;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/test.cpp -> build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/test.cpp.1.o -> build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+yes
+------------------------------------------------------------------------------------------------
+Checking for header inttypes.h
+==>
+#include <inttypes.h>
+
+int main(int argc, char **argv) {
+	(void)argc; (void)argv;
+	return 0;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/test.cpp -> build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/test.cpp.1.o -> build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+yes
+------------------------------------------------------------------------------------------------
+Checking for header sys/inttypes.h
+==>
+#include <sys/inttypes.h>
+
+int main(int argc, char **argv) {
+	(void)argc; (void)argv;
+	return 0;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_61ecbfef21667d45a28decabe37fdf64/test.cpp -> build/.conf_check_61ecbfef21667d45a28decabe37fdf64/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+err: ../test.cpp:1:10: fatal error: sys/inttypes.h: No such file or directory
+ #include <sys/inttypes.h>
+          ^~~~~~~~~~~~~~~~
+compilation terminated.
+
+from /home/qqy/Desktop/High-Precision-Congestion-Control/simulation/src/core: Test does not build: Traceback (most recent call last):
+  File "/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Tools/c_config.py", line 459, in run_c_code
+    bld.compile()
+  File "/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Build.py", line 188, in compile
+    raise Errors.BuildError(self.producer.error)
+BuildError: Build failed
+ -> task in 'testprog' failed (exit status 1): 
+	{task 139958181760848: cxx test.cpp -> test.cpp.1.o}
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+
+not found
+from /home/qqy/Desktop/High-Precision-Congestion-Control/simulation/src/core: The configuration failed
+------------------------------------------------------------------------------------------------
+Checking for library rt
+==>
+
+int main(int argc, char **argv) {
+	(void)argc; (void)argv;
+	return 0;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/test.cpp -> build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-pthread', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/testbuild/test.cpp.1.o -> build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/testbuild/testprog
+[0m
+['/usr/bin/g++', '-pthread', 'test.cpp.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-lrt']
+yes
+------------------------------------------------------------------------------------------------
+Checking for header netpacket/packet.h
+==>
+#include <netpacket/packet.h>
+
+int main(int argc, char **argv) {
+	(void)argc; (void)argv;
+	return 0;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/test.cpp -> build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/testbuild/test.cpp.1.o -> build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+yes
+------------------------------------------------------------------------------------------------
+Checking for NSC location
+not found
+------------------------------------------------------------------------------------------------
+Checking for 'sqlite3'
+['/usr/bin/pkg-config', '--cflags', '--libs', 'sqlite3']
+out: -lsqlite3
+
+yes
+------------------------------------------------------------------------------------------------
+Checking for header linux/if_tun.h
+==>
+#include <linux/if_tun.h>
+
+int main(int argc, char **argv) {
+	(void)argc; (void)argv;
+	return 0;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_79f849e1774b3cde8897857e178c7c8c/test.cpp -> build/.conf_check_79f849e1774b3cde8897857e178c7c8c/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-DHAVE_PACKET_H=1', '-DHAVE_SQLITE3=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_79f849e1774b3cde8897857e178c7c8c/testbuild/test.cpp.1.o -> build/.conf_check_79f849e1774b3cde8897857e178c7c8c/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_79f849e1774b3cde8897857e178c7c8c/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+yes
+------------------------------------------------------------------------------------------------
+Checking for program sudo
+/usr/bin/sudo
+find program=['sudo'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/snap/bin'] var='SUDO' -> '/usr/bin/sudo'
+------------------------------------------------------------------------------------------------
+Checking for program valgrind
+/usr/bin/valgrind
+find program=['valgrind'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/snap/bin'] var='VALGRIND' -> '/usr/bin/valgrind'
+------------------------------------------------------------------------------------------------
+Checking for 'gsl'
+['/usr/bin/pkg-config', '--cflags', '--libs', 'gsl']
+out: -lgsl -lgslcblas -lm
+
+yes
+------------------------------------------------------------------------------------------------
+Checking for compilation flag -Wno-error=deprecated-d... support
+==>
+#include <stdio.h>
+int main() { return 0; }
+
+<==
+[1/2] [32mcxx: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/test.cc -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-Wno-error=deprecated-declarations', '-DHAVE_PACKET_H=1', '-DHAVE_SQLITE3=1', '-DHAVE_IF_TUN_H=1', '-DHAVE_GSL=1', '../test.cc', '-c', '-o', 'test.cc.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cc.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+ok
+------------------------------------------------------------------------------------------------
+Checking for compilation flag -Wno-error=deprecated-d... support
+==>
+#include <stdio.h>
+int main() { return 0; }
+
+<==
+[1/2] [32mc: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/test.c -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o
+[0m
+['/usr/bin/gcc', '-Wno-error=deprecated-declarations', '-DHAVE_PACKET_H=1', '-DHAVE_SQLITE3=1', '-DHAVE_IF_TUN_H=1', '-DHAVE_GSL=1', '../test.c', '-c', '-o', 'test.c.1.o']
+[2/2] [33mcprogram: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog
+[0m
+['/usr/bin/gcc', 'test.c.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+ok
+------------------------------------------------------------------------------------------------
+Checking for compilation flag -fstrict-aliasing... support
+==>
+#include <stdio.h>
+int main() { return 0; }
+
+<==
+[1/2] [32mcxx: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/test.cc -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-Wno-error=deprecated-declarations', '-fstrict-aliasing', '-DHAVE_PACKET_H=1', '-DHAVE_SQLITE3=1', '-DHAVE_IF_TUN_H=1', '-DHAVE_GSL=1', '../test.cc', '-c', '-o', 'test.cc.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cc.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+ok
+------------------------------------------------------------------------------------------------
+Checking for compilation flag -fstrict-aliasing... support
+==>
+#include <stdio.h>
+int main() { return 0; }
+
+<==
+[1/2] [32mc: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/test.c -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o
+[0m
+['/usr/bin/gcc', '-fstrict-aliasing', '-DHAVE_PACKET_H=1', '-DHAVE_SQLITE3=1', '-DHAVE_IF_TUN_H=1', '-DHAVE_GSL=1', '../test.c', '-c', '-o', 'test.c.1.o']
+[2/2] [33mcprogram: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog
+[0m
+['/usr/bin/gcc', 'test.c.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+ok
+------------------------------------------------------------------------------------------------
+Checking for compilation flag -Wstrict-aliasing... support
+==>
+#include <stdio.h>
+int main() { return 0; }
+
+<==
+[1/2] [32mcxx: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/test.cc -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o
+[0m
+['/usr/bin/g++', '-O3', '-g', '-std=gnu++11', '-march=native', '-Wno-error=deprecated-declarations', '-fstrict-aliasing', '-Wstrict-aliasing', '-DHAVE_PACKET_H=1', '-DHAVE_SQLITE3=1', '-DHAVE_IF_TUN_H=1', '-DHAVE_GSL=1', '../test.cc', '-c', '-o', 'test.cc.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cc.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+ok
+------------------------------------------------------------------------------------------------
+Checking for compilation flag -Wstrict-aliasing... support
+==>
+#include <stdio.h>
+int main() { return 0; }
+
+<==
+[1/2] [32mc: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/test.c -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o
+[0m
+['/usr/bin/gcc', '-Wstrict-aliasing', '-DHAVE_PACKET_H=1', '-DHAVE_SQLITE3=1', '-DHAVE_IF_TUN_H=1', '-DHAVE_GSL=1', '../test.c', '-c', '-o', 'test.c.1.o']
+[2/2] [33mcprogram: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog
+[0m
+['/usr/bin/gcc', 'test.c.1.o', '-o', '/home/qqy/Desktop/High-Precision-Congestion-Control/simulation/build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+ok
+------------------------------------------------------------------------------------------------
+Checking for program doxygen
+/usr/bin/doxygen
+find program=['doxygen'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/snap/bin'] var='DOXYGEN' -> '/usr/bin/doxygen'

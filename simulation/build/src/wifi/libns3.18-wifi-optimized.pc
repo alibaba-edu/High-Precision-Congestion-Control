@@ -1,0 +1,10 @@
+prefix=/usr/local
+libdir=/usr/local/lib
+includedir=/usr/local/include/ns3.18
+
+Name: libns3-wifi
+Description: ns-3 module ns3-wifi
+Version: 3.18
+Libs: -L${libdir} -Wl,-Bdynamic -lns3.18-wifi-optimized -lgsl -lgslcblas -lm
+Cflags: -I${includedir}
+Requires: libns3.18-network-optimized libns3.18-propagation-optimized

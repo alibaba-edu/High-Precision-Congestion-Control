@@ -509,7 +509,7 @@ void
 WimaxNetDevice::Receive (Ptr<const PacketBurst> burst)
 {
 
-  NS_LOG_DEBUG ("WimaxNetDevice::Receive, station = " << GetMacAddress ());
+  //NS_LOG_DEBUG ("WimaxNetDevice::Receive, station = " << GetMacAddress ());
 
   Ptr<PacketBurst> b = burst->Copy ();
   for (std::list<Ptr<Packet> >::const_iterator iter = b->Begin (); iter != b->End (); ++iter)
@@ -600,14 +600,14 @@ WimaxNetDevice::InitializeChannels (void)
 bool
 WimaxNetDevice::IsBridge (void) const
 {
-  NS_LOG_FUNCTION_NOARGS ();
+  //NS_LOG_FUNCTION_NOARGS ();
   return false;
 }
 
 Address
 WimaxNetDevice::GetMulticast (Ipv4Address multicastGroup) const
 {
-  NS_LOG_FUNCTION (multicastGroup);
+  //NS_LOG_FUNCTION (multicastGroup);
 
   Mac48Address ad = Mac48Address::GetMulticast (multicastGroup);
 
@@ -616,7 +616,7 @@ WimaxNetDevice::GetMulticast (Ipv4Address multicastGroup) const
   // use it by just returning the EUI-48 address which is automagically converted
   // to an Address.
   //
-  NS_LOG_LOGIC ("multicast address is " << ad);
+  //NS_LOG_LOGIC ("multicast address is " << ad);
 
   return ad;
 }
@@ -626,7 +626,7 @@ WimaxNetDevice::GetMulticast (Ipv6Address addr) const
 {
   Mac48Address ad = Mac48Address::GetMulticast (addr);
 
-  NS_LOG_LOGIC ("MAC IPv6 multicast address is " << ad);
+  //NS_LOG_LOGIC ("MAC IPv6 multicast address is " << ad);
   return ad;
 }
 

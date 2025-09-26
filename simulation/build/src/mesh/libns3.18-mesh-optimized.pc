@@ -1,0 +1,10 @@
+prefix=/usr/local
+libdir=/usr/local/lib
+includedir=/usr/local/include/ns3.18
+
+Name: libns3-mesh
+Description: ns-3 module ns3-mesh
+Version: 3.18
+Libs: -L${libdir} -Wl,-Bdynamic -lns3.18-mesh-optimized
+Cflags: -I${includedir}
+Requires: libns3.18-internet-optimized libns3.18-wifi-optimized libns3.18-bridge-optimized libns3.18-applications-optimized

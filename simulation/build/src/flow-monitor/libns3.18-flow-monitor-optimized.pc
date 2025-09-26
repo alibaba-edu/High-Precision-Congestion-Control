@@ -1,0 +1,10 @@
+prefix=/usr/local
+libdir=/usr/local/lib
+includedir=/usr/local/include/ns3.18
+
+Name: libns3-flow-monitor
+Description: ns-3 module ns3-flow-monitor
+Version: 3.18
+Libs: -L${libdir} -Wl,-Bdynamic -lns3.18-flow-monitor-optimized
+Cflags: -I${includedir}
+Requires: libns3.18-internet-optimized libns3.18-config-store-optimized libns3.18-tools-optimized

@@ -1,0 +1,10 @@
+prefix=/usr/local
+libdir=/usr/local/lib
+includedir=/usr/local/include/ns3.18
+
+Name: libns3-csma-layout
+Description: ns-3 module ns3-csma-layout
+Version: 3.18
+Libs: -L${libdir} -Wl,-Bdynamic -lns3.18-csma-layout-optimized
+Cflags: -I${includedir}
+Requires: libns3.18-csma-optimized libns3.18-network-optimized libns3.18-applications-optimized libns3.18-netanim-optimized libns3.18-point-to-point-optimized

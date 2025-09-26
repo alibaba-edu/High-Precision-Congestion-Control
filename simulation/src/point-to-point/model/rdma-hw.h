@@ -114,6 +114,13 @@ public:
 	void FastRecoveryMlx(Ptr<RdmaQueuePair> q);
 	void ActiveIncreaseMlx(Ptr<RdmaQueuePair> q);
 	void HyperIncreaseMlx(Ptr<RdmaQueuePair> q);
+	bool m_dcqcn_log_file  = true;
+	void DcqcnMaybeLog(Ptr<RdmaQueuePair> q,
+                     const char* phase,
+                     uint64_t cur_bps,
+                     double alpha,
+                     uint64_t tgt_bps,
+                     uint32_t stage);
 
 	/***********************
 	 * High Precision CC
@@ -127,6 +134,7 @@ public:
 	void UpdateRateHp(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch, bool fast_react);
 	void UpdateRateHpTest(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch, bool fast_react);
 	void FastReactHp(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch);
+	void HpccMaybeLog(Ptr<RdmaQueuePair> qp, double cur_bps);
 
 	/**********************
 	 * TIMELY
@@ -136,6 +144,8 @@ public:
 	void HandleAckTimely(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch);
 	void UpdateRateTimely(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch, bool us);
 	void FastReactTimely(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch);
+	void TimelyMaybeLog(Ptr<RdmaQueuePair> qp, const char* phase, uint64_t cur_bps, uint64_t rtt_ns, double gradient);
+	bool m_timely_log_file = true;
 
 	/**********************
 	 * DCTCP
@@ -150,6 +160,44 @@ public:
 	void SetPintSmplThresh(double p);
 	void HandleAckHpPint(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch);
 	void UpdateRateHpPint(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch, bool fast_react);
+
+	/*********************
+	 * Mycc
+	 ********************/
+	double m_mycc_pStar{0.05};     // 目标ECN标记率
+	double m_mycc_Kp{0.06};
+	double m_mycc_Ki{0.006};
+	double m_mycc_integ_cap{1.0};  // 积分上限（防风up）
+	double m_mycc_ewma{0.8};       // 标记率EWMA
+	uint32_t m_mycc_win{16};       // 滑窗大小
+	double m_mycc_probe_step{8e8}; // 无标记时的温和探测 +0.8Gbps
+	double m_mycc_severe_th{0.20}; // “重拥塞”阈值
+	double m_mycc_severe_mul{0.70};// 重拥塞时乘性退避
+	// 声明函数
+	void HandleAckMycc(Ptr<RdmaQueuePair> qp, Ptr<Packet>, CustomHeader&);
+	void UpdateRateMycc(Ptr<RdmaQueuePair> qp, bool fast);
+	void HandleCnpMycc(Ptr<RdmaQueuePair> qp, uint16_t qfb, uint16_t total);
+
+	/*********************
+	 * Rttcc
+	 ********************/
+	// ==== Rttcc attributes (CcMode = 12) ====
+	double    m_rttcc_alpha;        // EWMA for RTT smoothing
+	uint64_t  m_rttcc_rttLow;       // ns: fast-increase threshold
+	uint64_t  m_rttcc_rttTarget;    // ns: decrease threshold
+	DataRate  m_rttcc_rateLine;     // DataRate line for gradient term
+	double    m_rttcc_probe_step;   // bps: small additive step at very low RTT
+	uint64_t  m_rttcc_baseIntNs;    // ns: base decision interval
+	uint64_t  m_rttcc_fastExtraNs;  // ns: extra guard for fast-increase
+	uint64_t  m_rttcc_decBaseNs;    // ns: base guard for decrease
+	uint64_t  m_rttcc_cvgBaseNs;    // ns: base guard for convergence
+	void HandleAckRttcc (ns3::Ptr<RdmaQueuePair> qp, ns3::Ptr<ns3::Packet> p, CustomHeader &ch);
+	bool      m_rttcc_log_file = true;
+	uint64_t  m_rttcc_log_every_ns = 20000;
+	double    m_rttcc_log_change_pct = 0.02;
+	void RttccMaybeLog(Ptr<RdmaQueuePair> qp, const char* phase,
+                   uint64_t cur_bps, uint64_t rtt_ns, double gradient);
+	//std::string IpToStr(const ns3::Ipv4Address& a);
 };
 
 } /* namespace ns3 */

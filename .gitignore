@@ -1,0 +1,19 @@
+# 忽略编译产生的文件
+*.pyc
+__pycache__/
+*.o
+*.so
+build/
+dist/
+
+# 忽略日志文件和数据文件（特别是大的）
+*.log
+mix/log/**/*.log  # 忽略你代码中生成的日志文件
+*.csv
+*.dat
+*.png  # 如果图片是生成的，而不是源码的一部分
+
+# 忽略系统或IDE文件
+.DS_Store
+.vscode/
+*.swp

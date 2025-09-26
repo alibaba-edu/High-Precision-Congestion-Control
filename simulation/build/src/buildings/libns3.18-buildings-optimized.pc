@@ -1,0 +1,10 @@
+prefix=/usr/local
+libdir=/usr/local/lib
+includedir=/usr/local/include/ns3.18
+
+Name: libns3-buildings
+Description: ns-3 module ns3-buildings
+Version: 3.18
+Libs: -L${libdir} -Wl,-Bdynamic -lns3.18-buildings-optimized
+Cflags: -I${includedir}
+Requires: libns3.18-mobility-optimized libns3.18-propagation-optimized libns3.18-config-store-optimized

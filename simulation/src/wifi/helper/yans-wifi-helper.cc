@@ -47,7 +47,7 @@ AsciiPhyTransmitSinkWithContext (
   WifiPreamble preamble,
   uint8_t txLevel)
 {
-  NS_LOG_FUNCTION (stream << context << p << mode << preamble << txLevel);
+  //NS_LOG_FUNCTION (stream << context << p << mode << preamble << txLevel);
   *stream->GetStream () << "t " << Simulator::Now ().GetSeconds () << " " << context << " " << *p << std::endl;
 }
 
@@ -59,7 +59,7 @@ AsciiPhyTransmitSinkWithoutContext (
   WifiPreamble preamble,
   uint8_t txLevel)
 {
-  NS_LOG_FUNCTION (stream << p << mode << preamble << txLevel);
+  //NS_LOG_FUNCTION (stream << p << mode << preamble << txLevel);
   *stream->GetStream () << "t " << Simulator::Now ().GetSeconds () << " " << *p << std::endl;
 }
 
@@ -72,7 +72,7 @@ AsciiPhyReceiveSinkWithContext (
   WifiMode mode,
   enum WifiPreamble preamble)
 {
-  NS_LOG_FUNCTION (stream << context << p << snr << mode << preamble);
+  //NS_LOG_FUNCTION (stream << context << p << snr << mode << preamble);
   *stream->GetStream () << "r " << Simulator::Now ().GetSeconds () << " " << context << " " << *p << std::endl;
 }
 
@@ -84,7 +84,7 @@ AsciiPhyReceiveSinkWithoutContext (
   WifiMode mode,
   enum WifiPreamble preamble)
 {
-  NS_LOG_FUNCTION (stream << p << snr << mode << preamble);
+  //NS_LOG_FUNCTION (stream << p << snr << mode << preamble);
   *stream->GetStream () << "r " << Simulator::Now ().GetSeconds () << " " << *p << std::endl;
 }
 
@@ -428,7 +428,7 @@ YansWifiPhyHelper::EnablePcapInternal (std::string prefix, Ptr<NetDevice> nd, bo
   Ptr<WifiNetDevice> device = nd->GetObject<WifiNetDevice> ();
   if (device == 0)
     {
-      NS_LOG_INFO ("YansWifiHelper::EnablePcapInternal(): Device " << &device << " not of type ns3::WifiNetDevice");
+      //NS_LOG_INFO ("YansWifiHelper::EnablePcapInternal(): Device " << &device << " not of type ns3::WifiNetDevice");
       return;
     }
 
@@ -468,7 +468,7 @@ YansWifiPhyHelper::EnableAsciiInternal (
   Ptr<WifiNetDevice> device = nd->GetObject<WifiNetDevice> ();
   if (device == 0)
     {
-      NS_LOG_INFO ("YansWifiHelper::EnableAsciiInternal(): Device " << device << " not of type ns3::WifiNetDevice");
+      //NS_LOG_INFO ("YansWifiHelper::EnableAsciiInternal(): Device " << device << " not of type ns3::WifiNetDevice");
       return;
     }
 

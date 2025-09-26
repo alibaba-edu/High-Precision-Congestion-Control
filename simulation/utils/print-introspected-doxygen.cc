@@ -14,7 +14,7 @@
 
 using namespace ns3;
 
-NS_LOG_COMPONENT_DEFINE ("PrintIntrospectedDoxygen");
+//NS_LOG_COMPONENT_DEFINE ("PrintIntrospectedDoxygen");
 
 namespace
 {
@@ -266,7 +266,7 @@ StaticInformation::Gather (TypeId tid)
 void 
 StaticInformation::DoGather (TypeId tid)
 {
-  NS_LOG_FUNCTION (this);
+  //NS_LOG_FUNCTION (this);
   if (HasAlreadyBeenProcessed (tid))
     {
       return;

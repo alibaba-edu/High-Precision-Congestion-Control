@@ -1,0 +1,10 @@
+prefix=/usr/local
+libdir=/usr/local/lib
+includedir=/usr/local/include/ns3.18
+
+Name: libns3-lte
+Description: ns-3 module ns3-lte
+Version: 3.18
+Libs: -L${libdir} -Wl,-Bdynamic -lns3.18-lte-optimized
+Cflags: -I${includedir}
+Requires: libns3.18-core-optimized libns3.18-network-optimized libns3.18-spectrum-optimized libns3.18-stats-optimized libns3.18-buildings-optimized libns3.18-virtual-net-device-optimized libns3.18-point-to-point-optimized libns3.18-applications-optimized libns3.18-internet-optimized libns3.18-csma-optimized

@@ -21,7 +21,7 @@ if __name__=="__main__":
 	# For example, here we list two CC: 1. HPCC-PINT with utgt=95,AI=50Mbps,pint_log_base=1.05,pint_prob=1; 2. HPCC with utgt=95,ai=50Mbps.
 	# For the exact naming, please check ../simulation/mix/fct_*.txt output by the simulation.
 	CCs = [
-		'hpccPint95ai50log1.05p1.000',
+		'hpccPint95ai50log1.050p1.000',
 		'hp95ai50',
 	]
 
@@ -46,10 +46,17 @@ if __name__=="__main__":
 		# up to here, `output` should be a string of multiple lines, each line is: fct, size
 		a = output.split('\n')[:-2]
 		n = len(a)
+		#print n
+		#print a
+		#print n
 		for i in range(0,100,step):
 			l = i * n / 100
+			#print l
+			#print a[0:1]
 			r = (i+step) * n / 100
+			#print r
 			d = map(lambda x: [float(x.split()[0]), int(x.split()[1])], a[l:r])
+			#print d
 			fct=sorted(map(lambda x: x[0], d))
 			res[i/step].append(d[-1][1]) # flow size
 			#res[i/step].append(sum(fct) / len(fct)) # avg fct

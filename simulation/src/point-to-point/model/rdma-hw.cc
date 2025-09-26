@@ -12,8 +12,272 @@
 #include "ppp-header.h"
 #include "qbb-header.h"
 #include "cn-header.h"
+#include "rdma-queue-pair.h"
+#include <cstdio>
+#include <unordered_map>
+#include <cmath>
+#include <sstream>
+#include <string>
+#include <cstdlib>
+#include <sstream>
+#include <string>
+
+namespace {
+
+  static std::string MakeFlowKey(uint32_t nodeId,
+                               const ns3::Ipv4Address& sip, uint16_t sport,
+                               const ns3::Ipv4Address& dip, uint16_t dport,
+                               uint16_t pg) {
+  	std::ostringstream oss;
+  	oss << "n" << nodeId
+      	<< "_S" << sip << "-" << sport
+      	<< "_D" << dip << "-" << dport
+      	<< "_pg" << pg;
+  	return oss.str();
+  }
+
+  // 一个简化的“文件句柄池”：第一次写入时创建文件并写 header
+  struct FlowCsvMgr {
+  	std::unordered_map<std::string, FILE*> files;
+
+  	~FlowCsvMgr() {
+    		for (auto &kv : files) if (kv.second) std::fclose(kv.second);
+  	}
+
+  	FILE* get(const std::string& prefix,
+            uint32_t nodeId,
+            const ns3::Ipv4Address& sip, uint16_t sport,
+            const ns3::Ipv4Address& dip, uint16_t dport,
+            uint16_t pg,
+            const char* header) {
+    		std::string key = MakeFlowKey(nodeId, sip, sport, dip, dport, pg);
+    		auto it = files.find(prefix + key);
+    		if (it != files.end()) return it->second;
+
+    		const std::string base = "mix/log/";
+  		// 如果 prefix 里带了子目录（例如 "dcqcn/dcqcn_"），先把目录部分 mkdir -p
+  		size_t slash = prefix.find_last_of('/');
+  		if (slash != std::string::npos) {
+    			std::string dir = base + prefix.substr(0, slash); // e.g. mix/log/dcqcn
+    			std::string cmd = "mkdir -p " + dir;
+    			(void)std::system(cmd.c_str());
+  		} else {
+			std::string cmd = "mkdir -p " + base;
+			(void)std::system(cmd.c_str());
+    			//std::system(std::string("mkdir -p ") + base);
+  		}
+
+    		std::string path = base + prefix + key + ".csv";
+    		FILE* f = std::fopen(path.c_str(), "w");
+    		if (!f) return nullptr;
+    		std::fprintf(f, "%s\n", header);
+    		files.emplace(prefix + key, f);
+    		return f;
+  	}
+  };
+
+  static FlowCsvMgr g_flowCsv;
+
+  static std::string IpToStr(const ns3::Ipv4Address& a) {
+  	std::ostringstream oss;
+  	oss << a;          // Ipv4Address 支持 << 打印为 x.x.x.x
+  	return oss.str();
+  }
+
+  struct RttccFlowLogMgr {
+  	std::unordered_map<std::string, FILE*> files;
+
+  	~RttccFlowLogMgr() {
+    		for (auto &kv : files) if (kv.second) std::fclose(kv.second);
+  	}
+
+  	static std::string IpToStr(const ns3::Ipv4Address& a) {
+    		std::ostringstream oss; oss << a; return oss.str(); // 点分十进制
+  	}
+
+  	static std::string MakeKey(uint32_t nodeId,
+                             const ns3::Ipv4Address& sip, uint16_t sport,
+                             const ns3::Ipv4Address& dip, uint16_t dport,
+                             uint16_t pg) {
+    		std::ostringstream oss;
+    		oss << "n" << nodeId
+        		<< "_S" << IpToStr(sip) << "-" << sport
+        		<< "_D" << IpToStr(dip) << "-" << dport
+        		<< "_pg" << pg;
+    		return oss.str();
+  	}
+
+  	FILE* get(uint32_t nodeId,
+            const ns3::Ipv4Address& sip, uint16_t sport,
+            const ns3::Ipv4Address& dip, uint16_t dport,
+            uint16_t pg) {
+    		std::string key = MakeKey(nodeId, sip, sport, dip, dport, pg);
+    		auto it = files.find(key);
+    		if (it != files.end()) return it->second;
+
+    		// 确保 mix/ 目录存在
+    		FILE* probe = std::fopen("mix/log/.probe", "a");
+    		if (!probe) std::system("mkdir -p mix/log");  //(void)_mk1;
+    		else std::fclose(probe);
+
+		std::string dir  = "mix/log/rttcc";
+		std::system(std::string("mkdir -p " + dir).c_str());
+		std::string path = dir + "/rttcc_" + key + ".csv";
+    		//std::string path = "mix/log/rttcc_" + key + ".csv";
+    		FILE* f = std::fopen(path.c_str(), "w");
+    		if (!f) return nullptr;
+
+    		std::fprintf(f, "time_s\tnode\tsip\tdip\tsport\tdport\tpg\tphase\trate_Gbps\trtt_ns\tgrad\n");
+    		files.emplace(std::move(key), f);
+    		return f;
+  	}
+  };
+
+  static RttccFlowLogMgr g_rttccFlowLogs;
+}
+
 
 namespace ns3{
+
+void RdmaHw::DcqcnMaybeLog(Ptr<RdmaQueuePair> q,
+                           const char* phase,
+                           uint64_t cur_bps,
+                           double alpha,
+                           uint64_t tgt_bps,
+                           uint32_t stage)
+{
+  if (!m_dcqcn_log_file) return;
+
+  FILE* f = g_flowCsv.get(
+      /*prefix*/ "dcqcn/dcqcn_",
+      m_node->GetId(),
+      q->sip, q->sport,
+      q->dip, q->dport,
+      q->m_pg,
+      /*header*/ "time_s\tnode\tsip\tdip\tsport\tdport\tpg\tphase\trate_Gbps\talpha\ttarget_Gbps\tstage"
+  );
+  if (!f) return;
+
+  ns3::Time now = Simulator::Now();
+  std::fprintf(f, "%.6f\t%u\t%s\t%s\t%u\t%u\t%u\t%s\t%.3f\t%.6f\t%.3f\t%u\n",
+      now.GetSeconds(),
+      m_node->GetId(),
+      RttccFlowLogMgr::IpToStr(q->sip).c_str(),
+      RttccFlowLogMgr::IpToStr(q->dip).c_str(),
+      q->sport, q->dport, q->m_pg,
+      phase,
+      double(cur_bps)/1e9,
+      q->mlx.m_alpha,
+      double(tgt_bps)/1e9,
+      stage
+  );
+}
+
+
+
+
+void RdmaHw::TimelyMaybeLog(Ptr<RdmaQueuePair> qp,
+                            const char* phase,
+                            uint64_t cur_bps,
+                            uint64_t rtt_ns,
+                            double gradient)
+{
+  // 可选：是否打开日志的开关；若你不想加 Attribute，也可以直接始终记录
+  if (!m_timely_log_file) return;
+
+  FILE* f = g_flowCsv.get(
+      /*prefix*/ "timely/timely_",
+      m_node->GetId(),
+      qp->sip, qp->sport,
+      qp->dip, qp->dport,
+      qp->m_pg,
+      /*header*/ "time_s\tnode\tsip\tdip\tsport\tdport\tpg\tphase\trate_Gbps\trtt_ns\tgrad"
+  );
+  if (!f) return;
+
+  ns3::Time now = Simulator::Now();
+  std::fprintf(f, "%.6f\t%u\t%s\t%s\t%u\t%u\t%u\t%s\t%.3f\t%llu\t%.6f\n",
+      now.GetSeconds(),
+      m_node->GetId(),
+      RttccFlowLogMgr::IpToStr(qp->sip).c_str(),
+      RttccFlowLogMgr::IpToStr(qp->dip).c_str(),
+      qp->sport, qp->dport, qp->m_pg,
+      phase,
+      double(cur_bps) / 1e9,
+      (unsigned long long)rtt_ns,
+      gradient
+  );
+}
+
+
+
+void RdmaHw::RttccMaybeLog(Ptr<RdmaQueuePair> qp,
+                           const char* phase,
+                           uint64_t cur_bps,
+                           uint64_t rtt_ns,
+                           double gradient)
+{
+  if (!m_rttcc_log_file) return;
+
+  auto& st = qp->rttcc;
+  ns3::Time now = Simulator::Now();
+
+  bool time_ok = st.lastLogTime.IsZero()
+              || (uint64_t)(now - st.lastLogTime).GetNanoSeconds() >= m_rttcc_log_every_ns;
+
+  double rel = (st.lastLogBps == 0) ? 1.0
+              : std::fabs((double)cur_bps - (double)st.lastLogBps) / (double)st.lastLogBps;
+
+  bool change_ok = (st.lastLogBps == 0) || (rel >= m_rttcc_log_change_pct);
+  if (!(time_ok || change_ok)) return;
+
+  FILE* f = g_rttccFlowLogs.get(
+      m_node->GetId(),
+      qp->sip, qp->sport,
+      qp->dip, qp->dport,
+      qp->m_pg
+  );
+  if (f) {
+    std::fprintf(f, "%.6f\t%u\t%s\t%s\t%u\t%u\t%u\t%s\t%.3f\t%llu\t%.6f\n",
+      now.GetSeconds(),
+      m_node->GetId(),
+      RttccFlowLogMgr::IpToStr(qp->sip).c_str(),
+      RttccFlowLogMgr::IpToStr(qp->dip).c_str(),
+      qp->sport, qp->dport, qp->m_pg,
+      phase,
+      cur_bps / 1e9,
+      (unsigned long long)rtt_ns,
+      gradient
+    );
+  }
+
+  st.lastLogTime = now;
+  st.lastLogBps  = cur_bps;
+}
+
+
+void RdmaHw::HpccMaybeLog(Ptr<RdmaQueuePair> qp, double rateGbps) {
+    static FILE* f = nullptr;
+    if (!f) {
+        std::system("mkdir -p mix/hpcc_log"); //(void)_mk2;
+        f = std::fopen("mix/hpcc_log/hpcc_flows.csv", "w");
+        fprintf(f, "time_s,node,sip,dip,sport,dport,pg,rate_Gbps\n");
+    }
+    ns3::Time now = Simulator::Now();
+    fprintf(f, "%.6f,%u,%s,%s,%u,%u,%u,%.3f\n",
+        now.GetSeconds(),
+        m_node->GetId(),
+        IpToStr(qp->sip).c_str(),
+        IpToStr(qp->dip).c_str(),
+        qp->sport,
+        qp->dport,
+        qp->m_pg,
+        rateGbps);
+}
+
+
+
+
 
 TypeId RdmaHw::GetTypeId (void)
 {
@@ -174,6 +438,68 @@ TypeId RdmaHw::GetTypeId (void)
 				UintegerValue(65536),
 				MakeUintegerAccessor(&RdmaHw::pint_smpl_thresh),
 				MakeUintegerChecker<uint32_t>())
+//========Mycc============
+		.AddAttribute("MyccPStar", "Target ECN marking probability", DoubleValue(0.05),
+  				MakeDoubleAccessor(&RdmaHw::m_mycc_pStar), MakeDoubleChecker<double>())
+		.AddAttribute("MyccKp", "Proportional gain for MYCC PI controller", DoubleValue(0.06),
+  				MakeDoubleAccessor(&RdmaHw::m_mycc_Kp), MakeDoubleChecker<double>())
+		.AddAttribute("MyccKi", "Integral gain for MYCC PI controller", DoubleValue(0.006),
+  				MakeDoubleAccessor(&RdmaHw::m_mycc_Ki), MakeDoubleChecker<double>())
+		.AddAttribute("MyccIntegCap", "Integral term absolute cap", DoubleValue(1.0),
+  				MakeDoubleAccessor(&RdmaHw::m_mycc_integ_cap), MakeDoubleChecker<double>())
+		.AddAttribute("MyccEwma", "EWMA factor for ECN probability estimate", DoubleValue(0.8),
+  				MakeDoubleAccessor(&RdmaHw::m_mycc_ewma), MakeDoubleChecker<double>())
+		.AddAttribute("MyccWin", "Sliding window size (packets) used for ECN estimation", UintegerValue(16),
+  				MakeUintegerAccessor(&RdmaHw::m_mycc_win), MakeUintegerChecker<uint32_t>())
+		.AddAttribute("MyccProbeStep", "Additive probe step (bps) when ECN=0", DoubleValue(8e8),   // 0.8 Gbps
+  				MakeDoubleAccessor(&RdmaHw::m_mycc_probe_step), MakeDoubleChecker<double>())
+		.AddAttribute("MyccSevereTh", "Severe congestion ECN threshold", DoubleValue(0.20),
+  				MakeDoubleAccessor(&RdmaHw::m_mycc_severe_th), MakeDoubleChecker<double>())
+		.AddAttribute("MyccSevereMul", "Multiplicative decrease factor when severe", DoubleValue(0.70),
+  				MakeDoubleAccessor(&RdmaHw::m_mycc_severe_mul), MakeDoubleChecker<double>())
+//=========Rttcc==========
+		.AddAttribute("RttccAlpha", "EWMA factor for RTT smoothing",
+             			DoubleValue(0.5), MakeDoubleAccessor(&RdmaHw::m_rttcc_alpha),
+             			MakeDoubleChecker<double>())
+		.AddAttribute("RttccRttLow", "RTT low threshold (ns) for fast increase",
+             			UintegerValue(9000), MakeUintegerAccessor(&RdmaHw::m_rttcc_rttLow),
+             			MakeUintegerChecker<uint64_t>())
+		.AddAttribute("RttccRttTarget", "RTT target (ns) for decrease",
+             			UintegerValue(25000), MakeUintegerAccessor(&RdmaHw::m_rttcc_rttTarget),
+             			MakeUintegerChecker<uint64_t>())
+		.AddAttribute("RttccRateLine", "RateLine (bps) used in convergence gradient term",
+             			DataRateValue(DataRate("100Gb/s")), MakeDataRateAccessor(&RdmaHw::m_rttcc_rateLine),
+             			MakeDataRateChecker())
+		.AddAttribute("RttccProbeStep", "Additive probe step (bps) when in very low RTT",
+             			DoubleValue(5e8), MakeDoubleAccessor(&RdmaHw::m_rttcc_probe_step),
+             			MakeDoubleChecker<double>())
+		.AddAttribute("RttccBaseIntervalNs", "Base decision interval (ns)",
+             			UintegerValue(15000), MakeUintegerAccessor(&RdmaHw::m_rttcc_baseIntNs),
+             			MakeUintegerChecker<uint64_t>())
+		.AddAttribute("RttccFastExtraNs", "Extra guard (ns) in fast increase",
+             			UintegerValue(20000), MakeUintegerAccessor(&RdmaHw::m_rttcc_fastExtraNs),
+             			MakeUintegerChecker<uint64_t>())
+		.AddAttribute("RttccDecreaseBaseNs", "Base guard (ns) in decrease",
+             			UintegerValue(20000), MakeUintegerAccessor(&RdmaHw::m_rttcc_decBaseNs),
+             			MakeUintegerChecker<uint64_t>())
+		.AddAttribute("RttccConvergeBaseNs", "Base guard (ns) in convergence",
+             			UintegerValue(15000), MakeUintegerAccessor(&RdmaHw::m_rttcc_cvgBaseNs),
+             			MakeUintegerChecker<uint64_t>())
+		.AddAttribute("RttccLogToFile",
+    				"Write Rttcc logs to per-node CSV instead of stdout.",
+    				BooleanValue(true),
+    				MakeBooleanAccessor(&RdmaHw::m_rttcc_log_file),
+    				MakeBooleanChecker())
+		.AddAttribute("RttccLogEveryNs",
+    				"Minimum interval between two log lines for the same flow (ns).",
+    				UintegerValue(20000), // 20us
+    				MakeUintegerAccessor(&RdmaHw::m_rttcc_log_every_ns),
+    				MakeUintegerChecker<uint64_t>())
+		.AddAttribute("RttccLogChangePct",
+    				"Minimum relative rate change to trigger a log line (0~1).",
+    				DoubleValue(0.02), // 2%
+    				MakeDoubleAccessor(&RdmaHw::m_rttcc_log_change_pct),
+    				MakeDoubleChecker<double>())
 		;
 	return tid;
 }
@@ -233,12 +559,16 @@ void RdmaHw::AddQueuePair(uint64_t size, uint16_t pg, Ipv4Address sip, Ipv4Addre
 	uint32_t nic_idx = GetNicIdxOfQp(qp);
 	m_nic[nic_idx].qpGrp->AddQp(qp);
 	uint64_t key = GetQpKey(dip.Get(), sport, pg);
+	//std::cout << m_qpMap.count(key) << std::endl;
 	m_qpMap[key] = qp;
+
+	//std::cout << "[RdmaHw] QP created, total=" << m_qpMap.size() << "\n";
 
 	// set init variables
 	DataRate m_bps = m_nic[nic_idx].dev->GetDataRate();
 	qp->m_rate = m_bps;
 	qp->m_max_rate = m_bps;
+	//std::cout << "init m_bps=" << m_bps.GetBitRate() << " bps\n";
 	if (m_cc_mode == 1){
 		qp->mlx.m_targetRate = m_bps;
 	}else if (m_cc_mode == 3){
@@ -251,6 +581,14 @@ void RdmaHw::AddQueuePair(uint64_t size, uint16_t pg, Ipv4Address sip, Ipv4Addre
 		qp->tmly.m_curRate = m_bps;
 	}else if (m_cc_mode == 10){
 		qp->hpccPint.m_curRate = m_bps;
+	}else if (m_cc_mode == 11) {          //========= Mycc ============
+  		qp->mycc.m_curRate = m_nic[nic_idx].dev->GetDataRate();
+  		qp->mycc.win_size = m_mycc_win;
+	}else if (m_cc_mode == 12){           // ======== Rttcc ========
+  		qp->rttcc.rateCurrent = m_nic[nic_idx].dev->GetDataRate();
+  		qp->rttcc.rateTarget  = qp->m_max_rate;          // 目标上限 = 每流最大速率
+  		qp->rttcc.recordTimeLast = Simulator::Now();
+  		qp->m_rate = qp->rttcc.rateCurrent;              // 与主速率保持一致
 	}
 
 	// Notify Nic
@@ -347,6 +685,7 @@ int RdmaHw::ReceiveCnp(Ptr<Packet> p, CustomHeader &ch){
 	// This is a Congestion signal
 	// Then, extract data from the congestion packet.
 	// We assume, without verify, the packet is destinated to me
+	//printf("%u",1);
 	uint32_t qIndex = ch.cnp.qIndex;
 	if (qIndex == 1){		//DCTCP
 		std::cout << "TCP--ignore\n";
@@ -381,6 +720,8 @@ int RdmaHw::ReceiveCnp(Ptr<Packet> p, CustomHeader &ch){
 			qp->tmly.m_curRate = dev->GetDataRate();
 		}else if (m_cc_mode == 10){
 			qp->hpccPint.m_curRate = dev->GetDataRate();
+		}else if (m_cc_mode == 11) {  //============Mycc=============
+  			HandleCnpMycc(qp, qfb, total);
 		}
 	}
 	return 0;
@@ -431,6 +772,10 @@ int RdmaHw::ReceiveAck(Ptr<Packet> p, CustomHeader &ch){
 		HandleAckDctcp(qp, p, ch);
 	}else if (m_cc_mode == 10){
 		HandleAckHpPint(qp, p, ch);
+	}else if (m_cc_mode == 11) {  //============Mycc=============
+  		HandleAckMycc(qp, p, ch);
+	}else if (m_cc_mode == 12){
+  		HandleAckRttcc(qp, p, ch);
 	}
 	// ACK may advance the on-the-fly window, allowing more packets to send
 	dev->TriggerTransmit();
@@ -550,6 +895,9 @@ Ptr<Packet> RdmaHw::GetNxtPacket(Ptr<RdmaQueuePair> qp){
 	if (m_mtu < payload_size)
 		payload_size = m_mtu;
 	Ptr<Packet> p = Create<Packet> (payload_size);
+
+	uint32_t seq_now = qp->snd_nxt;
+
 	// add SeqTsHeader
 	SeqTsHeader seqTs;
 	seqTs.SetSeq (qp->snd_nxt);
@@ -579,6 +927,8 @@ Ptr<Packet> RdmaHw::GetNxtPacket(Ptr<RdmaQueuePair> qp){
 	qp->snd_nxt += payload_size;
 	qp->m_ipid++;
 
+	qp->rttcc.tsMap[seq_now] = Simulator::Now();
+
 	// return
 	return p;
 }
@@ -586,6 +936,71 @@ Ptr<Packet> RdmaHw::GetNxtPacket(Ptr<RdmaQueuePair> qp){
 void RdmaHw::PktSent(Ptr<RdmaQueuePair> qp, Ptr<Packet> pkt, Time interframeGap){
 	qp->lastPktSize = pkt->GetSize();
 	UpdateNextAvail(qp, interframeGap, pkt->GetSize());
+
+	// ==== real throughput (per-QP) windowed logging ====
+	const Time win = MicroSeconds(100);                     
+	qp->dbg_bytes_win += pkt->GetSize();                    
+	if (qp->dbg_win_start.IsZero()) {
+    		qp->dbg_win_start = Simulator::Now();
+	}
+	// 到达窗口末尾就计算吞吐并打印
+	Time span = Simulator::Now() - qp->dbg_win_start;
+	if (span >= win) {
+    		double secs = span.GetSeconds();
+    		double bps  = (double)qp->dbg_bytes_win * 8.0 / secs;
+
+    		// 懒加载打开每流日志文件
+    		if (!qp->dbg_tp_fp) {
+        		// 确保目录存在
+        		//(void)std::system("mkdir -p mix/log");
+
+			std::string dir = "mix/log";
+			switch (m_cc_mode) {
+        			case 1:  dir += "/dcqcn";   break;
+        			case 3:  dir += "/hpcc";    break;
+        			case 7:  dir += "/timely";  break;
+        			case 10: dir += "/hpccpint";break;
+        			case 12: dir += "/rttcc";   break;
+        			default: dir += "/misc";    break;
+      			}
+			(void)std::system(std::string("mkdir -p " + dir).c_str());
+			//std::system(std::string("mkdir -p " + dir).c_str());
+			char fname[256];
+			std::snprintf(fname, sizeof(fname),
+   				(dir + "/tp_%08x_%08x_%u_%u.pg%u.log").c_str(),
+   				qp->sip.Get(), qp->dip.Get(), qp->sport, qp->dport, qp->m_pg);
+			qp->dbg_tp_fp = std::fopen(fname, "w");
+        		// 为了便于区分流：sip_dip_sport_dport.pg.log
+        		//char fname[256];
+        		//std::snprintf(fname, sizeof(fname),
+                      	//	"mix/log/tp_%08x_%08x_%u_%u.pg%u.log",
+                      	//	qp->sip.Get(), qp->dip.Get(),
+                      	//	qp->sport, qp->dport, qp->m_pg);
+        		//qp->dbg_tp_fp = std::fopen(fname, "w");
+        		// 保险起见
+        		if (!qp->dbg_tp_fp) {
+            			// 打不开就直接返回，不影响仿真
+            			qp->dbg_bytes_win = 0;
+            			qp->dbg_win_start = Simulator::Now();
+            			return;
+        		}
+        		std::fprintf(qp->dbg_tp_fp,
+                     		"# time_ns  throughput_bps  rate_set_bps  bytes_in_window\n");
+    		}
+
+    		// 记录当前真实吞吐与控制器设置的速率（方便对比）
+    		std::fprintf(qp->dbg_tp_fp, "%lu %.0f %lu %llu\n",
+                 	Simulator::Now().GetTimeStep(),        // ns 时间戳
+                 	bps,
+                 	(unsigned long)qp->m_rate.GetBitRate(),// 目标/设置速率
+                 	(unsigned long long)qp->dbg_bytes_win);
+    		std::fflush(qp->dbg_tp_fp);
+
+    		// 滑动窗口重置
+    		qp->dbg_bytes_win = 0;
+    		qp->dbg_win_start = Simulator::Now();
+	}
+
 }
 
 void RdmaHw::UpdateNextAvail(Ptr<RdmaQueuePair> qp, Time interframeGap, uint32_t pkt_size){
@@ -610,6 +1025,8 @@ void RdmaHw::ChangeRate(Ptr<RdmaQueuePair> qp, DataRate new_rate){
 	// change to new rate
 	qp->m_rate = new_rate;
 }
+
+
 
 #define PRINT_LOG 0
 /******************************
@@ -649,6 +1066,12 @@ void RdmaHw::cnp_received_mlx(Ptr<RdmaQueuePair> q){
 		// set rate on first CNP
 		q->mlx.m_targetRate = q->m_rate = m_rateOnFirstCNP * q->m_rate;
 		q->mlx.m_first_cnp = false;
+		DcqcnMaybeLog(q, "FIRST_CNP",
+              		q->m_rate.GetBitRate(),
+              		q->mlx.m_alpha,
+              		q->mlx.m_targetRate.GetBitRate(),
+              		q->mlx.m_rpTimeStage);
+
 	}
 }
 
@@ -666,6 +1089,12 @@ void RdmaHw::CheckRateDecreaseMlx(Ptr<RdmaQueuePair> q){
 		if (clamp)
 			q->mlx.m_targetRate = q->m_rate;
 		q->m_rate = std::max(m_minRate, q->m_rate * (1 - q->mlx.m_alpha / 2));
+		DcqcnMaybeLog(q, "DEC",
+              		q->m_rate.GetBitRate(),
+              		q->mlx.m_alpha,
+              		q->mlx.m_targetRate.GetBitRate(),
+              		q->mlx.m_rpTimeStage);
+
 		// reset rate increase related things
 		q->mlx.m_rpTimeStage = 0;
 		q->mlx.m_decrease_cnp_arrived = false;
@@ -701,6 +1130,11 @@ void RdmaHw::FastRecoveryMlx(Ptr<RdmaQueuePair> q){
 	printf("%lu fast recovery: %08x %08x %u %u (%0.3lf %.3lf)->", Simulator::Now().GetTimeStep(), q->sip.Get(), q->dip.Get(), q->sport, q->dport, q->mlx.m_targetRate.GetBitRate() * 1e-9, q->m_rate.GetBitRate() * 1e-9);
 	#endif
 	q->m_rate = (q->m_rate / 2) + (q->mlx.m_targetRate / 2);
+	DcqcnMaybeLog(q, "FAST_REC",
+              q->m_rate.GetBitRate(),
+              q->mlx.m_alpha,
+              q->mlx.m_targetRate.GetBitRate(),
+              q->mlx.m_rpTimeStage);
 	#if PRINT_LOG
 	printf("(%.3lf %.3lf)\n", q->mlx.m_targetRate.GetBitRate() * 1e-9, q->m_rate.GetBitRate() * 1e-9);
 	#endif
@@ -717,6 +1151,11 @@ void RdmaHw::ActiveIncreaseMlx(Ptr<RdmaQueuePair> q){
 	if (q->mlx.m_targetRate > dev->GetDataRate())
 		q->mlx.m_targetRate = dev->GetDataRate();
 	q->m_rate = (q->m_rate / 2) + (q->mlx.m_targetRate / 2);
+	DcqcnMaybeLog(q, "AI",
+              q->m_rate.GetBitRate(),
+              q->mlx.m_alpha,
+              q->mlx.m_targetRate.GetBitRate(),
+              q->mlx.m_rpTimeStage);
 	#if PRINT_LOG
 	printf("(%.3lf %.3lf)\n", q->mlx.m_targetRate.GetBitRate() * 1e-9, q->m_rate.GetBitRate() * 1e-9);
 	#endif
@@ -733,6 +1172,11 @@ void RdmaHw::HyperIncreaseMlx(Ptr<RdmaQueuePair> q){
 	if (q->mlx.m_targetRate > dev->GetDataRate())
 		q->mlx.m_targetRate = dev->GetDataRate();
 	q->m_rate = (q->m_rate / 2) + (q->mlx.m_targetRate / 2);
+	DcqcnMaybeLog(q, "HAI",
+              q->m_rate.GetBitRate(),
+              q->mlx.m_alpha,
+              q->mlx.m_targetRate.GetBitRate(),
+              q->mlx.m_rpTimeStage);
 	#if PRINT_LOG
 	printf("(%.3lf %.3lf)\n", q->mlx.m_targetRate.GetBitRate() * 1e-9, q->m_rate.GetBitRate() * 1e-9);
 	#endif
@@ -743,9 +1187,11 @@ void RdmaHw::HyperIncreaseMlx(Ptr<RdmaQueuePair> q){
  ***********************/
 void RdmaHw::HandleAckHp(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch){
 	uint32_t ack_seq = ch.ack.seq;
+	//std::cout<< "ack:" << ack_seq << std::endl;
 	// update rate
 	if (ack_seq > qp->hp.m_lastUpdateSeq){ // if full RTT feedback is ready, do full update
 		UpdateRateHp(qp, p, ch, false);
+		HpccMaybeLog(qp, qp->hp.m_curRate.GetBitRate() * 1e-9);
 	}else{ // do fast react
 		FastReactHp(qp, p, ch);
 	}
@@ -904,6 +1350,7 @@ void RdmaHw::UpdateRateHp(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch
 					}
 				}
 			}
+			//HpccMaybeLog(qp, new_rate.GetBitRate() * 1e-9);
 		}
 		if (!fast_react){
 			if (next_seq > qp->hp.m_lastUpdateSeq)
@@ -915,6 +1362,7 @@ void RdmaHw::UpdateRateHp(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch
 void RdmaHw::FastReactHp(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch){
 	if (m_fast_react)
 		UpdateRateHp(qp, p, ch, true);
+	//HpccMaybeLog(qp, new_rate.GetBitRate() * 1e-9);
 }
 
 /**********************
@@ -977,6 +1425,10 @@ void RdmaHw::UpdateRateTimely(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader
 				qp->tmly.rttDiff = rtt_diff;
 			}
 		}
+		TimelyMaybeLog(qp, inc ? "INC" : "DEC",
+               		qp->m_rate.GetBitRate(),
+               		rtt,
+               		gradient);
 		#if PRINT_LOG
 		if (print){
 			printf(" %c %.3lf\n", inc? '^':'v', qp->m_rate.GetBitRate() * 1e-9);
@@ -1102,5 +1554,301 @@ void RdmaHw::UpdateRateHpPint(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader
                }
        }
 }
+
+void RdmaHw::HandleCnpMycc(Ptr<RdmaQueuePair> qp, uint16_t qfb, uint16_t total) {
+  	// 累计到发端的窗口计数器
+  	qp->mycc.win_cnt += total;
+  	qp->mycc.ecn_cnt += qfb;
+	printf("%u\n", qfb);
+  	// 当累计达到窗口大小（~16包）时，更新 p_est，但不一定立刻改速率
+  	while (qp->mycc.win_cnt >= qp->mycc.win_size) {
+    		double pHat = (qp->mycc.win_cnt > 0) ? 
+                  	(double)qp->mycc.ecn_cnt / (double)qp->mycc.win_cnt : 0.0;
+		printf("%.2lf\n", pHat);
+    		// EWMA 估计
+    		qp->mycc.p_est = m_mycc_ewma * qp->mycc.p_est + (1.0 - m_mycc_ewma) * pHat;
+	
+    		// 滑窗对齐地“消耗”一窗，保留余量（避免丢精度）
+    		qp->mycc.win_cnt -= qp->mycc.win_size;
+    		double ratioLeft = (qp->mycc.win_cnt > 0) ? 
+                       (double)qp->mycc.win_cnt / (double)(qp->mycc.win_cnt + m_mycc_win) : 0.0;
+    		// 这里简单处理：若满窗则清零累计，余量下次继续
+    		qp->mycc.ecn_cnt = (qp->mycc.win_cnt == 0) ? 0 : (uint32_t)std::round(qp->mycc.p_est * qp->mycc.win_cnt);
+  	}
+}
+
+void RdmaHw::HandleAckMycc(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch) {
+  	uint32_t ack_seq = ch.ack.seq;
+  	// 只有当覆盖到上次发送边界（完整RTT）时做“完整更新”，否则可选快速path
+  	bool full = (ack_seq > qp->mycc.m_lastUpdateSeq);
+  	UpdateRateMycc(qp, /*fast=*/!full);
+}
+
+void RdmaHw::UpdateRateMycc(Ptr<RdmaQueuePair> qp, bool fast) {
+  	// 1) 取当前估计的标记率（优先用 p_est；若还没形成估计，可用0作为初始）
+  	double p = qp->mycc.p_est;
+
+  	// 2) PI 控制
+  	double err = m_mycc_pStar - p;                         // 原逻辑用 pHat；这里用平滑后的 p_est 更稳
+	double tmp_integ = qp->mycc.integ + err;
+	if (tmp_integ >  m_mycc_integ_cap) tmp_integ =  m_mycc_integ_cap;
+	if (tmp_integ < -m_mycc_integ_cap) tmp_integ = -m_mycc_integ_cap;
+	qp->mycc.integ = tmp_integ;
+  	//qp->mycc.integ = std::clamp(qp->mycc.integ + err, 
+        //                      -m_mycc_integ_cap, m_mycc_integ_cap);
+  	// 轻微泄放，防积分缠绕
+  	qp->mycc.integ *= 0.999;
+
+  	double delta = m_mycc_Kp * err + m_mycc_Ki * qp->mycc.integ; // 无量纲增益
+  	double cur_bps = (double)qp->mycc.m_curRate.GetBitRate();
+  	double new_bps = cur_bps * (1.0 + delta);
+
+  	// 3) 额外策略：无标记时缓慢探测、重拥塞时快速退
+  	if (p <= 1e-9) {
+    		new_bps += m_mycc_probe_step;                 // +0.8Gbps
+  	} else if (p > m_mycc_severe_th) {
+    		new_bps *= m_mycc_severe_mul;                 // *0.70
+  	}
+
+  	// 4) 速率边界
+  	double min_bps = (double)m_minRate.GetBitRate();
+  	double max_bps = (double)qp->m_max_rate.GetBitRate();
+  	new_bps = std::min(std::max(new_bps, min_bps), max_bps);
+	//std::cout << "init new_bps=" << (new_bps / 1e9) << " bps\n";
+  	// 5) 生效（非常重要：用 ChangeRate 同步发送时序）
+  	ChangeRate(qp, DataRate((uint64_t)new_bps));
+
+  	// 6) 只在“完整更新”时落盘状态与RTT边界
+  	if (!fast) {
+    		qp->mycc.m_curRate = DataRate((uint64_t)new_bps);
+    		qp->mycc.m_lastUpdateSeq = qp->snd_nxt;
+  	}
+}
+
+
+/**********************
+ * RTTCC (CcMode = 12)
+ *********************/
+void RdmaHw::HandleAckRttcc(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch){
+  	const uint32_t ack_seq = ch.ack.seq;
+  	auto &st = qp->rttcc;
+	//std::cout<< "ack:" << ack_seq << std::endl;
+  	// RTT 估计：由发送时刻映射回查
+  	//auto it = st.tsMap.find(ack_seq);
+  	//if (it == st.tsMap.end()) {
+    		// 没记录就跳过本次（可能是重传/乱序导致）
+    		//return;
+  	//}
+  	//uint64_t rttNow = (Simulator::Now() - it->second).GetNanoSeconds();
+	uint64_t rttNow = Simulator::Now().GetTimeStep() - ch.ack.ih.ts;
+  	//st.tsMap.erase(it);
+	//std::cout<< "Now:" << Simulator::Now().GetTimeStep() << "     first_time:" << ch.ack.ih.ts << std::endl;
+
+  	st.rttNow = rttNow;
+  	if (st.rttLast == 0) st.rttLast = st.rttNow;
+
+  	// EWMA 平滑
+  	st.rttNow = (uint64_t)((1.0 - m_rttcc_alpha) * (double)st.rttNow + m_rttcc_alpha * (double)st.rttLast);
+  	st.rttDelta = (int64_t)st.rttNow - (int64_t)st.rttLast;
+	//std::cout<< "st.rttNow:" << st.rttNow << "      rttLast:" << st.rttLast << std::endl;
+  	st.rttLast  = st.rttNow;
+  	ns3::Time now = Simulator::Now();
+  	int64_t  elapsed_ns = (now - st.recordTimeLast).GetNanoSeconds();
+  	if (elapsed_ns <= 0) return;
+
+
+	uint64_t t_ns = Simulator::Now().GetNanoSeconds();
+	st.minRtt.Push(t_ns, rttNow);
+	uint64_t baseRtt = st.minRtt.Get();
+	//queue delay!!!!!
+	uint64_t q = std::max((uint64_t)0, rttNow - baseRtt); //baseRtt
+	double alpha = 1.0 - exp(-(double)elapsed_ns / 80000.0); // τ≈80us
+	st.qSmooth = (1-alpha)*st.qSmooth + alpha*(double)q;
+	if (st.qSmooth > 80000.0) st.qSmooth = 80000.0;
+	//double gradient = (st.qSmooth - st.qPrev) / (double)elapsed_ns;
+	//if (fabs(gradient) < 0.006) gradient = 0.0;    // 梯度死区
+	st.qPrev = st.qSmooth;
+	//std::cout<< "st.qSmooth:" << st.qSmooth << std::endl;
+
+
+  	double gradient = (double)st.rttDelta / (double)elapsed_ns;
+	//std::cout<< "st.rttDelta:" << st.rttDelta << "      elapsed_ns:" << elapsed_ns << std::endl;
+
+  	// 总的最小决策间隔
+  	if ((uint64_t)elapsed_ns < m_rttcc_baseIntNs) return;
+
+  	// 当前速率（bps）作为整数做运算，最后再包回 DataRate
+  	uint64_t cur_bps = st.rateCurrent.GetBitRate();
+  	const uint64_t max_bps = qp->m_max_rate.GetBitRate();
+  	const uint64_t min_bps = m_minRate.GetBitRate();
+
+	const uint64_t q_low_ns = 300, q_tgt_ns = 5000;
+	const uint64_t MAX_UP = 1000000000ULL;     // +1 Gbps/次
+	const uint64_t MAX_DOWN_PCT = 20;          // -20%/次
+
+	if (st.qSmooth < q_low_ns && st.cnt < 20 && gradient<=0 && rttNow< m_rttcc_rttLow) {             // FAST
+  		if (elapsed_ns < m_rttcc_fastExtraNs && st.cnt > 0) return;
+  		uint64_t head = st.rateTarget.GetBitRate() > cur_bps ?
+                  	(st.rateTarget.GetBitRate()-cur_bps)/2 : 0;
+  		uint64_t step = std::min<uint64_t>(MAX_UP, std::max<uint64_t>(head, 500000000ULL));
+  		cur_bps = std::min(max_bps, cur_bps + step);
+  		st.cnt++; st.cnt1=st.cnt2=0; st.rateFlag = RdmaQueuePair::RttccState::FAST_INCREASE;
+		RttccMaybeLog(qp, "FAST",  cur_bps, st.rttNow, gradient);
+
+	} else if (st.qSmooth > q_tgt_ns || (gradient > 0 && st.rttNow > m_rttcc_rttTarget)) {  // DEC
+  		Time guard = NanoSeconds(m_rttcc_decBaseNs + st.cnt1*5000ULL);
+  		if ((now - st.recordTimeLast) < guard && st.rateFlag==RdmaQueuePair::RttccState::RTT_DECREASE) return;
+  		if (st.rateFlag != RdmaQueuePair::RttccState::RTT_DECREASE) st.rateTarget = st.rateCurrent;
+
+  		//uint64_t cut = std::min<uint64_t>(cur_bps*MAX_DOWN_PCT/100,  // ≤20%
+                //    	(uint64_t)(cur_bps*(0.5*((st.qSmooth-q_tgt_ns)/st.qSmooth))));
+		uint64_t cut;
+		if(st.qSmooth>=q_tgt_ns)  cut = (uint64_t)(cur_bps*(0.5*((st.qSmooth-q_tgt_ns)/st.qSmooth)));
+		double frac = 1.0 - 0.5 * ((double)(st.rttNow - m_rttcc_rttTarget) / (double)st.rttNow);
+		uint64_t cur_b;
+		if(frac>=0) cur_b = (uint64_t)((double)cur_bps * frac);
+  		if(st.qSmooth>=q_tgt_ns) cur_bps = std::min(cur_bps-cut,cur_b);
+		else if(frac>=0) cur_bps = cur_b;
+  		st.cnt=0; st.cnt1++; st.cnt2=0; st.sum=0; st.rateFlag = RdmaQueuePair::RttccState::RTT_DECREASE;
+		RttccMaybeLog(qp, "DEC",   cur_bps, st.rttNow, gradient);
+
+	} else {                                                // CONV
+  		st.sum++;
+  		if (gradient < 0) cur_bps = std::min(max_bps, cur_bps + 100000000UL);
+  		else if (gradient > 0) {
+    			uint64_t cut = std::min<uint64_t>(cur_bps/10, (uint64_t)(cur_bps*std::min(0.02, gradient*2)));
+    			cur_bps -= cut;
+  		}
+  		st.cnt=0; st.cnt1=0; st.cnt2++; st.rateFlag = RdmaQueuePair::RttccState::CONVERGENCE;
+		RttccMaybeLog(qp, "CONV",  cur_bps, st.rttNow, gradient);
+	}
+	cur_bps = std::max(min_bps, std::min(cur_bps, max_bps));
+	ChangeRate(qp, DataRate(cur_bps));
+	st.rateCurrent = qp->m_rate;
+	st.recordTimeLast = now;
+	m_nic[GetNicIdxOfQp(qp)].dev->TriggerTransmit();
+
+
+
+
+
+/*
+  	// ============ 阶段决策 ============
+  	if (st.rttNow < m_rttcc_rttLow && st.cnt < 20) {
+    		// -------- 快速增长阶段 --------
+    		//if ((st.sum % 50) == 0) {               // 你的“每50次一个小步”逻辑
+      		//	cur_bps += 500000000ULL;              // +0.5 Gbps
+      		//	st.sum = 0;
+      			// 限幅
+      		//	if (cur_bps > max_bps) cur_bps = max_bps;
+    		//} 
+		{
+      			// 额外护栏（对应 18us）
+      			if ((uint64_t)elapsed_ns < m_rttcc_fastExtraNs && st.cnt > 0) {
+        			//st.recordTimeLast = now;
+        			return;
+      			}
+      			// 重新拉高目标/重置计数（与原代码等价）
+      			if (st.cnt >= 8 || st.rateTarget + 5000000000ULL < st.rateCurrent) {
+        			st.rateTarget = qp->m_max_rate;
+        			st.cnt = 0;
+      			}
+      			if (st.cnt == 0) {
+        			// 第一次：二分靠近目标
+        			uint64_t tgt = st.rateTarget.GetBitRate();
+        			cur_bps = cur_bps + (tgt > cur_bps ? (tgt - cur_bps)/2 : 0);
+      			} else {
+        			cur_bps += 2000000000ULL;           // +2 Gbps
+      			}
+      			if (cur_bps > max_bps) cur_bps = max_bps;
+      			st.cnt++;
+    		}
+    		st.cnt1 = 0; st.cnt2 = 0; st.sum++;
+    		st.rateFlag = RdmaQueuePair::RttccState::FAST_INCREASE;
+		RttccMaybeLog(qp, "FAST",  cur_bps, st.rttNow, gradient);
+
+  	} else if (st.rttNow > m_rttcc_rttTarget) {
+    		// -------- 拥塞避免（快速降速）--------
+    		uint64_t guard_ns = m_rttcc_decBaseNs + (uint64_t)st.cnt1 * 5000ULL;
+    		if ((uint64_t)elapsed_ns < guard_ns && st.rateFlag == RdmaQueuePair::RttccState::RTT_DECREASE) {
+      			//st.recordTimeLast = now;
+      			return;
+    		}
+
+    		// 切换到该阶段时冻结目标
+    		if (st.rateFlag == RdmaQueuePair::RttccState::FAST_INCREASE || st.rateFlag == RdmaQueuePair::RttccState::CONVERGENCE) {
+      			st.rateTarget = st.rateCurrent;
+    		}
+    		if (st.rateFlag == RdmaQueuePair::RttccState::CONVERGENCE && st.cnt1 > 0) {
+      			cur_bps = (uint64_t)((double)cur_bps * 0.9); // 额外 10% 切
+    		}
+
+    		// 自适应降速（与原式一致）
+    		double factor;
+    		if (st.cnt1 < 5) {
+      			// max(0.5, 1 - 0.5*(rttNow-rttTarget)/rttNow)
+      			double frac = 1.0 - 0.5 * ((double)(st.rttNow - m_rttcc_rttTarget) / (double)st.rttNow);
+      			if (frac < 0.5) frac = 0.5;
+      			factor = frac;
+    		} else {
+      			factor = 0.92; // 略缓降
+    		}
+    		cur_bps = (uint64_t)((double)cur_bps * factor);
+		RttccMaybeLog(qp, "DEC",   cur_bps, st.rttNow, gradient);
+
+    		st.cnt = 0; st.cnt1++; st.cnt2 = 0; st.sum = 0;
+    		st.rateFlag = RdmaQueuePair::RttccState::RTT_DECREASE;
+
+  	} else {
+    		// -------- 收敛阶段（梯度微调）--------
+    		uint64_t base = m_rttcc_cvgBaseNs + (uint64_t)st.sum * 50ULL;
+    		if ((uint64_t)elapsed_ns < base && st.sum > 12) {
+      			//st.recordTimeLast = now;
+      			return;
+    		}
+    		st.sum++;
+    		if (gradient < 0) {
+      			cur_bps += 100000000ULL; // 负梯度时给一点 +0.1Gbps
+    		}
+    		st.cnt1 = 0;
+
+    		double rateLine = (double)m_rttcc_rateLine.GetBitRate();
+    		if (gradient < 0.025 && gradient > 0) {
+      			// 轻微正梯度：温和乘性缩小
+      			cur_bps = (uint64_t)((double)cur_bps * (1.0 - gradient*2));
+    		} else if (gradient > -0.025 && gradient < 0) {
+      			// 轻微负梯度：线性微增（你的公式）
+      			double delta = m_rttcc_rateLine.GetBitRate() * (-gradient*2) * (1.0 - (double)cur_bps / rateLine);
+      			cur_bps += (uint64_t)delta;
+    		}
+
+    		if (cur_bps > max_bps) cur_bps = max_bps;
+		RttccMaybeLog(qp, "CONV",  cur_bps, st.rttNow, gradient);
+    		st.rateFlag = RdmaQueuePair::RttccState::CONVERGENCE;
+    		st.cnt = 0; st.cnt2++;
+  	}
+
+  	// 低 RTT 且几乎无排队时的小幅探测步
+  	if (st.rttNow < m_rttcc_rttLow && st.cnt == 0) {
+   		//cur_bps = std::min(max_bps, cur_bps + (uint64_t)m_rttcc_probe_step);
+  	}
+
+  	// 边界并下发
+  	if (cur_bps < min_bps) cur_bps = min_bps;
+  	ns3::DataRate newR(cur_bps);
+  	ChangeRate(qp, newR);
+  	st.rateCurrent = qp->m_rate;
+	//std::cout << "init new_bps=" << (st.rateCurrent / 1e9) << " Gbps\n";
+
+  	// 推进时间与触发发送
+  	st.recordTimeLast = now;
+  	uint32_t nic_idx = GetNicIdxOfQp(qp);
+  	m_nic[nic_idx].dev->TriggerTransmit();
+
+*/
+}
+
+
+
 
 }
