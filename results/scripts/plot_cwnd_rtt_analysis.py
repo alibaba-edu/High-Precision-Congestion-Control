@@ -94,7 +94,37 @@ def _parse_cwnd_file(cwnd_file):
     return flows
 
 
-def _get_steady_state_stats(flows):
+def _parse_fct_file(fct_file_path):
+    """Parse FCT file to get actual throughput per flow."""
+    throughput_map = {}
+    try:
+        with open(fct_file_path, 'r') as f:
+            for line in f:
+                parts = line.strip().split()
+                if len(parts) >= 8:
+                    # Format: src_ip dst_ip sport dport size start_time complete_time base_rtt
+                    sport = int(parts[2])
+                    dport = int(parts[3])
+                    size_bytes = int(parts[4])
+                    start_ns = int(parts[5])
+                    complete_ns = int(parts[6])
+                    
+                    # Extract src/dst from IP (0b000X01 format)
+                    src_ip = parts[0]
+                    dst_ip = parts[1]
+                    src = int(src_ip[5], 16) if len(src_ip) >= 6 else 0
+                    dst = int(dst_ip[5], 16) if len(dst_ip) >= 6 else 0
+                    
+                    duration_s = (complete_ns - start_ns) / 1e9
+                    if duration_s > 0:
+                        throughput_bps = (size_bytes * 8) / duration_s
+                        throughput_map[(src, dst, sport, dport)] = throughput_bps
+    except FileNotFoundError:
+        pass
+    return throughput_map
+
+
+def _get_steady_state_stats(flows, fct_throughput_map=None):
     """Calculate steady-state CWND and rate for each flow."""
     stats = {}
     
@@ -119,14 +149,84 @@ def _get_steady_state_stats(flows):
         if steady_wins and steady_rates:
             stats[flow_key] = {
                 "cwnd_avg": statistics.mean(steady_wins),
-                "rate_avg": statistics.mean(steady_rates),
+                "rate_avg": statistics.mean(steady_rates),  # HPCC target rate
                 "fct": t_max  # Flow completion time
             }
+            
+            # Add actual throughput if available from FCT
+            if fct_throughput_map and flow_key in fct_throughput_map:
+                stats[flow_key]["actual_throughput"] = fct_throughput_map[flow_key]
     
     return stats
 
 
-def plot_cwnd_rtt_analysis(cwnd_file, output_file):
+def _parse_rate_to_bps(rate_str):
+    if rate_str is None:
+        return None
+    s = str(rate_str).strip()
+    try:
+        return float(s)
+    except ValueError:
+        pass
+    s = s.lower()
+    if s.endswith("gbps"):
+        return float(s[:-4]) * 1e9
+    if s.endswith("mbps"):
+        return float(s[:-4]) * 1e6
+    if s.endswith("kbps"):
+        return float(s[:-4]) * 1e3
+    if s.endswith("bps"):
+        return float(s[:-3])
+    return None
+
+
+def _parse_config(config_path):
+    cfg = {}
+    if not config_path or not Path(config_path).exists():
+        return cfg
+    with open(config_path, "r") as f:
+        for raw in f:
+            line = raw.strip()
+            if not line or line.startswith("{") or line.startswith("#"):
+                continue
+            parts = line.split()
+            if len(parts) < 2:
+                continue
+            key = parts[0]
+            value = parts[1]
+            cfg[key] = value
+    return cfg
+
+
+def _parse_topology_min_rate(topo_path):
+    if not topo_path or not Path(topo_path).exists():
+        return None
+    rates = []
+    with open(topo_path, "r") as f:
+        for raw in f:
+            line = raw.strip()
+            if not line or line.startswith("#"):
+                continue
+            parts = line.split()
+            if len(parts) >= 5:
+                rate_bps = _parse_rate_to_bps(parts[2])
+                if rate_bps:
+                    rates.append(rate_bps)
+    return min(rates) if rates else None
+
+
+def _compute_host_delay_us(pkt_size_bytes, line_rate_bps, rx_pull_rate):
+    if not pkt_size_bytes or not line_rate_bps or rx_pull_rate is None:
+        return 0.0
+    if rx_pull_rate >= 1.0:
+        return 0.0
+    base_time = (pkt_size_bytes * 8.0) / line_rate_bps
+    pull_time = (pkt_size_bytes * 8.0) / (line_rate_bps * rx_pull_rate)
+    extra = pull_time - base_time
+    return max(extra * 1e6, 0.0)
+
+
+def plot_cwnd_rtt_analysis(cwnd_file, output_file, config_path=None, topo_path=None):
     """Generate comprehensive CWND/Rate/RTT analysis dashboard."""
     
     # Parse data
@@ -135,8 +235,12 @@ def plot_cwnd_rtt_analysis(cwnd_file, output_file):
         print("ERROR: No flows found in CWND file")
         return
     
+    # Try to load FCT data for actual throughput
+    fct_file = cwnd_file.replace('cwnd_', 'fct_')
+    fct_throughput_map = _parse_fct_file(fct_file)
+    
     # Get statistics
-    stats = _get_steady_state_stats(flows)
+    stats = _get_steady_state_stats(flows, fct_throughput_map)
     rtt = _calculate_rtt_from_cwnd_data(cwnd_file)
     rtt_us = rtt * 1e6 if rtt else None
     
@@ -149,19 +253,15 @@ def plot_cwnd_rtt_analysis(cwnd_file, output_file):
     else:
         win_unit, win_scale = "B", 1
     
-    # Create figure with proper spacing
-    fig = plt.figure(figsize=(16, 11))
+    # Create figure with single plot
+    fig = plt.figure(figsize=(12, 6))
     
     # Add spacing at top for title
-    fig.suptitle('CWND, Rate, and RTT Analysis Dashboard', 
-                 fontsize=16, fontweight='bold', y=0.98)
+    fig.suptitle('CWND Analysis', 
+                 fontsize=16, fontweight='bold', y=0.96)
     
-    # Create grid with proper spacing
-    gs = fig.add_gridspec(2, 2, left=0.08, right=0.95, top=0.94, bottom=0.07, 
-                          hspace=0.35, wspace=0.3)
-    
-    # Panel 1: CWND vs Time (all flows)
-    ax1 = fig.add_subplot(gs[0, 0])
+    # CWND vs Time (all flows)
+    ax1 = plt.subplot(111)
     colors = ['blue', 'red', 'green', 'orange', 'purple', 'brown']
     linestyles = ['-', '--', '-.', ':', '-', '--']
     
@@ -187,122 +287,24 @@ def plot_cwnd_rtt_analysis(cwnd_file, output_file):
     ax1.set_title('Window Size Over Time', fontsize=12, fontweight='bold', pad=10)
     ax1.grid(True, alpha=0.3)
     ax1.legend(loc='best', fontsize=9)
-    ax1.set_ylim([0, max_win / win_scale * 1.1])
-    
-    # Panel 2: Rate vs CWND (mathematical relationship)
-    ax2 = fig.add_subplot(gs[0, 1])
-    
-    if rtt_us:
-        cwnd_range = np.linspace(100, max_win, 100)
-        rtt_s = rtt_us * 1e-6
-        rate_gbps = (cwnd_range * 8) / (1e9 * rtt_s)
-        
-        ax2.plot(cwnd_range / win_scale, rate_gbps, linewidth=2.5, color='purple')
-        
-        # Plot observed points for each flow
-        for idx, (flow_key, stat) in enumerate(sorted(stats.items())):
-            cwnd_kb = stat["cwnd_avg"] / 1024
-            rate_gbps_obs = stat["rate_avg"] / 1e9
-            ax2.plot([stat["cwnd_avg"] / win_scale], [rate_gbps_obs], 
-                    'o', markersize=10, color=colors[idx % len(colors)], 
-                    label=f'Flow {idx}: {rate_gbps_obs:.3f} Gbps')
-        
-        ax2.set_xlabel('CWND (KB)', fontsize=11, fontweight='bold')
-        ax2.set_ylabel('Rate (Gbps)', fontsize=11, fontweight='bold')
-        ax2.set_title(f'Rate = CWND × 8 / RTT (RTT = {rtt_us:.1f} μs)', 
-                     fontsize=12, fontweight='bold', pad=10)
-        ax2.grid(True, alpha=0.3)
-        ax2.legend(loc='best', fontsize=9)
-    else:
-        ax2.text(0.5, 0.5, 'RTT calculation failed', ha='center', va='center',
-                transform=ax2.transAxes, fontsize=12)
-        ax2.set_title('Rate vs CWND Relationship', fontsize=12, fontweight='bold', pad=10)
-    
-    # Panel 3: Throughput per flow
-    ax3 = fig.add_subplot(gs[1, 0])
-    
-    flow_labels = []
-    flow_rates = []
-    colors_bar = []
-    
-    for idx, (flow_key, stat) in enumerate(sorted(stats.items())):
-        src, dst, sport, dport = flow_key
-        flow_labels.append(f'Flow {src}→{dst}')
-        flow_rates.append(stat["rate_avg"] / 1e9)
-        colors_bar.append(colors[idx % len(colors)])
-    
-    total_rate = sum(flow_rates) if flow_rates else 0
-    flow_labels.append('Total')
-    flow_rates.append(total_rate)
-    colors_bar.append('lightgreen')
-    
-    bars = ax3.bar(range(len(flow_rates)), flow_rates, color=colors_bar, 
-                   edgecolor='black', linewidth=2)
-    
-    # Add link capacity line if total is available
-    if total_rate > 0:
-        link_capacity = total_rate * 1.1  # Estimate from total
-        ax3.axhline(y=link_capacity, color='red', linestyle='--', 
-                   linewidth=2, label='Est. Link Cap', alpha=0.7)
-    
-    ax3.set_ylabel('Throughput (Gbps)', fontsize=11, fontweight='bold')
-    ax3.set_title('Flow Throughput Distribution', fontsize=12, fontweight='bold', pad=10)
-    ax3.set_xticks(range(len(flow_labels)))
-    ax3.set_xticklabels(flow_labels, fontsize=10)
-    ax3.set_ylim([0, max(flow_rates) * 1.2 if flow_rates else 1])
-    ax3.grid(True, alpha=0.3, axis='y')
-    
-    # Add value labels on bars
-    for i, (bar, rate) in enumerate(zip(bars, flow_rates)):
-        height = bar.get_height()
-        ax3.text(bar.get_x() + bar.get_width()/2., height,
-                f'{rate:.3f}\nGbps', ha='center', va='bottom', 
-                fontsize=10, fontweight='bold')
-    
-    # Panel 4: RTT Composition
-    ax4 = fig.add_subplot(gs[1, 1])
-    
-    if rtt_us:
-        # Estimate RTT components based on typical datacenter
-        rtt_components = ['Propagation', 'Serialization', 'Queueing', 'Processing']
-        
-        # Scale components based on measured RTT
-        # Rough estimates: 15% prop, 7% serialization, 28% queueing, 50% processing
-        rtt_values = [
-            rtt_us * 0.15,  # Propagation
-            rtt_us * 0.07,  # Serialization
-            rtt_us * 0.28,  # Queueing
-            rtt_us * 0.50   # Processing
-        ]
-        
-        colors_pie = ['#ff9999', '#66b3ff', '#99ff99', '#ffcc99']
-        
-        wedges, texts, autotexts = ax4.pie(rtt_values, labels=rtt_components, 
-                                            autopct='%1.1f%%', colors=colors_pie,
-                                            startangle=90, textprops={'fontsize': 10})
-        
-        # Bold the percentage text
-        for autotext in autotexts:
-            autotext.set_color('black')
-            autotext.set_fontweight('bold')
-        
-        ax4.set_title(f'RTT Composition (Total = {rtt_us:.1f} μs)', 
-                     fontsize=12, fontweight='bold', pad=10)
-    else:
-        ax4.text(0.5, 0.5, 'RTT data unavailable', ha='center', va='center',
-                transform=ax4.transAxes, fontsize=12)
-        ax4.set_title('RTT Composition', fontsize=12, fontweight='bold', pad=10)
+    ax1.set_ylim([0, max_win / win_scale * 1.25])
     
     plt.savefig(output_file, dpi=150, bbox_inches='tight')
     print(f"✓ Analysis dashboard saved to: {output_file}")
     
-    if rtt_us:
-        print(f"  RTT: {rtt_us:.2f} μs")
-        print(f"  Flows: {len(flows)}")
-        for idx, (flow_key, stat) in enumerate(sorted(stats.items())):
-            src, dst = flow_key[0], flow_key[1]
-            print(f"    Flow {src}→{dst}: {stat['rate_avg']/1e9:.3f} Gbps, "
-                  f"CWND: {stat['cwnd_avg']/1024:.2f} KB")
+    if config_path:
+        print(f"  Config: {config_path}")
+    if topo_path:
+        print(f"  Topology: {topo_path}")
+    print(f"  Flows: {len(flows)}")
+    for idx, (flow_key, stat) in enumerate(sorted(stats.items())):
+        src, dst = flow_key[0], flow_key[1]
+        if "actual_throughput" in stat:
+            throughput_str = f"{stat['actual_throughput']/1e9:.3f} Gbps (actual)"
+        else:
+            throughput_str = f"{stat['rate_avg']/1e9:.3f} Gbps (target)"
+        print(f"    Flow {src}→{dst}: {throughput_str}, "
+              f"CWND: {stat['cwnd_avg']/1024:.2f} KB")
     
     plt.close()
 
@@ -311,8 +313,13 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         cwnd_file = sys.argv[1]
         output_file = sys.argv[2] if len(sys.argv) > 2 else cwnd_file.replace('.txt', '_analysis.png')
+        config_path = sys.argv[3] if len(sys.argv) > 3 else None
+        topo_path = sys.argv[4] if len(sys.argv) > 4 else None
     else:
-        cwnd_file = "results/data/cwnd_two_senders_heavy.txt"
-        output_file = "results/plots/cwnd_rtt_analysis.png"
-    
-    plot_cwnd_rtt_analysis(cwnd_file, output_file)
+        base = Path(__file__).resolve().parents[1]
+        cwnd_file = str(base / "data" / "cwnd_two_senders_heavy.txt")
+        output_file = str(base / "plots" / "cwnd_rtt_analysis.png")
+        config_path = str(base.parent / "simulation" / "mix" / "configs" / "config_two_senders.txt")
+        topo_path = str(base.parent / "simulation" / "mix" / "topologies" / "topology_two_senders.txt")
+
+    plot_cwnd_rtt_analysis(cwnd_file, output_file, config_path=config_path, topo_path=topo_path)

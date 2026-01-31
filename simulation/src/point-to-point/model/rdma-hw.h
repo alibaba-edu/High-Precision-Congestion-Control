@@ -31,6 +31,8 @@ public:
 	DataRate m_minRate;		//< Min sending rate
 	uint32_t m_mtu;
 	uint32_t m_cc_mode;
+	uint32_t m_rxPullMode;
+	double m_rxPullRate;
 	double m_nack_interval;
 	uint32_t m_chunk;
 	uint32_t m_ack_interval;
@@ -41,6 +43,8 @@ public:
 	std::unordered_map<uint64_t, Ptr<RdmaQueuePair> > m_qpMap; // mapping from uint64_t to qp
 	std::unordered_map<uint64_t, Ptr<RdmaRxQueuePair> > m_rxQpMap; // mapping from uint64_t to rx qp
 	std::unordered_map<uint32_t, std::vector<int> > m_rtTable; // map from ip address (u32) to possible ECMP port (index of dev)
+	std::vector<EventId> m_rxPullEvents;
+	std::vector<bool> m_rxPullActive;
 
 	// trace: rate/window updates per qp
 	TracedCallback<Ptr<RdmaQueuePair>, uint64_t, uint64_t> m_traceQpRate;
@@ -54,6 +58,7 @@ public:
 	static uint64_t GetQpKey(uint32_t dip, uint16_t sport, uint16_t pg); // get the lookup key for m_qpMap
 	Ptr<RdmaQueuePair> GetQp(uint32_t dip, uint16_t sport, uint16_t pg); // get the qp
 	uint32_t GetNicIdxOfQp(Ptr<RdmaQueuePair> qp); // get the NIC index of the qp
+	uint32_t GetNicIdxOfDev(Ptr<QbbNetDevice> dev); // get the NIC index of the device
 	void AddQueuePair(uint64_t size, uint16_t pg, Ipv4Address _sip, Ipv4Address _dip, uint16_t _sport, uint16_t _dport, uint32_t win, uint64_t baseRtt, Callback<void> notifyAppFinish); // add a new qp (new send)
 	void DeleteQueuePair(Ptr<RdmaQueuePair> qp);
 	uint64_t GetQpWinForTrace(Ptr<RdmaQueuePair> qp);
@@ -66,6 +71,9 @@ public:
 	int ReceiveCnp(Ptr<Packet> p, CustomHeader &ch);
 	int ReceiveAck(Ptr<Packet> p, CustomHeader &ch); // handle both ACK and NACK
 	int Receive(Ptr<Packet> p, CustomHeader &ch); // callback function that the QbbNetDevice should use when receive packets. Only NIC can call this function. And do not call this upon PFC
+	int ReceiveFromRxBuffer(Ptr<Packet> p); // process packet dequeued from NIC RX buffer
+	void NotifyRxEnqueue(Ptr<QbbNetDevice> dev); // schedule RX pull
+	void ProcessRxBuffer(uint32_t nic_idx); // pull packets from NIC RX buffer
 
 	void CheckandSendQCN(Ptr<RdmaRxQueuePair> q);
 	int ReceiverCheckSeq(uint32_t seq, Ptr<RdmaRxQueuePair> q, uint32_t size);

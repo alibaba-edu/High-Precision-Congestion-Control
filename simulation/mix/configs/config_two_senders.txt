@@ -3,6 +3,16 @@ USE_DYNAMIC_PFC_THRESHOLD 0 {0: disable, 1: enable}
 
 PACKET_PAYLOAD_SIZE 1000 {packet size (bytes)}
 
+RX_BUFFER_SIZE 8388608 {NIC RX buffer size (bytes) - default for all nodes}
+RX_BUFFER_PER_QUEUE 1048576 {NIC RX per-queue buffer size (bytes) - default for all nodes}
+RX_PULL_MODE 1 {0: immediate, 1: fixed-rate pull - default for all nodes}
+RX_PULL_RATE 0.88 {fixed-rate pull as fraction of line rate - default for all nodes}
+
+# Per-node overrides (optional): Use RX_BUFFER_SIZE_NODE, RX_BUFFER_PER_QUEUE_NODE, RX_PULL_MODE_NODE, RX_PULL_RATE_NODE
+# Example: RX_PULL_RATE_NODE 0 1.0 {node_id value} - sets node 0 to pull at full rate
+RX_PULL_MODE_NODE 0 0 {sender 0: use immediate mode to avoid RX buffer occupancy}
+RX_PULL_MODE_NODE 1 0 {sender 1: use immediate mode to avoid RX buffer occupancy}
+
 TOPOLOGY_FILE mix/topologies/topology_two_senders.txt {input file: topology}
 FLOW_FILE mix/flows/flow_two_senders_heavy.txt {input file: flow to generate}
 TRACE_FILE mix/inputs/trace.txt {input file: nodes to monitor packet-level events}
@@ -10,6 +20,7 @@ TRACE_OUTPUT_FILE ../results/data/mix_two_senders_heavy.tr {output file: packet-
 FCT_OUTPUT_FILE ../results/data/fct_two_senders_heavy.txt {output file: flow completion time}
 PFC_OUTPUT_FILE ../results/data/pfc_two_senders_heavy.txt {output file: PFC}
 CWND_OUTPUT_FILE ../results/data/cwnd_two_senders_heavy.txt {output file: qp rate/window trace}
+RXBUF_OUTPUT_FILE ../results/data/rxbuf_two_senders_heavy.txt {output file: NIC RX buffer bytes}
 
 SIMULATOR_STOP_TIME 8.00 {simulation stop time}
 

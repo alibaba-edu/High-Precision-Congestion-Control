@@ -110,6 +110,7 @@ def plot_cwnd(filename):
     plt.ylabel(f"Window ({unit})")
     plt.title("CWND-like Window Over Time")
     plt.grid(True, alpha=0.3)
+    plt.ylim(0, (max_win / scale) * 1.25)
     
     # Add RTT annotation
     if rtt_us is not None:

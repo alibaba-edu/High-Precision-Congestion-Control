@@ -15,6 +15,8 @@
 
 namespace ns3{
 
+NS_OBJECT_ENSURE_REGISTERED(RdmaHw);
+
 TypeId RdmaHw::GetTypeId (void)
 {
 	static TypeId tid = TypeId ("ns3::RdmaHw")
@@ -34,6 +36,16 @@ TypeId RdmaHw::GetTypeId (void)
 				UintegerValue(0),
 				MakeUintegerAccessor(&RdmaHw::m_cc_mode),
 				MakeUintegerChecker<uint32_t>())
+		.AddAttribute("RxPullMode",
+				"RX pull mode: 0=immediate, 1=fixed-rate",
+				UintegerValue(1),
+				MakeUintegerAccessor(&RdmaHw::m_rxPullMode),
+				MakeUintegerChecker<uint32_t>())
+		.AddAttribute("RxPullRate",
+				"RX pull rate as a fraction of line rate (fixed-rate mode).",
+				DoubleValue(1.0),
+				MakeDoubleAccessor(&RdmaHw::m_rxPullRate),
+				MakeDoubleChecker<double>())
 		.AddAttribute("NACK Generation Interval",
 				"The NACK Generation interval",
 				DoubleValue(500.0),
@@ -196,11 +208,14 @@ void RdmaHw::Setup(QpCompleteCallback cb){
 		dev->m_rdmaEQ->m_qpGrp = m_nic[i].qpGrp;
 		// setup callback
 		dev->m_rdmaReceiveCb = MakeCallback(&RdmaHw::Receive, this);
+		dev->m_rdmaRxEnqueueCb = MakeCallback(&RdmaHw::NotifyRxEnqueue, this);
 		dev->m_rdmaLinkDownCb = MakeCallback(&RdmaHw::SetLinkDown, this);
 		dev->m_rdmaPktSent = MakeCallback(&RdmaHw::PktSent, this);
 		// config NIC
 		dev->m_rdmaEQ->m_rdmaGetNxtPkt = MakeCallback(&RdmaHw::GetNxtPacket, this);
 	}
+	m_rxPullEvents.resize(m_nic.size());
+	m_rxPullActive.assign(m_nic.size(), false);
 	// setup qp complete callback
 	m_qpCompleteCallback = cb;
 }
@@ -212,6 +227,15 @@ uint32_t RdmaHw::GetNicIdxOfQp(Ptr<RdmaQueuePair> qp){
 	}else{
 		NS_ASSERT_MSG(false, "We assume at least one NIC is alive");
 	}
+}
+
+uint32_t RdmaHw::GetNicIdxOfDev(Ptr<QbbNetDevice> dev){
+	for (uint32_t i = 0; i < m_nic.size(); i++){
+		if (m_nic[i].dev == dev)
+			return i;
+	}
+	NS_ASSERT_MSG(false, "RdmaHw::GetNicIdxOfDev cannot find NIC");
+	return 0;
 }
 uint64_t RdmaHw::GetQpKey(uint32_t dip, uint16_t sport, uint16_t pg){
 	return ((uint64_t)dip << 32) | ((uint64_t)sport << 16) | (uint64_t)pg;
@@ -460,6 +484,59 @@ int RdmaHw::Receive(Ptr<Packet> p, CustomHeader &ch){
 		ReceiveAck(p, ch);
 	}
 	return 0;
+}
+
+int RdmaHw::ReceiveFromRxBuffer(Ptr<Packet> p){
+	CustomHeader ch(CustomHeader::L2_Header | CustomHeader::L3_Header | CustomHeader::L4_Header);
+	ch.getInt = 1;
+	p->PeekHeader(ch);
+	return Receive(p, ch);
+}
+
+void RdmaHw::NotifyRxEnqueue(Ptr<QbbNetDevice> dev){
+	uint32_t nic_idx = GetNicIdxOfDev(dev);
+	if (nic_idx >= m_rxPullActive.size())
+		return;
+	if (!m_rxPullActive[nic_idx]){
+		m_rxPullActive[nic_idx] = true;
+		m_rxPullEvents[nic_idx] = Simulator::ScheduleNow(&RdmaHw::ProcessRxBuffer, this, nic_idx);
+	}
+}
+
+void RdmaHw::ProcessRxBuffer(uint32_t nic_idx){
+	if (nic_idx >= m_nic.size())
+		return;
+	Ptr<QbbNetDevice> dev = m_nic[nic_idx].dev;
+	if (dev == NULL)
+		return;
+
+	Ptr<Packet> p = dev->DequeueRxPacket();
+	if (p == 0){
+		if (nic_idx < m_rxPullActive.size())
+			m_rxPullActive[nic_idx] = false;
+		return;
+	}
+
+	ReceiveFromRxBuffer(p);
+
+	if (m_rxPullMode == 0){ // immediate
+		while ((p = dev->DequeueRxPacket()) != 0){
+			ReceiveFromRxBuffer(p);
+		}
+		if (nic_idx < m_rxPullActive.size())
+			m_rxPullActive[nic_idx] = false;
+		return;
+	}
+
+	uint64_t line_rate = dev->GetDataRate().GetBitRate();
+	double rate = line_rate * m_rxPullRate;
+	if (rate < 1.0)
+		rate = 1.0;
+	double seconds = (p->GetSize() * 8.0) / rate;
+	if (seconds < 0)
+		seconds = 0;
+
+	m_rxPullEvents[nic_idx] = Simulator::Schedule(Seconds(seconds), &RdmaHw::ProcessRxBuffer, this, nic_idx);
 }
 
 int RdmaHw::ReceiverCheckSeq(uint32_t seq, Ptr<RdmaRxQueuePair> q, uint32_t size){

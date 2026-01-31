@@ -29,6 +29,7 @@
 #include "ns3/ipv4-header.h"
 #include "ns3/udp-header.h"
 #include "ns3/rdma-queue-pair.h"
+#include "ns3/rdma-ingress-queue.h"
 #include <vector>
 #include<map>
 #include <ns3/rdma.h>
@@ -155,6 +156,8 @@ protected:
    */
   Ptr<BEgressQueue> m_queue;
 
+  Ptr<RdmaIngressQueue> m_rdmaIQ;
+
   Ptr<QbbChannel> m_channel;
   
   //pfc
@@ -186,10 +189,15 @@ protected:
 public:
 	Ptr<RdmaEgressQueue> m_rdmaEQ;
 	void RdmaEnqueueHighPrioQ(Ptr<Packet> p);
+  bool EnqueueRxPacket(Ptr<Packet> p, uint32_t qIndex);
+  Ptr<Packet> DequeueRxPacket(void);
 
 	// callback for processing packet in RDMA
 	typedef Callback<int, Ptr<Packet>, CustomHeader&> RdmaReceiveCb;
 	RdmaReceiveCb m_rdmaReceiveCb;
+  // callback for RX enqueue notification
+  typedef Callback<void, Ptr<QbbNetDevice> > RdmaRxEnqueueCb;
+  RdmaRxEnqueueCb m_rdmaRxEnqueueCb;
 	// callback for link down
 	typedef Callback<void, Ptr<QbbNetDevice> > RdmaLinkDownCb;
 	RdmaLinkDownCb m_rdmaLinkDownCb;
@@ -198,6 +206,7 @@ public:
 	RdmaPktSent m_rdmaPktSent;
 
 	Ptr<RdmaEgressQueue> GetRdmaQueue();
+  Ptr<RdmaIngressQueue> GetRdmaIngressQueue();
 	void TakeDown(); // take down this device
 	void UpdateNextAvail(Time t);
 

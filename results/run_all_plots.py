@@ -25,7 +25,8 @@ PLOT_SCRIPTS = [
     ("plot_qlen.py", "Queue Length Analysis"),
     ("plot_fct.py", "Flow Completion Time Analysis"),
     ("plot_cwnd.py", "Congestion Window Analysis"),
-    ("plot_cwnd_rtt_analysis.py", "CWND/RTT Analysis Dashboard"),
+    ("plot_rx_buffer.py", "RX Buffer Occupancy"),
+    ("plot_cwnd_rtt_analysis.py", "CWND Analysis Dashboard"),
     ("plot_queue_metrics.py", "Queue Metrics"),
     ("plot_switch_throughput.py", "Switch Throughput"),
     ("plot_dashboard.py", "Comprehensive Dashboard"),
@@ -124,7 +125,7 @@ def run_plot_script(script_name, description, data_files):
         elif "switch_throughput" in script_name:
             # This script needs --trace, --topo, and --flows flags
             trace_file = DATA_DIR / "mix_two_senders_heavy.tr"
-            topo_file = DATA_DIR / "topology.txt"
+            topo_file = RESULTS_DIR.parent / "simulation" / "mix" / "topologies" / "topology_two_senders.txt"
             flows_file = (RESULTS_DIR / ".." / "simulation" / "mix" / "flows" / "flow_two_senders_heavy.txt").resolve()
             
             if trace_file.exists() and topo_file.exists() and flows_file.exists():
@@ -161,11 +162,15 @@ def run_plot_script(script_name, description, data_files):
         elif "cwnd_rtt_analysis" in script_name:
             # This script generates CWND/RTT analysis dashboard
             cwnd_file = DATA_DIR / "cwnd_two_senders_heavy.txt"
+            config_file = RESULTS_DIR.parent / "simulation" / "mix" / "configs" / "config_two_senders.txt"
+            topo_file = RESULTS_DIR.parent / "simulation" / "mix" / "topologies" / "topology_two_senders.txt"
             
             if cwnd_file.exists():
                 cmd = [sys.executable, str(script_path), 
-                       str(cwnd_file),
-                       str(PLOTS_DIR / "cwnd_rtt_analysis.png")]
+                           str(cwnd_file),
+                           str(PLOTS_DIR / "cwnd_rtt_analysis.png"),
+                           str(config_file),
+                           str(topo_file)]
                 
                 print(f"Command: {' '.join(cmd)}")
                 result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
@@ -182,6 +187,27 @@ def run_plot_script(script_name, description, data_files):
                     return False
             else:
                 print(f"⚠️  Skipping {description}: CWND data file not found ({cwnd_file})")
+                return False
+
+        elif "plot_rx_buffer" in script_name or "rx_buffer" in script_name:
+            # This script needs RX buffer trace
+            rxbuf_file = DATA_DIR / "rxbuf_two_senders_heavy.txt"
+            if rxbuf_file.exists():
+                cmd = [sys.executable, str(script_path), str(rxbuf_file)]
+                print(f"Command: {' '.join(cmd)}")
+                result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+                if result.returncode == 0:
+                    print(f"✓ {description} completed successfully")
+                    if result.stdout:
+                        print(result.stdout)
+                    return True
+                else:
+                    print(f"✗ {description} failed")
+                    if result.stderr:
+                        print(f"Error: {result.stderr[:300]}")
+                    return False
+            else:
+                print(f"⚠️  Skipping {description}: RX buffer file not found ({rxbuf_file})")
                 return False
         
         # Default behavior: try to find matching data file

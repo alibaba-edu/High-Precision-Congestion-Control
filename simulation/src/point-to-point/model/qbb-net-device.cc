@@ -203,6 +203,11 @@ namespace ns3 {
 					PointerValue (),
 					MakePointerAccessor (&QbbNetDevice::m_rdmaEQ),
 					MakePointerChecker<Object> ())
+			.AddAttribute ("RdmaIngressQueue", 
+					"A queue to use as the NIC RX buffer.",
+					PointerValue (),
+					MakePointerAccessor (&QbbNetDevice::m_rdmaIQ),
+					MakePointerChecker<Object> ())
 			.AddTraceSource ("QbbEnqueue", "Enqueue a packet in the QbbNetDevice.",
 					MakeTraceSourceAccessor (&QbbNetDevice::m_traceEnqueue))
 			.AddTraceSource ("QbbDequeue", "Dequeue a packet in the QbbNetDevice.",
@@ -227,6 +232,7 @@ namespace ns3 {
 		}
 
 		m_rdmaEQ = CreateObject<RdmaEgressQueue>();
+		m_rdmaIQ = CreateObject<RdmaIngressQueue>();
 	}
 
 	QbbNetDevice::~QbbNetDevice()
@@ -384,9 +390,21 @@ namespace ns3 {
 				packet->AddPacketTag(FlowIdTag(m_ifIndex));
 				m_node->SwitchReceiveFromDevice(this, packet, ch);
 			}else { // NIC
-				// send to RdmaHw
-				int ret = m_rdmaReceiveCb(packet, ch);
-				// TODO we may based on the ret do something
+				uint32_t qIndex = 0;
+				if (ch.l3Prot == 0x11){ // UDP data
+					qIndex = ch.udp.pg;
+				}else if (ch.l3Prot == 0xFF){ // CNP
+					qIndex = ch.cnp.qIndex;
+				}else if (ch.l3Prot == 0xFD || ch.l3Prot == 0xFC){ // NACK/ACK
+					qIndex = ch.ack.pg;
+				}
+
+				if (m_rdmaIQ && EnqueueRxPacket(packet, qIndex)){
+					if (!m_rdmaRxEnqueueCb.IsNull())
+						m_rdmaRxEnqueueCb(this);
+				}else{
+					m_traceDrop(packet, qIndex);
+				}
 			}
 		}
 		return;
@@ -495,9 +513,26 @@ namespace ns3 {
 		return m_rdmaEQ;
 	}
 
+	Ptr<RdmaIngressQueue> QbbNetDevice::GetRdmaIngressQueue(){
+		return m_rdmaIQ;
+	}
+
 	void QbbNetDevice::RdmaEnqueueHighPrioQ(Ptr<Packet> p){
 		m_traceEnqueue(p, 0);
 		m_rdmaEQ->EnqueueHighPrioQ(p);
+	}
+
+	bool QbbNetDevice::EnqueueRxPacket(Ptr<Packet> p, uint32_t qIndex){
+		if (!m_rdmaIQ)
+			return false;
+		return m_rdmaIQ->Enqueue(p, qIndex);
+	}
+
+	Ptr<Packet> QbbNetDevice::DequeueRxPacket(void){
+		if (!m_rdmaIQ)
+			return 0;
+		uint32_t qIndex = 0;
+		return m_rdmaIQ->Dequeue(qIndex);
 	}
 
 	void QbbNetDevice::TakeDown(){

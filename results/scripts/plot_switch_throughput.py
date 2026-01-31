@@ -131,11 +131,26 @@ def _parse_topology_links(topo_path):
 
 
 def _build_port_map(links):
+    """Build neighbor map AND interface map from topology links.
+    
+    Returns:
+        port_map: dict mapping node -> list of neighbors
+        intf_map: dict mapping (node, neighbor) -> interface_index
+    """
     port_map = defaultdict(list)
+    intf_map = {}
+    intf_counter = defaultdict(lambda: 1)  # ns-3 starts interface numbering at 1
+    
     for a, b in links:
         port_map[a].append(b)
         port_map[b].append(a)
-    return port_map
+        # Assign interface indices in link creation order (1-indexed)
+        intf_map[(a, b)] = intf_counter[a]
+        intf_counter[a] += 1
+        intf_map[(b, a)] = intf_counter[b]
+        intf_counter[b] += 1
+    
+    return port_map, intf_map
 
 
 def _infer_receiver_from_flows(flow_path):
@@ -148,6 +163,22 @@ def _infer_receiver_from_flows(flow_path):
             if len(parts) >= 2 and parts[0].isdigit() and parts[1].isdigit():
                 return int(parts[1])
     return None
+
+
+def _infer_switch_for_receiver(port_map, dst_node):
+    if dst_node is None or port_map is None:
+        return None
+    candidates = []
+    for node, neighs in port_map.items():
+        if dst_node in neighs:
+            candidates.append(node)
+    if not candidates:
+        return None
+    # Prefer nodes with degree > 1 (likely switch)
+    for node in candidates:
+        if len(port_map.get(node, [])) > 1:
+            return node
+    return candidates[0]
 
 
 def plot_switch_throughput(trace_path, out_path, bin_ms, topo_path=None, flow_path=None,
@@ -164,11 +195,14 @@ def plot_switch_throughput(trace_path, out_path, bin_ms, topo_path=None, flow_pa
     t0 = None
 
     port_map = None
+    intf_map = None
     if topo_path:
         links = _parse_topology_links(topo_path)
-        port_map = _build_port_map(links)
+        port_map, intf_map = _build_port_map(links)
     if dst_node is None and flow_path:
         dst_node = _infer_receiver_from_flows(flow_path)
+    if sw_node is None and dst_node is not None and port_map is not None:
+        sw_node = _infer_switch_for_receiver(port_map, dst_node)
 
     for ps, tr in _iter_traces(trace_path):
         if port_speed is None:
@@ -183,17 +217,17 @@ def plot_switch_throughput(trace_path, out_path, bin_ms, topo_path=None, flow_pa
         idx = (tr.time - t0) // bin_ns
         bytes_per_bin_switch[idx][tr.node] += int(tr.size)
 
-        if sw_node is not None and dst_node is not None and port_map is not None:
-            neighs = port_map.get(sw_node, [])
-            if dst_node in neighs:
-                dst_port = neighs.index(dst_node)
-                if tr.node == sw_node and tr.intf == dst_port:
-                    bytes_per_bin_port[idx] += int(tr.size)
+        if sw_node is not None and dst_node is not None and intf_map is not None:
+            dst_intf = intf_map.get((sw_node, dst_node))
+            if dst_intf is not None and tr.node == sw_node and tr.intf == dst_intf:
+                bytes_per_bin_port[idx] += int(tr.size)
 
-    if sw_node is not None and dst_node is not None and port_map is not None:
+    if sw_node is not None and dst_node is not None and port_map is not None and intf_map is not None:
         if dst_node not in port_map.get(sw_node, []):
             raise RuntimeError("Destination node not connected to the switch in topology")
-        dst_port = port_map[sw_node].index(dst_node)
+        dst_port = intf_map.get((sw_node, dst_node))
+        if dst_port is None:
+            raise RuntimeError(f"Interface mapping not found for switch {sw_node} -> node {dst_node}")
         if port_speed is None or sw_node not in port_speed or dst_port not in port_speed[sw_node]:
             raise RuntimeError("Port speed for selected switch/port not found in trace header")
 
