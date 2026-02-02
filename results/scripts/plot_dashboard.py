@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Comprehensive simulation results dashboard"""
+import argparse
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import sys
@@ -72,7 +73,7 @@ def _parse_qlen_time_blocks(qlen_file):
     return times, max_values
 
 
-def plot_dashboard(base_dir='simulation/mix'):
+def plot_dashboard(base_dir='simulation/mix', output_file=None):
     """Create a comprehensive dashboard of simulation results"""
     
     # Read data
@@ -222,13 +223,19 @@ def plot_dashboard(base_dir='simulation/mix'):
         ax_slow_hist.grid(True, alpha=0.3, axis='y')
     
     # Save
-    output_file = os.path.join(base_dir, 'outputs', 'dashboard.png')
+    if output_file is None:
+        output_file = os.path.join(base_dir, 'outputs', 'dashboard.png')
+    out_dir = os.path.dirname(output_file)
+    if out_dir:
+        os.makedirs(out_dir, exist_ok=True)
     plt.savefig(output_file, dpi=150, bbox_inches='tight')
     print("Dashboard saved to: " + output_file)
     plt.close()
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        plot_dashboard(sys.argv[1])
-    else:
-        plot_dashboard()
+    parser = argparse.ArgumentParser(description="Create a comprehensive simulation results dashboard")
+    parser.add_argument("--base-dir", default="simulation/mix", help="Base directory for simulation data")
+    parser.add_argument("--out", default=None, help="Output PNG path")
+    args = parser.parse_args()
+
+    plot_dashboard(args.base_dir, args.out)

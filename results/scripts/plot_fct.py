@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Visualize Flow Completion Time data"""
+import argparse
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import math
 from matplotlib.ticker import LogLocator, NullFormatter, FuncFormatter
 import sys
 
-def plot_fct(filename):
+def plot_fct(filename, output_file=None):
     flow_sizes = []
     fcts = []
     base_fcts = []
@@ -17,11 +18,21 @@ def plot_fct(filename):
             parts = line.strip().split()
             if len(parts) >= 8:
                 try:
-                    # Format: src dst sport dport base_fct start_time fct size
+                    # Format: src dst sport dport base_fct start_time end_time size
                     size = int(parts[7])
-                    fct = int(parts[6])
+                    start_time = int(parts[5])
+                    end_time = int(parts[6])
+                    
+                    # FCT is duration
+                    fct = end_time - start_time
                     base_fct = int(parts[4])
-                    slowdown = float(fct) / float(base_fct) if base_fct > 0 else 1
+                    
+                    if fct <= 0:
+                         # Fallback if fct is actually duration (unlikely based on data)
+                         if end_time < 100 * 1e9: 
+                             fct = end_time
+                    
+                    slowdown = float(fct) / float(base_fct) if base_fct > 0 else 1.0
                     
                     flow_sizes.append(size)
                     fcts.append(fct / 1e6)  # Convert to ms
@@ -158,13 +169,17 @@ def plot_fct(filename):
                   verticalalignment='top')
 
     fig.subplots_adjust(left=0.10, right=0.98, bottom=0.12, top=0.92, wspace=0.35, hspace=0.4)
-    output_file = filename.replace('.txt', '.png')
+    if output_file is None:
+        output_file = filename.replace('.txt', '.png')
     plt.savefig(output_file, dpi=150)
     print("Plot saved to: " + output_file)
     plt.close()
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        plot_fct(sys.argv[1])
-    else:
-        plot_fct('simulation/mix/outputs/fct/fct.txt')
+    parser = argparse.ArgumentParser(description="Plot flow completion time data")
+    parser.add_argument("input", nargs="?", default="simulation/mix/outputs/fct/fct.txt",
+                        help="Path to FCT data file")
+    parser.add_argument("--out", default=None, help="Output PNG path")
+    args = parser.parse_args()
+
+    plot_fct(args.input, args.out)

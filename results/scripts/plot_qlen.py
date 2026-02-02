@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 """Quick visualization of queue length data per link"""
+import argparse
 import matplotlib.pyplot as plt
 import sys
 
-def plot_qlen(filename):
+def plot_qlen(filename, output_file=None):
     # Format: First line "time: <nanoseconds>"
     # Then lines of "<sw> <port> <cnt_bin0> <cnt_bin1> ..." (histogram in KB bins)
     qlen_per_link = {}
@@ -76,13 +77,17 @@ def plot_qlen(filename):
         plt.legend()
     plt.tight_layout()
     
-    output_file = filename.replace('.txt', '.png')
+    if output_file is None:
+        output_file = filename.replace('.txt', '.png')
     plt.savefig(output_file, dpi=150)
     print(f"Plot saved to: {output_file} ({plotted} links with congestion)")
     plt.close()
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        plot_qlen(sys.argv[1])
-    else:
-        plot_qlen('simulation/mix/outputs/qlen/qlen.txt')
+    parser = argparse.ArgumentParser(description="Plot queue length data per link")
+    parser.add_argument("input", nargs="?", default="simulation/mix/outputs/qlen/qlen.txt",
+                        help="Path to qlen data file")
+    parser.add_argument("--out", default=None, help="Output PNG path")
+    args = parser.parse_args()
+
+    plot_qlen(args.input, args.out)

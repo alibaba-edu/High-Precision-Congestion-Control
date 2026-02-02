@@ -8,6 +8,7 @@ simulation/build/
 
 # NetAnim build/output
 netanim/
+pybindgen/
 
 # Plots and generated images
 results/plots/

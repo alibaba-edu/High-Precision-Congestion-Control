@@ -8,10 +8,13 @@ RX_BUFFER_PER_QUEUE 1048576 {NIC RX per-queue buffer size (bytes) - default for 
 RX_PULL_MODE 1 {0: immediate, 1: fixed-rate pull - default for all nodes}
 RX_PULL_RATE 1.0 {fixed-rate pull as fraction of line rate - default for all nodes}
 
-# Per-node overrides: senders (nodes 0,1) pull at full rate, receiver (node 2) pulls at 88%
-RX_PULL_RATE_NODE 0 1.0 {sender 0: full rate}
-RX_PULL_RATE_NODE 1 1.0 {sender 1: full rate}
-RX_PULL_RATE_NODE 2 0.5 {receiver: 50% rate - bottleneck}
+# Per-node overrides: senders (nodes 0,1) immediate pull; receiver (node 2) fixed-rate pull
+RX_PULL_MODE_NODE 0 0 {sender 0: immediate mode to avoid RX buffer occupancy}
+RX_PULL_MODE_NODE 1 0 {sender 1: immediate mode to avoid RX buffer occupancy}
+RX_PULL_MODE_NODE 2 1 {receiver: fixed-rate pull}
+RX_PULL_RATE_NODE 0 1.0 {sender 0: full rate (unused in immediate mode)}
+RX_PULL_RATE_NODE 1 1.0 {sender 1: full rate (unused in immediate mode)}
+RX_PULL_RATE_NODE 2 0.1 {receiver: 10% rate}
 
 TOPOLOGY_FILE mix/topologies/topology_two_senders.txt {input file: topology}
 FLOW_FILE mix/flows/flow_two_senders_heavy.txt {input file: flow to generate}

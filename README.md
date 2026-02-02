@@ -27,12 +27,24 @@ These extensions aim to improve performance in scenarios where end-host (receive
 
 ### Option 1: Using Docker (Recommended)
 
-1. **Build the Docker container:**
+Choose one of the following (they are alternatives):
+
+- **Use Docker Compose:**
+   ```bash
+   docker compose build
+   docker compose run --rm hpcc
+   ```
+   To stop a running container started with `docker compose up`:
+   ```bash
+   docker compose down
+   ```
+
+- **Build the Docker container:**
    ```bash
    docker build -t hpcc-simulator:latest .
    ```
 
-2. **Run the container with X11 display forwarding (for GUI tools like NetAnim):**
+- **Run the container with X11 display forwarding (for GUI tools like NetAnim):**
    ```bash
    docker run -it \
      -e DISPLAY=$DISPLAY \
@@ -41,7 +53,7 @@ These extensions aim to improve performance in scenarios where end-host (receive
      hpcc-simulator:latest
    ```
 
-3. **Or use VS Code Dev Containers:**
+- **Or use VS Code Dev Containers:**
    - Install the "Dev Containers" extension in VS Code
    - Open the workspace folder in VS Code
    - Click the Remote indicator in the bottom left and select "Reopen in Container"
@@ -91,6 +103,106 @@ make -j$(nproc)
 - **`netanim/`** - NetAnim visualization tool for packet animation playback
 - **`pybindgen/`** - Python bindings generator (installed via pip, not committed)
 - **`results/`** - Output directory for simulation results, logs, and plots
+
+## Running the Simulation
+
+This section provides a step-by-step guide to build, run, and analyze the HPCC simulator.
+
+### Step 1: Start Docker Container
+
+First, ensure the container is running:
+
+```bash
+docker compose up -d hpcc
+```
+
+Then enter the container shell:
+
+```bash
+docker compose exec hpcc bash
+```
+
+**Note:** The container provides a hybrid environment:
+*   **Python 2.7**: Used for the NS-3 simulation (`./waf`, `run.py`).
+*   **Python 3**: Used for all plotting and analysis scripts (`results/run_all_plots.py`).
+
+### Step 2: Build the Simulation
+
+Navigate to the simulation directory and use the helper script:
+
+```bash
+cd /workspace/simulation
+./build.sh
+```
+
+This script automatically sets up the environment and runs `./waf build`.
+
+### Step 3: Run the Simulation
+
+Run the simulator with a specific configuration file using the helper script:
+
+```bash
+# General usage
+./run.sh <config_file_path>
+
+# Example: Run the 'two_senders_heavy' scenario
+./run.sh mix/configs/config_two_senders_per_node.txt
+```
+
+To run and **clear previous results** (optional):
+```bash
+./run.sh mix/configs/config_two_senders_per_node.txt clean
+```
+
+### Step 4: Generate Analysis Plots
+
+Generate all visualization plots using the master plotting script:
+
+```bash
+cd /workspace
+python3 results/run_all_plots.py
+```
+
+This will run a suite of analysis scripts and save the output to `/workspace/results/plots/`.
+**Generated Plots include:**
+*   `cwnd_rtt_analysis.png`: Congestion Window & RTT Dashboard
+*   `cwnd_two_senders_heavy_rtt.png`: RTT over Time (timeline)
+*   `switch_throughput.png`: Switch metrics
+*   `rxbuf_two_senders_heavy.png`: RX Buffer Occupancy
+*   `packet_drops.png`: Packet drop tracking
+*   `topology_full.png` / `topology_flows.png`: Network visualization
+
+### Quick Reference: Common Commands
+
+```bash
+# 1. Enter container
+docker compose exec hpcc bash
+
+# 2. Build (in /workspace/simulation)
+cd /workspace/simulation && ./build.sh
+
+# 3. Run Experiment
+./run.sh mix/configs/config_two_senders_per_node.txt
+
+# 4. Generate Plots (in /workspace)
+cd /workspace && python3 results/run_all_plots.py
+
+# 5. View Results
+ls -lh /workspace/results/plots/
+```
+
+**Build script details (`./build.sh`):**
+- Sets up library paths automatically
+- Runs `./waf build` with proper environment
+- Checks for errors before completing
+- Quick status messages
+
+**Run script details (`./run.sh`):**
+- Validates config file exists
+- Checks executable is built
+- Sets library paths automatically
+- Optional `clean` flag to remove old results
+- Provides next-steps instructions
 
 ## Quick Start
 

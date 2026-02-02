@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  hpcc:
+    image: hpcc-plus-dev:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hpcc-plus-dev
+    working_dir: /workspace
+    stdin_open: true
+    tty: true
+    environment:
+      DISPLAY: ${DISPLAY}
+    volumes:
+      - .:/workspace
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    command: /bin/bash

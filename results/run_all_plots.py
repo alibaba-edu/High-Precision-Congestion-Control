@@ -22,10 +22,10 @@ PLOTS_DIR.mkdir(exist_ok=True)
 # List of all plot scripts to run (order matters for dependencies)
 PLOT_SCRIPTS = [
     ("plot_topology.py", "Network Topology Visualization"),
-    ("plot_qlen.py", "Queue Length Analysis"),
+    # ("plot_qlen.py", "Queue Length Analysis"), # Unified into queue metrics
     ("plot_fct.py", "Flow Completion Time Analysis"),
-    ("plot_cwnd.py", "Congestion Window Analysis"),
     ("plot_rx_buffer.py", "RX Buffer Occupancy"),
+    ("plot_packet_drops.py", "Packet Drop Analysis"),
     ("plot_cwnd_rtt_analysis.py", "CWND Analysis Dashboard"),
     ("plot_queue_metrics.py", "Queue Metrics"),
     ("plot_switch_throughput.py", "Switch Throughput"),
@@ -69,58 +69,34 @@ def run_plot_script(script_name, description, data_files):
                 topo_file = DATA_DIR / "topology.txt"
             
             if topo_file.exists():
-                # First: Full topology
+                # Unified Topology Analysis (Full + Flows side-by-side)
+                flows_file = (RESULTS_DIR / ".." / "simulation" / "mix" / "flows" / "flow_two_senders_heavy.txt").resolve()
+                
                 cmd = [sys.executable, str(script_path), 
                        str(topo_file),
-                       "--out", str(PLOTS_DIR / "topology_full.png")]
+                       "--out", str(PLOTS_DIR / "topology_analysis.png")]
                 
-                print(f"Generating full topology from: {topo_file.name}")
+                if flows_file.exists():
+                    cmd.extend(["--flows", str(flows_file)])
+                    print(f"Generating unified topology analysis (Full + Flows)...")
+                else:
+                    print(f"Generating topology analysis (Full view only)...")
+
                 result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
                 
                 if result.returncode == 0:
                     if result.stdout:
                         print(result.stdout)
-                
-                # Second: Flow-specific topology
-                flows_file = (RESULTS_DIR / ".." / "simulation" / "mix" / "flows" / "flow_two_senders_heavy.txt").resolve()
-                if flows_file.exists():
-                    cmd = [sys.executable, str(script_path), 
-                           str(topo_file),
-                           "--flows", str(flows_file),
-                           "--out", str(PLOTS_DIR / "topology_flows.png")]
-                    
-                    print(f"Generating flow-specific topology...")
-                    result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
-                    
-                    if result.returncode == 0:
-                        if result.stdout:
-                            print(result.stdout)
-                        print(f"✓ {description} completed successfully (both full and flow topologies)")
-                        return True
-                
-                print(f"✓ {description} completed successfully (full topology generated)")
-                return True
+                    print(f"✓ {description} completed successfully")
+                    return True
+                else:
+                    print(f"✗ {description} failed")
+                    if result.stderr:
+                        print(result.stderr)
+                    return False
             else:
                 print(f"⚠️  Skipping {description}: Topology file not found")
                 return False
-        
-        elif "queue_metrics" in script_name:
-            # This script needs --qlen and optionally --pfc flags
-            qlen_file = DATA_DIR / "qlen_two_senders_heavy.txt"
-            pfc_file = DATA_DIR / "pfc_two_senders_heavy.txt"
-            
-            if qlen_file.exists():
-                cmd = [sys.executable, str(script_path), "--qlen", str(qlen_file)]
-                if pfc_file.exists():
-                    cmd.extend(["--pfc", str(pfc_file)])
-                print(f"Command: {' '.join(cmd)}")
-                result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
-                
-                if result.returncode == 0:
-                    print(f"✓ {description} completed successfully")
-                    if result.stdout:
-                        print(result.stdout)
-                    return True
         
         elif "switch_throughput" in script_name:
             # This script needs --trace, --topo, and --flows flags
@@ -158,7 +134,7 @@ def run_plot_script(script_name, description, data_files):
                     missing.append(f"flows ({flows_file})")
                 print(f"⚠️  Skipping {description}: Missing files: {', '.join(missing)}")
                 return False
-        
+
         elif "cwnd_rtt_analysis" in script_name:
             # This script generates CWND/RTT analysis dashboard
             cwnd_file = DATA_DIR / "cwnd_two_senders_heavy.txt"
@@ -189,11 +165,34 @@ def run_plot_script(script_name, description, data_files):
                 print(f"⚠️  Skipping {description}: CWND data file not found ({cwnd_file})")
                 return False
 
+        elif "queue_metrics" in script_name:
+            # This script needs --qlen, optional --pfc, and --out-dir
+            qlen_file = DATA_DIR / "qlen_two_senders_heavy.txt"
+            pfc_file = DATA_DIR / "pfc_two_senders_heavy.txt"
+            
+            if qlen_file.exists():
+                cmd = [sys.executable, str(script_path), 
+                       "--qlen", str(qlen_file),
+                       "--out-dir", str(PLOTS_DIR)]
+                
+                if pfc_file.exists():
+                    cmd.extend(["--pfc", str(pfc_file)])
+                    
+                print(f"Command: {' '.join(cmd)}")
+                result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+                
+                if result.returncode == 0:
+                    print(f"✓ {description} completed successfully")
+                    if result.stdout:
+                        print(result.stdout)
+                    return True
+        
         elif "plot_rx_buffer" in script_name or "rx_buffer" in script_name:
             # This script needs RX buffer trace
             rxbuf_file = DATA_DIR / "rxbuf_two_senders_heavy.txt"
             if rxbuf_file.exists():
-                cmd = [sys.executable, str(script_path), str(rxbuf_file)]
+                cmd = [sys.executable, str(script_path), str(rxbuf_file),
+                       "--out", str(PLOTS_DIR / "rx_buffer.png")]
                 print(f"Command: {' '.join(cmd)}")
                 result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
                 if result.returncode == 0:
@@ -209,6 +208,59 @@ def run_plot_script(script_name, description, data_files):
             else:
                 print(f"⚠️  Skipping {description}: RX buffer file not found ({rxbuf_file})")
                 return False
+
+        elif "plot_fct" in script_name:
+             # FCT Plot
+             fct_file = DATA_DIR / "fct_two_senders_heavy.txt"
+             if fct_file.exists():
+                cmd = [sys.executable, str(script_path), str(fct_file),
+                       "--out", str(PLOTS_DIR / "fct.png")]
+                print(f"Command: {' '.join(cmd)}")
+                result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+                if result.returncode == 0:
+                    print(f"✓ {description} completed successfully")
+                    if result.stdout:
+                         print(result.stdout)
+                    return True
+                else:
+                    print(f"✗ {description} failed")
+                    if result.stderr:
+                         print(f"Error: {result.stderr[:300]}")
+                    return False
+        
+
+
+        elif "packet_drops" in script_name or "drop" in script_name:
+            # This script needs packet drop trace AND pfc trace for unified plot
+            drop_file = DATA_DIR / "drop_two_senders_heavy.txt"
+            pfc_file = DATA_DIR / "pfc_two_senders_heavy.txt"
+            
+            if drop_file.exists() or pfc_file.exists():
+                cmd = [sys.executable, str(script_path), 
+                       "-o", str(PLOTS_DIR / "reliability_analysis.png")]
+                
+                if drop_file.exists():
+                    cmd.extend(["--drops", str(drop_file)])
+                
+                if pfc_file.exists():
+                    cmd.extend(["--pfc", str(pfc_file)])
+                    
+                print(f"Command: {' '.join(cmd)}")
+                result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+                if result.returncode == 0:
+                    print(f"✓ {description} completed successfully")
+                    if result.stdout:
+                        print(result.stdout)
+                    return True
+                else:
+                    print(f"✗ {description} failed")
+                    if result.stderr:
+                        print(f"Error: {result.stderr[:300]}")
+                    return False
+            else:
+                print(f"⚠️  Skipping {description}: No drop or PFC trace files found")
+                return False
+
         
         # Default behavior: try to find matching data file
         for data_file in sorted(data_files):

@@ -233,6 +233,7 @@ namespace ns3 {
 
 		m_rdmaEQ = CreateObject<RdmaEgressQueue>();
 		m_rdmaIQ = CreateObject<RdmaIngressQueue>();
+		m_rxPullMode = 1;
 	}
 
 	QbbNetDevice::~QbbNetDevice()
@@ -399,6 +400,11 @@ namespace ns3 {
 					qIndex = ch.ack.pg;
 				}
 
+				if (m_rxPullMode == 0 && !m_rdmaReceiveCb.IsNull()){
+					m_rdmaReceiveCb(packet, ch);
+					return;
+				}
+
 				if (m_rdmaIQ && EnqueueRxPacket(packet, qIndex)){
 					if (!m_rdmaRxEnqueueCb.IsNull())
 						m_rdmaRxEnqueueCb(this);
@@ -515,6 +521,14 @@ namespace ns3 {
 
 	Ptr<RdmaIngressQueue> QbbNetDevice::GetRdmaIngressQueue(){
 		return m_rdmaIQ;
+	}
+
+	void QbbNetDevice::SetRxPullMode(uint32_t mode){
+		m_rxPullMode = mode;
+	}
+
+	uint32_t QbbNetDevice::GetRxPullMode() const{
+		return m_rxPullMode;
 	}
 
 	void QbbNetDevice::RdmaEnqueueHighPrioQ(Ptr<Packet> p){

@@ -1,8 +1,8 @@
 4 1 3
 3
-0 3 1Gbps 0.001ms 0
-1 3 1Gbps 0.001ms 0
-3 2 1Gbps 0.001ms 0
+0 3 10Gbps 0.01ms 0
+1 3 10Gbps 0.01ms 0
+3 2 10Gbps 0.01ms 0
 
 
 First line: total node #, switch node #, link #

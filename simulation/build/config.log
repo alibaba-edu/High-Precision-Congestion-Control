@@ -1,21 +1,21 @@
-# project ns (3.18) configured on Sat Jan 31 10:01:59 2026 by
+# project ns (3.18) configured on Mon Feb  2 13:34:40 2026 by
 # waf 1.7.11 (abi 98, python 20712f0 on linux2)
-# using ./waf configure --disable-python
+# using ./waf configure --disable-python --enable-modules=core,network,internet,point-to-point,applications,stats,flow-monitor,mobility
 #
 ----------------------------------------
 Setting top to
-/workspaces/High-Precision-Congestion-Control-Plus/simulation
+/workspace/simulation
 ----------------------------------------
 Setting out to
-/workspaces/High-Precision-Congestion-Control-Plus/simulation/build
+/workspace/simulation/build
 ----------------------------------------
 Checking for 'gcc' (c compiler)
-find program=['gcc', 'cc'] paths=['/root/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand', '/root/.vscode-server/data/User/globalStorage/github.copilot-chat/copilotCli', '/vscode/vscode-server/bin/linux-x64/c9d77990917f3102ada88be140d28b038d1dd7c7/bin/remote-cli', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='CC' -> '/usr/bin/gcc'
-find program=['ar'] paths=['/root/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand', '/root/.vscode-server/data/User/globalStorage/github.copilot-chat/copilotCli', '/vscode/vscode-server/bin/linux-x64/c9d77990917f3102ada88be140d28b038d1dd7c7/bin/remote-cli', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='AR' -> '/usr/bin/ar'
+find program=['gcc', 'cc'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='CC' -> '/usr/bin/gcc'
+find program=['ar'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='AR' -> '/usr/bin/ar'
 /usr/bin/gcc
 ----------------------------------------
 Checking for 'g++' (c++ compiler)
-find program=['g++', 'c++'] paths=['/root/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand', '/root/.vscode-server/data/User/globalStorage/github.copilot-chat/copilotCli', '/vscode/vscode-server/bin/linux-x64/c9d77990917f3102ada88be140d28b038d1dd7c7/bin/remote-cli', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='CXX' -> '/usr/bin/g++'
+find program=['g++', 'c++'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='CXX' -> '/usr/bin/g++'
 (tool ar is already loaded, skipping)
 /usr/bin/g++
 ---------------------------------------------------------
@@ -25,40 +25,34 @@ Checking for compilation flag -Wl,--soname=foo... support
 int main() { return 0; }
 
 <==
-[1/2] cxx: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/test.cc -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-Wl,--soname=foo', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cc', '-c', '-o', 'test.cc.1.o']
-[2/2] cxxprogram: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog
-
-['/usr/bin/g++', 'test.cc.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+[1/2] [32mcxx: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/test.cc -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o
+[0m
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-Wl,--soname=foo', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cc', '-c', '-o', 'test.cc.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cc.1.o', '-o', '/workspace/simulation/build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 ok
 ---------------------------------------------------------
 Checking boost includes
-from /workspaces/High-Precision-Congestion-Control-Plus/simulation/src: headers not found, please provide a --boost-includes argument (see help)
+from /workspace/simulation/src: headers not found, please provide a --boost-includes argument (see help)
 not found
 ---------------------------------------------------------
 Checking boost includes
-from /workspaces/High-Precision-Congestion-Control-Plus/simulation/src: headers not found, please provide a --boost-includes argument (see help)
+from /workspace/simulation/src: headers not found, please provide a --boost-includes argument (see help)
 not found
 ---------------------------------------------------------
 Checking for click location
 not found
 ---------------------------------------------------------
 Checking for program pkg-config
-/usr/bin/pkg-config
-find program=['pkg-config'] paths=['/root/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand', '/root/.vscode-server/data/User/globalStorage/github.copilot-chat/copilotCli', '/vscode/vscode-server/bin/linux-x64/c9d77990917f3102ada88be140d28b038d1dd7c7/bin/remote-cli', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='PKGCONFIG' -> '/usr/bin/pkg-config'
----------------------------------------------------------
-Checking for 'gtk+-2.0' >= 2.12
-['/usr/bin/pkg-config', '--atleast-version=2.12', 'gtk+-2.0']
 not found
-from /workspaces/High-Precision-Congestion-Control-Plus/simulation/src/config-store: The configuration failed
+find program=['pkg-config'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='PKGCONFIG' -> ''
+from /workspace/simulation/src/config-store: Could not find the program pkg-config
 ---------------------------------------------------------
-Checking for 'libxml-2.0' >= 2.7
-['/usr/bin/pkg-config', '--atleast-version=2.7', 'libxml-2.0']
-['/usr/bin/pkg-config', '--cflags', '--libs', 'libxml-2.0']
-out: -I/usr/include/libxml2 -lxml2
-
-yes
+Checking for program pkg-config
+not found
+find program=['pkg-config'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='PKGCONFIG' -> ''
+from /workspace/simulation/src/config-store: Could not find the program pkg-config
 ---------------------------------------------------------
 Checking for type uint128_t
 ==>
@@ -72,9 +66,9 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] cxx: build/.conf_check_656b178ce7442053dff90315b31a1cc5/test.cpp -> build/.conf_check_656b178ce7442053dff90315b31a1cc5/testbuild/test.cpp.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[1/2] [32mcxx: build/.conf_check_656b178ce7442053dff90315b31a1cc5/test.cpp -> build/.conf_check_656b178ce7442053dff90315b31a1cc5/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
 err: ../test.cpp: In function 'int main(int, char**)':
 ../test.cpp:5:7: error: 'uint128_t' was not declared in this scope; did you mean 'uint32_t'?
     5 |  if ((uint128_t *) 0) return 0;
@@ -92,18 +86,18 @@ err: ../test.cpp: In function 'int main(int, char**)':
       |              ^~~~~~~~~
       |              uint32_t
 
-from /workspaces/High-Precision-Congestion-Control-Plus/simulation/src/core: Test does not build: Traceback (most recent call last):
-  File "/workspaces/High-Precision-Congestion-Control-Plus/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Tools/c_config.py", line 459, in run_c_code
+from /workspace/simulation/src/core: Test does not build: Traceback (most recent call last):
+  File "/workspace/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Tools/c_config.py", line 459, in run_c_code
     bld.compile()
-  File "/workspaces/High-Precision-Congestion-Control-Plus/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Build.py", line 188, in compile
+  File "/workspace/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Build.py", line 188, in compile
     raise Errors.BuildError(self.producer.error)
 BuildError: Build failed
  -> task in 'testprog' failed (exit status 1): 
-	{task 129555809337488: cxx test.cpp -> test.cpp.1.o}
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+	{task 134192621989968: cxx test.cpp -> test.cpp.1.o}
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
 
 not found
-from /workspaces/High-Precision-Congestion-Control-Plus/simulation/src/core: The configuration failed
+from /workspace/simulation/src/core: The configuration failed
 ---------------------------------------------------------
 Checking for type __uint128_t
 ==>
@@ -117,12 +111,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] cxx: build/.conf_check_ace1886511f08627ee2e4ca020806295/test.cpp -> build/.conf_check_ace1886511f08627ee2e4ca020806295/testbuild/test.cpp.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] cxxprogram: build/.conf_check_ace1886511f08627ee2e4ca020806295/testbuild/test.cpp.1.o -> build/.conf_check_ace1886511f08627ee2e4ca020806295/testbuild/testprog
-
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_ace1886511f08627ee2e4ca020806295/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+[1/2] [32mcxx: build/.conf_check_ace1886511f08627ee2e4ca020806295/test.cpp -> build/.conf_check_ace1886511f08627ee2e4ca020806295/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_ace1886511f08627ee2e4ca020806295/testbuild/test.cpp.1.o -> build/.conf_check_ace1886511f08627ee2e4ca020806295/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_ace1886511f08627ee2e4ca020806295/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ---------------------------------------------------------
 Checking high precision time implementation
@@ -138,12 +132,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] cxx: build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/test.cpp -> build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/test.cpp.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] cxxprogram: build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/test.cpp.1.o -> build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/testprog
-
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+[1/2] [32mcxx: build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/test.cpp -> build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/test.cpp.1.o -> build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ---------------------------------------------------------
 Checking for header inttypes.h
@@ -156,12 +150,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] cxx: build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/test.cpp -> build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/test.cpp.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] cxxprogram: build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/test.cpp.1.o -> build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/testprog
-
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+[1/2] [32mcxx: build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/test.cpp -> build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/test.cpp.1.o -> build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ---------------------------------------------------------
 Checking for header sys/inttypes.h
@@ -174,26 +168,26 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] cxx: build/.conf_check_61ecbfef21667d45a28decabe37fdf64/test.cpp -> build/.conf_check_61ecbfef21667d45a28decabe37fdf64/testbuild/test.cpp.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[1/2] [32mcxx: build/.conf_check_61ecbfef21667d45a28decabe37fdf64/test.cpp -> build/.conf_check_61ecbfef21667d45a28decabe37fdf64/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
 err: ../test.cpp:1:10: fatal error: sys/inttypes.h: No such file or directory
     1 | #include <sys/inttypes.h>
       |          ^~~~~~~~~~~~~~~~
 compilation terminated.
 
-from /workspaces/High-Precision-Congestion-Control-Plus/simulation/src/core: Test does not build: Traceback (most recent call last):
-  File "/workspaces/High-Precision-Congestion-Control-Plus/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Tools/c_config.py", line 459, in run_c_code
+from /workspace/simulation/src/core: Test does not build: Traceback (most recent call last):
+  File "/workspace/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Tools/c_config.py", line 459, in run_c_code
     bld.compile()
-  File "/workspaces/High-Precision-Congestion-Control-Plus/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Build.py", line 188, in compile
+  File "/workspace/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Build.py", line 188, in compile
     raise Errors.BuildError(self.producer.error)
 BuildError: Build failed
  -> task in 'testprog' failed (exit status 1): 
-	{task 129555809430992: cxx test.cpp -> test.cpp.1.o}
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+	{task 134192621346896: cxx test.cpp -> test.cpp.1.o}
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
 
 not found
-from /workspaces/High-Precision-Congestion-Control-Plus/simulation/src/core: The configuration failed
+from /workspace/simulation/src/core: The configuration failed
 ---------------------------------------------------------
 Checking for header sys/types.h
 ==>
@@ -205,12 +199,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] cxx: build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/test.cpp -> build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/testbuild/test.cpp.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] cxxprogram: build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/testbuild/test.cpp.1.o -> build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/testbuild/testprog
-
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+[1/2] [32mcxx: build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/test.cpp -> build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/testbuild/test.cpp.1.o -> build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ---------------------------------------------------------
 Checking for header sys/stat.h
@@ -223,12 +217,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] cxx: build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/test.cpp -> build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/testbuild/test.cpp.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] cxxprogram: build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/testbuild/test.cpp.1.o -> build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/testbuild/testprog
-
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+[1/2] [32mcxx: build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/test.cpp -> build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/testbuild/test.cpp.1.o -> build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ---------------------------------------------------------
 Checking for header dirent.h
@@ -241,12 +235,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] cxx: build/.conf_check_c94d96928742c001335a0559791a93d8/test.cpp -> build/.conf_check_c94d96928742c001335a0559791a93d8/testbuild/test.cpp.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] cxxprogram: build/.conf_check_c94d96928742c001335a0559791a93d8/testbuild/test.cpp.1.o -> build/.conf_check_c94d96928742c001335a0559791a93d8/testbuild/testprog
-
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_c94d96928742c001335a0559791a93d8/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+[1/2] [32mcxx: build/.conf_check_c94d96928742c001335a0559791a93d8/test.cpp -> build/.conf_check_c94d96928742c001335a0559791a93d8/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_c94d96928742c001335a0559791a93d8/testbuild/test.cpp.1.o -> build/.conf_check_c94d96928742c001335a0559791a93d8/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_c94d96928742c001335a0559791a93d8/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ---------------------------------------------------------
 Checking for header stdlib.h
@@ -259,12 +253,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] cxx: build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/test.cpp -> build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/testbuild/test.cpp.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] cxxprogram: build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/testbuild/test.cpp.1.o -> build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/testbuild/testprog
-
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+[1/2] [32mcxx: build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/test.cpp -> build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/testbuild/test.cpp.1.o -> build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ---------------------------------------------------------
 Checking for header signal.h
@@ -277,12 +271,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] cxx: build/.conf_check_48955ac54d2136a572805353a7b9b62d/test.cpp -> build/.conf_check_48955ac54d2136a572805353a7b9b62d/testbuild/test.cpp.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] cxxprogram: build/.conf_check_48955ac54d2136a572805353a7b9b62d/testbuild/test.cpp.1.o -> build/.conf_check_48955ac54d2136a572805353a7b9b62d/testbuild/testprog
-
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_48955ac54d2136a572805353a7b9b62d/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+[1/2] [32mcxx: build/.conf_check_48955ac54d2136a572805353a7b9b62d/test.cpp -> build/.conf_check_48955ac54d2136a572805353a7b9b62d/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_48955ac54d2136a572805353a7b9b62d/testbuild/test.cpp.1.o -> build/.conf_check_48955ac54d2136a572805353a7b9b62d/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_48955ac54d2136a572805353a7b9b62d/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ---------------------------------------------------------
 Checking for header pthread.h
@@ -297,12 +291,12 @@ int main ()
 }
 
 <==
-[1/2] cxx: build/.conf_check_2be466e82e703a744ee152afe2b58299/test.cpp -> build/.conf_check_2be466e82e703a744ee152afe2b58299/testbuild/test.cpp.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-pthread', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] cxxprogram: build/.conf_check_2be466e82e703a744ee152afe2b58299/testbuild/test.cpp.1.o -> build/.conf_check_2be466e82e703a744ee152afe2b58299/testbuild/testprog
-
-['/usr/bin/g++', '-pthread', 'test.cpp.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_2be466e82e703a744ee152afe2b58299/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+[1/2] [32mcxx: build/.conf_check_2be466e82e703a744ee152afe2b58299/test.cpp -> build/.conf_check_2be466e82e703a744ee152afe2b58299/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-pthread', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_2be466e82e703a744ee152afe2b58299/testbuild/test.cpp.1.o -> build/.conf_check_2be466e82e703a744ee152afe2b58299/testbuild/testprog
+[0m
+['/usr/bin/g++', '-pthread', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_2be466e82e703a744ee152afe2b58299/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ---------------------------------------------------------
 Checking for header stdint.h
@@ -315,12 +309,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] cxx: build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/test.cpp -> build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/test.cpp.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] cxxprogram: build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/test.cpp.1.o -> build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/testprog
-
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+[1/2] [32mcxx: build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/test.cpp -> build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/test.cpp.1.o -> build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ---------------------------------------------------------
 Checking for header inttypes.h
@@ -333,12 +327,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] cxx: build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/test.cpp -> build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/test.cpp.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] cxxprogram: build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/test.cpp.1.o -> build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/testprog
-
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+[1/2] [32mcxx: build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/test.cpp -> build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/test.cpp.1.o -> build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ---------------------------------------------------------
 Checking for header sys/inttypes.h
@@ -351,26 +345,26 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] cxx: build/.conf_check_61ecbfef21667d45a28decabe37fdf64/test.cpp -> build/.conf_check_61ecbfef21667d45a28decabe37fdf64/testbuild/test.cpp.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[1/2] [32mcxx: build/.conf_check_61ecbfef21667d45a28decabe37fdf64/test.cpp -> build/.conf_check_61ecbfef21667d45a28decabe37fdf64/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
 err: ../test.cpp:1:10: fatal error: sys/inttypes.h: No such file or directory
     1 | #include <sys/inttypes.h>
       |          ^~~~~~~~~~~~~~~~
 compilation terminated.
 
-from /workspaces/High-Precision-Congestion-Control-Plus/simulation/src/core: Test does not build: Traceback (most recent call last):
-  File "/workspaces/High-Precision-Congestion-Control-Plus/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Tools/c_config.py", line 459, in run_c_code
+from /workspace/simulation/src/core: Test does not build: Traceback (most recent call last):
+  File "/workspace/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Tools/c_config.py", line 459, in run_c_code
     bld.compile()
-  File "/workspaces/High-Precision-Congestion-Control-Plus/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Build.py", line 188, in compile
+  File "/workspace/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Build.py", line 188, in compile
     raise Errors.BuildError(self.producer.error)
 BuildError: Build failed
  -> task in 'testprog' failed (exit status 1): 
-	{task 129555809369552: cxx test.cpp -> test.cpp.1.o}
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+	{task 134192622012496: cxx test.cpp -> test.cpp.1.o}
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
 
 not found
-from /workspaces/High-Precision-Congestion-Control-Plus/simulation/src/core: The configuration failed
+from /workspace/simulation/src/core: The configuration failed
 ---------------------------------------------------------
 Checking for library rt
 ==>
@@ -381,12 +375,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] cxx: build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/test.cpp -> build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/testbuild/test.cpp.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-pthread', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] cxxprogram: build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/testbuild/test.cpp.1.o -> build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/testbuild/testprog
-
-['/usr/bin/g++', '-pthread', 'test.cpp.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-lrt']
+[1/2] [32mcxx: build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/test.cpp -> build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-pthread', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/testbuild/test.cpp.1.o -> build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/testbuild/testprog
+[0m
+['/usr/bin/g++', '-pthread', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-lrt']
 yes
 ---------------------------------------------------------
 Checking for header netpacket/packet.h
@@ -399,22 +393,21 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] cxx: build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/test.cpp -> build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/testbuild/test.cpp.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] cxxprogram: build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/testbuild/test.cpp.1.o -> build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/testbuild/testprog
-
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+[1/2] [32mcxx: build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/test.cpp -> build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/testbuild/test.cpp.1.o -> build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ---------------------------------------------------------
 Checking for NSC location
 not found
 ---------------------------------------------------------
-Checking for 'sqlite3'
-['/usr/bin/pkg-config', '--cflags', '--libs', 'sqlite3']
-out: -lsqlite3
-
-yes
+Checking for program pkg-config
+not found
+find program=['pkg-config'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='PKGCONFIG' -> ''
+from /workspace/simulation/src/stats: Could not find the program pkg-config
 ---------------------------------------------------------
 Checking for header linux/if_tun.h
 ==>
@@ -426,33 +419,28 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] cxx: build/.conf_check_79f849e1774b3cde8897857e178c7c8c/test.cpp -> build/.conf_check_79f849e1774b3cde8897857e178c7c8c/testbuild/test.cpp.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '-DHAVE_SQLITE3=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] cxxprogram: build/.conf_check_79f849e1774b3cde8897857e178c7c8c/testbuild/test.cpp.1.o -> build/.conf_check_79f849e1774b3cde8897857e178c7c8c/testbuild/testprog
-
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_79f849e1774b3cde8897857e178c7c8c/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+[1/2] [32mcxx: build/.conf_check_79f849e1774b3cde8897857e178c7c8c/test.cpp -> build/.conf_check_79f849e1774b3cde8897857e178c7c8c/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_79f849e1774b3cde8897857e178c7c8c/testbuild/test.cpp.1.o -> build/.conf_check_79f849e1774b3cde8897857e178c7c8c/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_79f849e1774b3cde8897857e178c7c8c/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ---------------------------------------------------------
 Checking for program sudo
 not found
-find program=['sudo'] paths=['/root/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand', '/root/.vscode-server/data/User/globalStorage/github.copilot-chat/copilotCli', '/vscode/vscode-server/bin/linux-x64/c9d77990917f3102ada88be140d28b038d1dd7c7/bin/remote-cli', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='SUDO' -> ''
-from /workspaces/High-Precision-Congestion-Control-Plus/simulation: Could not find the program sudo
+find program=['sudo'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='SUDO' -> ''
+from /workspace/simulation: Could not find the program sudo
 ---------------------------------------------------------
 Checking for program valgrind
 not found
-find program=['valgrind'] paths=['/root/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand', '/root/.vscode-server/data/User/globalStorage/github.copilot-chat/copilotCli', '/vscode/vscode-server/bin/linux-x64/c9d77990917f3102ada88be140d28b038d1dd7c7/bin/remote-cli', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='VALGRIND' -> ''
-from /workspaces/High-Precision-Congestion-Control-Plus/simulation: Could not find the program valgrind
+find program=['valgrind'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='VALGRIND' -> ''
+from /workspace/simulation: Could not find the program valgrind
 ---------------------------------------------------------
-Checking for 'gsl'
-['/usr/bin/pkg-config', '--cflags', '--libs', 'gsl']
-err: Package gsl was not found in the pkg-config search path.
-Perhaps you should add the directory containing `gsl.pc'
-to the PKG_CONFIG_PATH environment variable
-No package 'gsl' found
-
+Checking for program pkg-config
 not found
-from /workspaces/High-Precision-Congestion-Control-Plus/simulation: The configuration failed
+find program=['pkg-config'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='PKGCONFIG' -> ''
+from /workspace/simulation: Could not find the program pkg-config
 ----------------------------------------------------------------
 Checking for compilation flag -Wno-error=deprecated-d... support
 ==>
@@ -460,26 +448,12 @@ Checking for compilation flag -Wno-error=deprecated-d... support
 int main() { return 0; }
 
 <==
-[1/2] cxx: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/test.cc -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-Wno-error=deprecated-declarations', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '-DHAVE_SQLITE3=1', '-DHAVE_IF_TUN_H=1', '../test.cc', '-c', '-o', 'test.cc.1.o']
-[2/2] cxxprogram: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog
-
-['/usr/bin/g++', 'test.cc.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
-ok
-----------------------------------------------------------------
-Checking for compilation flag -Wno-error=deprecated-d... support
-==>
-#include <stdio.h>
-int main() { return 0; }
-
-<==
-[1/2] c: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/test.c -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o
-
-['/usr/bin/gcc', '-Wno-error=deprecated-declarations', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '-DHAVE_SQLITE3=1', '-DHAVE_IF_TUN_H=1', '../test.c', '-c', '-o', 'test.c.1.o']
-[2/2] cprogram: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog
-
-['/usr/bin/gcc', 'test.c.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+[1/2] [32mc: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/test.c -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o
+[0m
+['/usr/bin/gcc', '-Wno-error=deprecated-declarations', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '-DHAVE_IF_TUN_H=1', '../test.c', '-c', '-o', 'test.c.1.o']
+[2/2] [33mcprogram: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog
+[0m
+['/usr/bin/gcc', 'test.c.1.o', '-o', '/workspace/simulation/build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 ok
 ----------------------------------------------------------------
 Checking for compilation flag -fstrict-aliasing... support
@@ -488,26 +462,12 @@ Checking for compilation flag -fstrict-aliasing... support
 int main() { return 0; }
 
 <==
-[1/2] cxx: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/test.cc -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-Wno-error=deprecated-declarations', '-fstrict-aliasing', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '-DHAVE_SQLITE3=1', '-DHAVE_IF_TUN_H=1', '../test.cc', '-c', '-o', 'test.cc.1.o']
-[2/2] cxxprogram: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog
-
-['/usr/bin/g++', 'test.cc.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
-ok
-----------------------------------------------------------------
-Checking for compilation flag -fstrict-aliasing... support
-==>
-#include <stdio.h>
-int main() { return 0; }
-
-<==
-[1/2] c: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/test.c -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o
-
-['/usr/bin/gcc', '-fstrict-aliasing', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '-DHAVE_SQLITE3=1', '-DHAVE_IF_TUN_H=1', '../test.c', '-c', '-o', 'test.c.1.o']
-[2/2] cprogram: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog
-
-['/usr/bin/gcc', 'test.c.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+[1/2] [32mc: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/test.c -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o
+[0m
+['/usr/bin/gcc', '-fstrict-aliasing', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '-DHAVE_IF_TUN_H=1', '../test.c', '-c', '-o', 'test.c.1.o']
+[2/2] [33mcprogram: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog
+[0m
+['/usr/bin/gcc', 'test.c.1.o', '-o', '/workspace/simulation/build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 ok
 ----------------------------------------------------------------
 Checking for compilation flag -Wstrict-aliasing... support
@@ -516,29 +476,15 @@ Checking for compilation flag -Wstrict-aliasing... support
 int main() { return 0; }
 
 <==
-[1/2] cxx: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/test.cc -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o
-
-['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-Wno-error=deprecated-declarations', '-fstrict-aliasing', '-Wstrict-aliasing', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '-DHAVE_SQLITE3=1', '-DHAVE_IF_TUN_H=1', '../test.cc', '-c', '-o', 'test.cc.1.o']
-[2/2] cxxprogram: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog
-
-['/usr/bin/g++', 'test.cc.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
-ok
-----------------------------------------------------------------
-Checking for compilation flag -Wstrict-aliasing... support
-==>
-#include <stdio.h>
-int main() { return 0; }
-
-<==
-[1/2] c: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/test.c -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o
-
-['/usr/bin/gcc', '-Wstrict-aliasing', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '-DHAVE_SQLITE3=1', '-DHAVE_IF_TUN_H=1', '../test.c', '-c', '-o', 'test.c.1.o']
-[2/2] cprogram: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog
-
-['/usr/bin/gcc', 'test.c.1.o', '-o', '/workspaces/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+[1/2] [32mc: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/test.c -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o
+[0m
+['/usr/bin/gcc', '-Wstrict-aliasing', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '-DHAVE_IF_TUN_H=1', '../test.c', '-c', '-o', 'test.c.1.o']
+[2/2] [33mcprogram: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog
+[0m
+['/usr/bin/gcc', 'test.c.1.o', '-o', '/workspace/simulation/build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 ok
 ----------------------------------------------------------------
 Checking for program doxygen
 not found
-find program=['doxygen'] paths=['/root/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand', '/root/.vscode-server/data/User/globalStorage/github.copilot-chat/copilotCli', '/vscode/vscode-server/bin/linux-x64/c9d77990917f3102ada88be140d28b038d1dd7c7/bin/remote-cli', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='DOXYGEN' -> ''
-from /workspaces/High-Precision-Congestion-Control-Plus/simulation: Could not find the program doxygen
+find program=['doxygen'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='DOXYGEN' -> ''
+from /workspace/simulation: Could not find the program doxygen

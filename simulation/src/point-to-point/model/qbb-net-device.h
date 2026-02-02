@@ -191,6 +191,8 @@ public:
 	void RdmaEnqueueHighPrioQ(Ptr<Packet> p);
   bool EnqueueRxPacket(Ptr<Packet> p, uint32_t qIndex);
   Ptr<Packet> DequeueRxPacket(void);
+  void SetRxPullMode(uint32_t mode);
+  uint32_t GetRxPullMode() const;
 
 	// callback for processing packet in RDMA
 	typedef Callback<int, Ptr<Packet>, CustomHeader&> RdmaReceiveCb;
@@ -211,6 +213,9 @@ public:
 	void UpdateNextAvail(Time t);
 
 	TracedCallback<Ptr<const Packet>, Ptr<RdmaQueuePair> > m_traceQpDequeue; // the trace for printing dequeue
+
+private:
+  uint32_t m_rxPullMode; // 0: immediate, 1: fixed-rate pull
 };
 
 } // namespace ns3

@@ -53,7 +53,7 @@ ACK_HIGH_PRIO {ack_prio} {{0: same priority as data, 1: prioritize ACK}}
 LINK_DOWN {link_down} {{a b c: take down link between b and c at time a}}
 
 ENABLE_TRACE {enable_tr} {{dump packet-level events or not}}
-ENABLE_CWND_TRACE 0 {{dump qp rate/window trace or not}}
+ENABLE_CWND_TRACE 1 {{dump qp rate/window trace or not}}
 
 KMAX_MAP {kmax_map} {{bandwidth->kmax map}}
 KMIN_MAP {kmin_map} {{bandwidth->kmin map}}
@@ -95,9 +95,9 @@ if __name__ == "__main__":
 
 	config_name = "mix/configs/config_%s_%s_%s%s.txt"%(topo, trace, args.cc, failure)
 
-	kmax_map = "2 %d %d %d %d"%(bw*1000000000, 400*bw/25, bw*4*1000000000, 400*bw*4/25)
-	kmin_map = "2 %d %d %d %d"%(bw*1000000000, 100*bw/25, bw*4*1000000000, 100*bw*4/25)
-	pmax_map = "2 %d %.2f %d %.2f"%(bw*1000000000, 0.2, bw*4*1000000000, 0.2)
+	kmax_map = "3 %d %d %d %d %d %d"%(10000000000, 400*10/25, bw*1000000000, 400*bw/25, bw*4*1000000000, 400*bw*4/25)
+	kmin_map = "3 %d %d %d %d %d %d"%(10000000000, 100*10/25, bw*1000000000, 100*bw/25, bw*4*1000000000, 100*bw*4/25)
+	pmax_map = "3 %d %.2f %d %.2f %d %.2f"%(10000000000, 0.2, bw*1000000000, 0.2, bw*4*1000000000, 0.2)
 	if (args.cc.startswith("dcqcn")):
 		ai = 5 * bw / 25
 		hai = 50 * bw /25

@@ -1,0 +1,17 @@
+Waf: Entering directory `/workspace/simulation/build'
+[ 665/1008] cxx: scratch/subdir/scratch-simulator-subdir.cc -> build/scratch/subdir/scratch-simulator-subdir.cc.1.o
+[ 666/1008] cxx: scratch/third.cc -> build/scratch/third.cc.2.o
+[ 667/1008] cxx: scratch/scratch-simulator.cc -> build/scratch/scratch-simulator.cc.3.o
+[ 668/1008] cxx: utils/test-runner.cc -> build/utils/test-runner.cc.1.o
+[ 669/1008] cxx: utils/bench-simulator.cc -> build/utils/bench-simulator.cc.2.o
+[ 670/1008] cxx: utils/bench-packets.cc -> build/utils/bench-packets.cc.3.o
+In file included from ../scratch/third.cc:41:
+./ns3/netanim-module.h:10:10: fatal error: animation-interface-helper.h: No such file or directory
+   10 | #include "animation-interface-helper.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+Waf: Leaving directory `/workspace/simulation/build'
+Build failed
+ -> task in 'third' failed (exit status 1): 
+	{task 132565840778384: cxx third.cc -> third.cc.2.o}
+['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-pthread', '-I.', '-I..', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '-DHAVE_IF_TUN_H=1', '../scratch/third.cc', '-c', '-o', 'scratch/third.cc.2.o']

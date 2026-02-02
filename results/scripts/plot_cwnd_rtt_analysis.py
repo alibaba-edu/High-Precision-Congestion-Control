@@ -253,15 +253,18 @@ def plot_cwnd_rtt_analysis(cwnd_file, output_file, config_path=None, topo_path=N
     else:
         win_unit, win_scale = "B", 1
     
-    # Create figure with single plot
-    fig = plt.figure(figsize=(12, 6))
+    # Get line rate from topology
+    line_rate_bps = _parse_topology_min_rate(topo_path) if topo_path else 1e9  # Default 1 Gbps
+    
+    # Create figure with three plots
+    fig = plt.figure(figsize=(12, 14))
     
     # Add spacing at top for title
-    fig.suptitle('CWND Analysis', 
+    fig.suptitle('CWND and Rate Analysis', 
                  fontsize=16, fontweight='bold', y=0.96)
     
     # CWND vs Time (all flows)
-    ax1 = plt.subplot(111)
+    ax1 = plt.subplot(311)
     colors = ['blue', 'red', 'green', 'orange', 'purple', 'brown']
     linestyles = ['-', '--', '-.', ':', '-', '--']
     
@@ -289,6 +292,74 @@ def plot_cwnd_rtt_analysis(cwnd_file, output_file, config_path=None, topo_path=N
     ax1.legend(loc='best', fontsize=9)
     ax1.set_ylim([0, max_win / win_scale * 1.25])
     
+    # Rate vs Time (senders only - nodes 0 and 1)
+    ax2 = plt.subplot(312)
+    
+    for idx, (flow_key, data) in enumerate(sorted(flows.items())):
+        src, dst, sport, dport = flow_key
+        # Only plot senders (src nodes 0 and 1)
+        if src not in [0, 1]:
+            continue
+            
+        label = f"Sender {src} (port {sport})"
+        
+        # Convert rate to Gbps
+        y = [r / 1e9 for r in data["rate"]]
+        line_style = linestyles[idx % len(linestyles)]
+        color = colors[idx % len(colors)]
+        
+        ax2.plot(data["t"], y, label=label, linewidth=2, 
+                linestyle=line_style, color=color)
+    
+    # Add line rate reference
+    if line_rate_bps:
+        line_rate_gbps = line_rate_bps / 1e9
+        ax2.axhline(y=line_rate_gbps, color='red', linestyle='--', 
+                   alpha=0.5, linewidth=2, label=f'Line Rate ({line_rate_gbps:.1f} Gbps)')
+    
+    ax2.set_xlabel('Time (s)', fontsize=11, fontweight='bold')
+    ax2.set_ylabel('Sending Rate (Gbps)', fontsize=11, fontweight='bold')
+    ax2.set_title('Sender Rates Over Time', fontsize=12, fontweight='bold', pad=10)
+    ax2.grid(True, alpha=0.3)
+    ax2.legend(loc='best', fontsize=9)
+    
+    # Set y-axis limit to 1.1 * line_rate
+    if line_rate_bps:
+        ax2.set_ylim([0, line_rate_gbps * 1.1])
+    
+    # RTT vs Time (all flows)
+    ax3 = plt.subplot(313)
+    
+    for idx, (flow_key, data) in enumerate(sorted(flows.items())):
+        src, dst, sport, dport = flow_key
+        label = f"Flow {src}→{dst} ({sport})"
+        
+        # Calculate RTT for this flow dynamically
+        # RTT = (Win * 8) / Rate
+        rtt_us_series = []
+        t_series = []
+        for t, w, r in zip(data["t"], data["win"], data["rate"]):
+            if r > 0 and w > 0:
+                val = (w * 8.0 * 1e6) / r
+                # Basic outlier filter (ignore crazy spikes > 1ms for readability if desired, but raw is usually better)
+                rtt_us_series.append(val)
+                t_series.append(t)
+
+        line_style = linestyles[idx % len(linestyles)]
+        color = colors[idx % len(colors)]
+        
+        if rtt_us_series:
+            ax3.plot(t_series, rtt_us_series, label=label, linewidth=1.5,
+                    linestyle=line_style, color=color, alpha=0.9)
+    
+    ax3.set_xlabel('Time (s)', fontsize=11, fontweight='bold')
+    ax3.set_ylabel('RTT (µs)', fontsize=11, fontweight='bold')
+    ax3.set_title('Round Trip Time Over Time', fontsize=12, fontweight='bold', pad=10)
+    ax3.grid(True, alpha=0.3)
+    ax3.legend(loc='best', fontsize=9)
+
+    
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
     plt.savefig(output_file, dpi=150, bbox_inches='tight')
     print(f"✓ Analysis dashboard saved to: {output_file}")
     

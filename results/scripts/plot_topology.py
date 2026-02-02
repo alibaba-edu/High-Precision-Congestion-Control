@@ -65,7 +65,8 @@ def parse_topology(topo_file):
                     src = int(parts[0])
                     dst = int(parts[1])
                     speed = parts[2]
-                    links.append((src, dst, speed))
+                    delay = parts[3] if len(parts) > 3 else "0us"
+                    links.append((src, dst, speed, delay))
                 except (ValueError, IndexError):
                     continue
 
@@ -180,7 +181,7 @@ def plot_topology(topo_file, output_file='topology.png', flows_file=None):
     
     # Get all node IDs that actually appear in links
     all_node_ids = set(nodes.keys())
-    for src, dst, _ in links:
+    for src, dst, _, _ in links:
         all_node_ids.add(src)
         all_node_ids.add(dst)
     
@@ -196,9 +197,9 @@ def plot_topology(topo_file, output_file='topology.png', flows_file=None):
         # endpoints of those links so switch nodes are shown as well.
         filtered_links = []
         nodes_to_show = set(active_nodes_from_flows)
-        for src, dst, speed in links:
+        for src, dst, speed, delay in links:
             if (src in active_nodes_from_flows) or (dst in active_nodes_from_flows):
-                filtered_links.append((src, dst, speed))
+                filtered_links.append((src, dst, speed, delay))
                 nodes_to_show.add(src)
                 nodes_to_show.add(dst)
         links = filtered_links
@@ -211,7 +212,7 @@ def plot_topology(topo_file, output_file='topology.png', flows_file=None):
     
     # Add edges
     speeds = {}
-    for src, dst, speed in links:
+    for src, dst, speed, delay in links:
         if src in nodes_to_show and dst in nodes_to_show:
             G.add_edge(src, dst)
             speeds[(src, dst)] = speed
@@ -227,132 +228,101 @@ def plot_topology(topo_file, output_file='topology.png', flows_file=None):
         # Use a spring layout
         pos = nx.spring_layout(G, k=2, iterations=50, seed=42)
     
-    # Create figure with two subplots
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 8))
+    # Create figure with two subplots side-by-side
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 10))
+    fig.suptitle('Network Topology Analysis', fontsize=16, fontweight='bold')
     
-    # ===== Subplot 1: Topology Graph =====
-    title = 'Active Flow Topology' if active_nodes_from_flows else 'Network Topology (Full View)'
-    ax1.set_title(title, fontsize=14, fontweight='bold')
-    
-    # Draw edges
-    nx.draw_networkx_edges(G, pos, ax=ax1, edge_color='gray', 
-                          width=1.5, alpha=0.7, arrows=True, 
-                          arrowsize=15, arrowstyle='->')
-    
-    # Edge labels: show speed on each edge
-    edge_labels = {}
-    for u, v in G.edges():
-        if (u, v) in speeds:
-            edge_labels[(u, v)] = speeds[(u, v)]
-    if edge_labels:
-        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, ax=ax1, font_size=9)
-    
-    # Color nodes: hosts=blue, switches=red, active flows=bright
-    node_colors = []
-    for node in G.nodes():
-        if active_nodes_from_flows:
-            # For flow topology, highlight active nodes
-            if node < num_hosts:
-                node_colors.append('dodgerblue')  # Active host - bright blue
-            else:
-                node_colors.append('crimson')  # Active switch - bright red
+    # --- Helper to draw graph on a specific axis ---
+    def _draw_subgraph(ax, nodes_subset, title):
+        sub_G = nx.DiGraph(G.subgraph(nodes_subset))
+        
+        # Recalculate layout for subset to look nice
+        if len(sub_G.nodes()) > 100:
+            pos_sub = nx.circular_layout(sub_G)
         else:
-            # For full topology
-            if node < num_hosts:
-                node_colors.append('lightblue')  # Host
+            pos_sub = nx.spring_layout(sub_G, k=2, iterations=50, seed=42)
+            
+        ax.set_title(title, fontsize=14, fontweight='bold')
+        
+        # Edges
+        edge_colors = ['gray'] * len(sub_G.edges())
+        nx.draw_networkx_edges(sub_G, pos_sub, ax=ax, edge_color=edge_colors,
+                              width=1.5, alpha=0.7, arrows=True, arrowsize=15)
+        
+        # Edge Labels (Speed + Delay)
+        edge_labels = {}
+        for u, v in sub_G.edges():
+            if (u, v) in link_info:
+                spd, dly = link_info[(u, v)]
+                edge_labels[(u, v)] = f"{spd}\n{dly}"
+        
+        nx.draw_networkx_edge_labels(sub_G, pos_sub, edge_labels=edge_labels, ax=ax, font_size=8)
+        
+        # Nodes
+        msg_colors = []
+        for n in sub_G.nodes():
+            if n < num_hosts:
+                msg_colors.append('dodgerblue' if n in active_nodes_from_flows else 'lightblue')
             else:
-                node_colors.append('lightcoral')  # Switch
+                msg_colors.append('crimson' if n in active_nodes_from_flows else 'lightcoral')
+        
+        nx.draw_networkx_nodes(sub_G, pos_sub, ax=ax, node_color=msg_colors,
+                              node_size=600, edgecolors='black', linewidths=1.5)
+        
+        # Labels
+        sub_labels = {i: nodes[i] for i in sub_G.nodes()}
+        nx.draw_networkx_labels(sub_G, pos_sub, sub_labels, ax=ax, font_size=10, font_weight='bold')
+        ax.axis('off')
+
+    # Store link info for lookup
+    link_info = {}
+    for src, dst, speed, delay in links:
+        link_info[(src, dst)] = (speed, delay)
+
+    # 1. Full Topology
+    _draw_subgraph(ax1, all_node_ids, "Full Network Topology")
     
-    nx.draw_networkx_nodes(G, pos, ax=ax1, node_color=node_colors, 
-                          node_size=500 if len(G.nodes()) <= 10 else 300, 
-                          edgecolors='black', linewidths=2)
-    
-    # Labels
-    labels = {i: nodes[i] for i in G.nodes()}
-    nx.draw_networkx_labels(G, pos, labels, ax=ax1, font_size=10, font_weight='bold')
-    
-    ax1.set_xlabel(f'Nodes: {len(G.nodes())} | Links: {len(G.edges())}', fontsize=11)
-    ax1.axis('off')
-    
-    # ===== Subplot 2: Statistics =====
-    ax2.axis('off')
-    ax2.set_title('Topology Statistics', fontsize=14, fontweight='bold')
-    
-    # Count links by speed
-    speed_counts = {}
-    for src, dst, speed in links:
-        speed_counts[speed] = speed_counts.get(speed, 0) + 1
-    
-    # Statistics text
-    flow_details_text = ""
+    # 2. Active Flows Topology (or Stats if no flows provided)
     if active_nodes_from_flows:
-        stats_text = f"""
-ACTIVE FLOW TOPOLOGY
-
-Active Nodes: {len(G.nodes())}
-"""
-        for node in sorted(G.nodes()):
-            node_type = "Host" if node < num_hosts else "Switch"
-            stats_text += f"  • Node {node} ({nodes.get(node,'')}) - {node_type}\n"
-        # Add flow legend/details
-        flows_list = parse_flows_details(flows_file) if flows_file else []
-        def _fmt_size(b):
-            try:
-                b = int(b)
-            except Exception:
-                return str(b)
-            if b >= 1024**2:
-                return f"{b} B ({b/1024**2:.1f} MB)"
-            if b >= 1024:
-                return f"{b} B ({b/1024:.1f} KB)"
-            return f"{b} B"
-
-        if flows_list:
-            flow_details_text += "\nFLOWS:\n"
-            for i, fdict in enumerate(flows_list):
-                flow_details_text += (
-                    f"  {i+1}. {fdict.get('src')} -> {fdict.get('dst')} "
-                    f"(dstport={fdict.get('dstport')}, size={_fmt_size(fdict.get('size'))})\n"
-                )
-            stats_text += flow_details_text
+        # User wants "Topology Flows". Let's show active endpoints and the switches they touch.
+        active_subset = set(active_nodes_from_flows)
+        relevant_switches = set()
+        for s, d, _, _ in links:
+            if s in active_subset or d in active_subset:
+                 if s >= num_hosts: relevant_switches.add(s)
+                 if d >= num_hosts: relevant_switches.add(d)
+        
+        _draw_subgraph(ax2, active_subset | relevant_switches, "Active Flows Context")
     else:
-        stats_text = f"""
-TOPOLOGY INFORMATION
+        ax2.text(0.5, 0.5, "No Flow Data Provided\n(Use --flows <file>)", 
+                ha='center', va='center', fontsize=14)
+        ax2.axis('off')
 
-Total Nodes: {len(G.nodes())}
-  └─ Hosts: {num_hosts}
-  └─ Switches: {num_switches}
-"""
-    
-    stats_text += f"""
-Total Links: {len(links)}
+    # Add Legend/Stats Box
+    stats_text = f"NODES:\n  • H<n>: Host\n  • S<n>: Switch\n\nLINKS:\n"
+    # Summarize unique link types
+    link_types = set()
+    for _, _, s, d in links:
+        link_types.add(f"{s}, {d}")
+    for lt in sorted(link_types):
+        stats_text += f"  • {lt}\n"
+        
+    if flows_file and os.path.exists(flows_file):
+        flow_details = parse_flows_details(flows_file)
+        if flow_details:
+            stats_text += f"\nACTIVE FLOWS ({len(flow_details)}):\n"
+            for i, f in enumerate(flow_details):
+                 # Format: Flow 0: 0->2 (Size: 10000B)
+                 size_str = f"{f['size']}B" if f['size'] else "N/A"
+                 stats_text += f"  {i+1}. {f['src']} -> {f['dst']} (Size: {size_str})\n"
+        
+    # Place text box in bottom center or similar
+    plt.figtext(0.5, 0.02, stats_text, ha="center", fontsize=9, 
+                bbox={"facecolor":"white", "alpha":0.9, "pad":5}, fontfamily='monospace')
 
-Link Speeds:
-"""
-    
-    for speed, count in sorted(speed_counts.items()):
-        stats_text += f"  • {speed}: {count} links\n"
-    
-    # Add node type legend
-    stats_text += f"""
-
-NODE TYPES:
-  • H<n> = Host (endpoint)
-  • S<n> = Switch (forwarder)
-"""
-    
-    ax2.text(0.05, 0.95, stats_text, transform=ax2.transAxes,
-            fontsize=11, verticalalignment='top', fontfamily='monospace',
-            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.3))
-    
-    plt.tight_layout()
+    plt.tight_layout(rect=[0, 0.15, 1, 0.95]) # Adjust layout more to make room for larger legend
     plt.savefig(output_file, dpi=150, bbox_inches='tight')
-    print(f"✅ Topology visualization saved to: {output_file}")
-    if active_nodes_from_flows:
-        print(f"   - {len(G.nodes())} active nodes for flows")
-    else:
-        print(f"   - {len(G.nodes())} nodes ({num_hosts} hosts, {num_switches} switches)")
-    print(f"   - {len(links)} links")
+    print(f"✅ Combined topology visualization saved to: {output_file}")
     plt.close()
 
 if __name__ == '__main__':
@@ -368,5 +338,8 @@ if __name__ == '__main__':
     if topo_file.endswith('.txt') and 'config' in topo_file:
         topo_file = _extract_topology_from_config(topo_file) or topo_file
     
-    output = args.out or topo_file.replace('.txt', '.png')
-    plot_topology(topo_file, output, flows_file=args.flows)
+    output = args.out or topo_file.replace('.txt', '_analysis.png')
+    
+    # Ensure flows file is absolute or correct relative path if needed
+    flows_file = args.flows
+    plot_topology(topo_file, output, flows_file=flows_file)

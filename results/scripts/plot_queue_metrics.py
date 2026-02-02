@@ -50,21 +50,28 @@ def _parse_qlen_blocks(qlen_file: str) -> List[Tuple[int, Dict[Tuple[int, int], 
 
 
 def _avg_qlen_over_time(blocks: List[Tuple[int, Dict[Tuple[int, int], List[int]]]]):
+    """Compute the maximum average queue length across any single port at each timestep."""
     times = []
     avgs = []
     for ts, dist_by_port in blocks:
-        total_samples = 0
-        total_bytes = 0
+        max_port_avg = 0.0
         for _, counts in dist_by_port.items():
+            total_samples = 0
+            total_bytes = 0
             for kb, cnt in enumerate(counts):
                 if cnt <= 0:
                     continue
                 total_samples += cnt
                 total_bytes += cnt * kb * 1000
-        if total_samples == 0:
-            continue
+            
+            if total_samples > 0:
+                port_avg = total_bytes / total_samples
+                if port_avg > max_port_avg:
+                    max_port_avg = port_avg
+                    
         times.append(ts / 1e9)
-        avgs.append(total_bytes / total_samples)
+        avgs.append(max_port_avg)
+
     if times:
         t0 = times[0]
         times = [max(0.0, t - t0) for t in times]
@@ -117,10 +124,15 @@ def _cdf_from_avg(avgs: List[float]):
     return xs, ys
 
 
-def _plot_avg_qlen(times, avgs, out_path):
-    plt.figure(figsize=(10, 4))
-    plt.plot(times, avgs, linewidth=1.2, marker="o", markersize=3)
-    ax = plt.gca()
+def _plot_avg_qlen(times, avgs, ax=None, out_path=None):
+    if ax is None:
+        plt.figure(figsize=(10, 4))
+        ax = plt.gca()
+        should_save = True
+    else:
+        should_save = False
+
+    ax.plot(times, avgs, linewidth=1.2, marker="o", markersize=3)
 
     if times and avgs:
         min_idx = min(range(len(avgs)), key=lambda i: avgs[i])
@@ -140,32 +152,42 @@ def _plot_avg_qlen(times, avgs, out_path):
             ax.annotate(f"{v:.0f}", xy=(t, v), xytext=(0, 6), textcoords="offset points",
                         ha="center", va="bottom", fontsize=7, color="#333333")
 
-    plt.xlabel("Time (s)")
-    plt.ylabel("Average queue length (bytes)")
-    plt.title("Average Queue Length Across Switch Ports")
-    plt.grid(True, alpha=0.3)
-    plt.tight_layout()
-    plt.savefig(out_path, dpi=150)
-    plt.close()
+    ax.set_xlabel("Time (s)")
+    ax.set_ylabel("Queue length (bytes)")
+    ax.set_title("Maximum Switch Port Queue Length")
+    ax.grid(True, alpha=0.3)
+
+    if should_save and out_path:
+        plt.tight_layout()
+        plt.savefig(out_path, dpi=150)
+        plt.close()
 
 
-def _plot_cdf(xs, ys, out_path, title="Queue Length CDF"):
-    plt.figure(figsize=(8, 4))
-    plt.plot(xs, ys, linewidth=1.5)
-    plt.xlabel("Queue length (B)")
-    plt.ylabel("CDF (%)")
-    plt.title(title)
-    plt.ylim(0, 100)
+def _plot_cdf(xs, ys, ax=None, out_path=None, title="Queue Length CDF"):
+    if ax is None:
+        plt.figure(figsize=(8, 4))
+        ax = plt.gca()
+        should_save = True
+    else:
+        should_save = False
+
+    ax.plot(xs, ys, linewidth=1.5)
+    ax.set_xlabel("Queue length (B)")
+    ax.set_ylabel("CDF (%)")
+    ax.set_title(title)
+    ax.set_ylim(0, 100)
     # Scale x-axis to actual max value in data, with 5% padding
     if xs:
         max_x = max(xs)
-        plt.xlim(0, max_x * 1.05)
+        ax.set_xlim(0, max_x * 1.05)
     else:
-        plt.xlim(0, 100)
-    plt.grid(True, alpha=0.3)
-    plt.tight_layout()
-    plt.savefig(out_path, dpi=150)
-    plt.close()
+        ax.set_xlim(0, 100)
+    ax.grid(True, alpha=0.3)
+
+    if should_save and out_path:
+        plt.tight_layout()
+        plt.savefig(out_path, dpi=150)
+        plt.close()
 
 
 def _plot_pfc(pfc_file: str, out_path: str, bin_us: int):
@@ -230,10 +252,27 @@ def main():
         blocks = _parse_qlen_blocks(args.qlen)
         times, avgs = _avg_qlen_over_time(blocks)
         if times and avgs:
-            _plot_avg_qlen(times, avgs, os.path.join(args.out_dir, "avg_qlen.png"))
+            # Generate combined plot
+            fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 5))
+            
+            # Plot 1: Max Qlen over time
+            _plot_avg_qlen(times, avgs, ax=ax1)
+            
+            # Plot 2: CDF
             xs_b, ys_b = _cdf_from_avg(avgs)
-            _plot_cdf(xs_b, ys_b, os.path.join(args.out_dir, "qlen_cdf.png"),
-                      title="Queue Length CDF (avg over time)")
+            _plot_cdf(xs_b, ys_b, ax=ax2, title="Switch Queue Length CDF (Max Port Avg)")
+            
+            plt.tight_layout()
+            combined_path = os.path.join(args.out_dir, "switch_queue_analysis.png")
+            plt.savefig(combined_path, dpi=150)
+            plt.close()
+            print(f"Combined queue analysis saved to: {combined_path}")
+
+            # Keep individual plots just in case (optional, but good for artifacts)
+            # _plot_avg_qlen(times, avgs, out_path=os.path.join(args.out_dir, "avg_qlen.png"))
+            # _plot_cdf(xs_b, ys_b, out_path=os.path.join(args.out_dir, "qlen_cdf.png"),
+            #           title="Switch Queue Length CDF (Max Port Avg)")
+
     else:
         print("qlen file not found:", args.qlen)
 

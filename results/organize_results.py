@@ -31,7 +31,7 @@ def organize_results(sim_dir='simulation/mix', results_base='results'):
     print("Output directory: {}".format(run_dir))
     
     # Copy data files
-    data_files = ['fct.txt', 'qlen.txt', 'pfc.txt', 'config.txt']
+    data_files = ['fct.txt', 'qlen.txt', 'pfc.txt', 'config.txt', 'cwnd.txt', 'rxbuf.txt', 'drop.txt']
     for fname in data_files:
         src = os.path.join(sim_dir, fname)
         if os.path.exists(src):
