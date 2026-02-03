@@ -231,7 +231,7 @@ operator << (std::ostream& os, const std::vector<int>& v)
 Ptr<SpectrumValue> 
 LteSpectrumValueHelper::CreateTxPowerSpectralDensity (uint16_t earfcn, uint8_t txBandwidthConfiguration, double powerTx, std::vector <int> activeRbs)
 {
-  NS_LOG_FUNCTION (earfcn << (uint16_t) txBandwidthConfiguration << powerTx << activeRbs);
+  NS_LOG_FUNCTION (earfcn << (uint16_t) txBandwidthConfiguration << powerTx);
 
   Ptr<SpectrumModel> model = GetSpectrumModel (earfcn, txBandwidthConfiguration);
   Ptr<SpectrumValue> txPsd = Create <SpectrumValue> (model);

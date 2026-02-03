@@ -272,7 +272,7 @@ def check_dir(path):
 	if not os.path.isdir(path):
 		try:
 			os.makedirs(path)
-		except OSError ,e:
+		except OSError as e:
 			if not os.path.isdir(path):
 				raise Errors.WafError('Cannot create the folder %r'%path,ex=e)
 def def_attrs(cls,**kw):
@@ -285,7 +285,7 @@ def quote_define_name(s):
 	return fu
 def h_list(lst):
 	m=md5()
-	m.update(str(lst))
+	m.update(str(lst).encode())
 	return m.digest()
 def h_fun(fun):
 	try:

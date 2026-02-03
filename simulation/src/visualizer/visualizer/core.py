@@ -48,7 +48,7 @@ try:
         import svgitem
     except ImportError:
         svgitem = None
-except ImportError, _import_error:
+except ImportError as _import_error:
     import dummy_threading as threading
 else:
     _import_error = None

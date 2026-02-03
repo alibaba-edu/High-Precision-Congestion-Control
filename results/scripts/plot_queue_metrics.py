@@ -124,7 +124,50 @@ def _cdf_from_avg(avgs: List[float]):
     return xs, ys
 
 
-def _plot_avg_qlen(times, avgs, ax=None, out_path=None):
+
+from pathlib import Path
+
+def _parse_schedules(config_file):
+    """Parse config file to extract RX_PULL_RATE_SCHEDULE."""
+    schedules = {}
+    if not config_file or not Path(config_file).exists():
+        return schedules
+    
+    with open(config_file, 'r') as f:
+        for line in f:
+            line = line.strip()
+            if line.startswith('#'): continue
+            if 'RX_PULL_RATE_SCHEDULE' in line:
+                parts = line.split()
+                if len(parts) >= 3 and parts[0] == 'RX_PULL_RATE_SCHEDULE':
+                    try:
+                        node_id = int(parts[1])
+                        count = int(parts[2])
+                        schedule = []
+                        idx = 3
+                        for _ in range(count):
+                            if idx + 1 < len(parts):
+                                t = float(parts[idx])
+                                r = float(parts[idx+1])
+                                schedule.append((t, r))
+                                idx += 2
+                        schedules[node_id] = schedule
+                    except ValueError: pass
+    return schedules
+
+def _draw_lines(ax, schedules):
+    # determine y-limit to place text
+    ylim = ax.get_ylim()
+    ymax = ylim[1]
+    for node_id, schedule in schedules.items():
+            for time, rate in schedule:
+                ax.axvline(x=time, color='gray', linestyle=':', alpha=0.8, linewidth=1.5)
+                # Use strict format: t=<time>s Rate=<rate>
+                ax.text(time, ymax * 0.98, f' t={time}s\nRate={rate}', rotation=90, 
+                        verticalalignment='top', fontsize=8, color='black', alpha=0.7)
+
+
+def _plot_avg_qlen(times, avgs, ax=None, out_path=None, schedules=None):
     if ax is None:
         plt.figure(figsize=(10, 4))
         ax = plt.gca()
@@ -133,6 +176,9 @@ def _plot_avg_qlen(times, avgs, ax=None, out_path=None):
         should_save = False
 
     ax.plot(times, avgs, linewidth=1.2, marker="o", markersize=3)
+    
+    if schedules:
+        _draw_lines(ax, schedules)
 
     if times and avgs:
         min_idx = min(range(len(avgs)), key=lambda i: avgs[i])
@@ -149,6 +195,7 @@ def _plot_avg_qlen(times, avgs, ax=None, out_path=None):
 
         for i in label_idxs:
             t, v = times[i], avgs[i]
+            # Avoid overlap with lines?
             ax.annotate(f"{v:.0f}", xy=(t, v), xytext=(0, 6), textcoords="offset points",
                         ha="center", va="bottom", fontsize=7, color="#333333")
 
@@ -244,9 +291,14 @@ def main():
     parser.add_argument("--pfc", default="simulation/mix/outputs/pfc/pfc.txt", help="Path to pfc output file")
     parser.add_argument("--out-dir", default="simulation/mix/outputs", help="Directory to write plots")
     parser.add_argument("--bin-us", type=int, default=1000, help="Bin size for PFC pause events in microseconds")
+    parser.add_argument("--config", default=None, help="Path to config file (for schedule)")
     args = parser.parse_args()
 
     os.makedirs(args.out_dir, exist_ok=True)
+    
+    schedules = {}
+    if args.config:
+        schedules = _parse_schedules(args.config)
 
     if os.path.exists(args.qlen):
         blocks = _parse_qlen_blocks(args.qlen)
@@ -256,7 +308,7 @@ def main():
             fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 5))
             
             # Plot 1: Max Qlen over time
-            _plot_avg_qlen(times, avgs, ax=ax1)
+            _plot_avg_qlen(times, avgs, ax=ax1, schedules=schedules)
             
             # Plot 2: CDF
             xs_b, ys_b = _cdf_from_avg(avgs)
@@ -267,11 +319,6 @@ def main():
             plt.savefig(combined_path, dpi=150)
             plt.close()
             print(f"Combined queue analysis saved to: {combined_path}")
-
-            # Keep individual plots just in case (optional, but good for artifacts)
-            # _plot_avg_qlen(times, avgs, out_path=os.path.join(args.out_dir, "avg_qlen.png"))
-            # _plot_cdf(xs_b, ys_b, out_path=os.path.join(args.out_dir, "qlen_cdf.png"),
-            #           title="Switch Queue Length CDF (Max Port Avg)")
 
     else:
         print("qlen file not found:", args.qlen)

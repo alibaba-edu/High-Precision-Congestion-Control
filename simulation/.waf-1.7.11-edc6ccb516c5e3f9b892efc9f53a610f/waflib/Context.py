@@ -2,9 +2,11 @@
 # encoding: utf-8
 # WARNING! Do not edit! http://waf.googlecode.com/git/docs/wafbook/single.html#_obtaining_the_waf_file
 
-import os,imp,sys
+import os,sys,importlib.util,types
 from waflib import Utils,Errors,Logs
 import waflib.Node
+class Nod3(waflib.Node.Node):
+	pass
 HEXVERSION=0x1070b00
 WAFVERSION="1.7.11"
 WAFREVISION="50f631bc5e00bdda966c68094229b99be9a21084"
@@ -60,13 +62,11 @@ class Context(ctx):
 		except KeyError:
 			global run_dir
 			rd=run_dir
-		class node_class(waflib.Node.Node):
-			pass
-		self.node_class=node_class
-		self.node_class.__module__="waflib.Node"
-		self.node_class.__name__="Nod3"
+		self.node_class=Nod3
 		self.node_class.ctx=self
 		self.root=self.node_class('',None)
+		self.srcnode = self.root
+		self.bldnode = self.root
 		self.cur_script=None
 		self.path=self.root.find_dir(rd)
 		self.stack_path=[]
@@ -108,7 +108,7 @@ class Context(ctx):
 				cache[node]=True
 				self.pre_recurse(node)
 				try:
-					function_code=node.read('rU')
+					function_code=node.read('r')
 					exec(compile(function_code,node.abspath(),'exec'),self.exec_dict)
 				finally:
 					self.post_recurse(node)
@@ -151,7 +151,7 @@ class Context(ctx):
 			else:
 				out,err=(None,None)
 				ret=subprocess.Popen(cmd,**kw).wait()
-		except Exception ,e:
+		except Exception as e:
 			raise Errors.WafError('Execution failure: %s'%str(e),ex=e)
 		if out:
 			if not isinstance(out,str):
@@ -188,7 +188,7 @@ class Context(ctx):
 		try:
 			p=subprocess.Popen(cmd,**kw)
 			(out,err)=p.communicate()
-		except Exception ,e:
+		except Exception as e:
 			raise Errors.WafError('Execution failure: %s'%str(e),ex=e)
 		if not isinstance(out,str):
 			out=out.decode(sys.stdout.encoding or'iso8859-1')
@@ -271,9 +271,9 @@ def load_module(path):
 		return cache_modules[path]
 	except KeyError:
 		pass
-	module=imp.new_module(WSCRIPT_FILE)
+	module=types.ModuleType(WSCRIPT_FILE)
 	try:
-		code=Utils.readf(path,m='rU')
+		code=Utils.readf(path,m='r')
 	except(IOError,OSError):
 		raise Errors.WafError('Could not read the file %r'%path)
 	module_dir=os.path.dirname(path)

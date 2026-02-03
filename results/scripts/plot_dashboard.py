@@ -73,26 +73,35 @@ def _parse_qlen_time_blocks(qlen_file):
     return times, max_values
 
 
-def plot_dashboard(base_dir='simulation/mix', output_file=None):
+
+def plot_dashboard(base_dir='simulation/mix', output_file=None, **kwargs):
     """Create a comprehensive dashboard of simulation results"""
     
     # Read data
     qlen_times, qlen_values = [], []
     fct_data = []
-    config_path = _select_file_in(base_dir, 'configs', 'config_fat_k4.txt', 'config.txt')
-    config = parse_config(config_path) if config_path else {}
     
-    # Parse queue length data
-    qlen_file = _select_file_in(base_dir, os.path.join('outputs', 'qlen'), 'qlen_fat_k4.txt', 'qlen.txt')
-    if qlen_file:
+    # Qlen logic
+    qlen_file = None
+    if kwargs.get('qlen_file'):
+        qlen_file = kwargs['qlen_file']
+    else:
+        qlen_file = _select_file_in(base_dir, os.path.join('outputs', 'qlen'), 'qlen_fat_k4.txt', 'qlen.txt')
+        
+    if qlen_file and os.path.exists(qlen_file):
         qlen_times, qlen_values = _parse_qlen_time_blocks(qlen_file)
         if qlen_times:
             t0 = qlen_times[0]
             qlen_times = [max(0.0, t - t0) for t in qlen_times]
     
-    # Parse FCT data
-    fct_file = _select_file_in(base_dir, os.path.join('outputs', 'fct'), 'fct_fat_k4.txt', 'fct.txt')
-    if fct_file:
+    # FCT logic
+    fct_file = None
+    if kwargs.get('fct_file'):
+        fct_file = kwargs['fct_file']
+    else:
+        fct_file = _select_file_in(base_dir, os.path.join('outputs', 'fct'), 'fct_fat_k4.txt', 'fct.txt')
+        
+    if fct_file and os.path.exists(fct_file):
         with open(fct_file, 'r') as f:
             for line in f:
                 parts = line.strip().split()
@@ -106,6 +115,17 @@ def plot_dashboard(base_dir='simulation/mix', output_file=None):
                         })
                     except ValueError:
                         pass
+    
+    # Config Logic
+    config_path = _select_file_in(base_dir, 'configs', 'config_fat_k4.txt', 'config.txt')
+    # Try to deduce config from FCT filename if provided
+    if fct_file and not config_path:
+        # heuristic...
+        pass 
+    
+    config = parse_config(config_path) if config_path else {}
+    
+    # ... rest of plotting code ...
     
     # Create dashboard
     fig = plt.figure(figsize=(16, 10))
@@ -236,6 +256,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Create a comprehensive simulation results dashboard")
     parser.add_argument("--base-dir", default="simulation/mix", help="Base directory for simulation data")
     parser.add_argument("--out", default=None, help="Output PNG path")
+    parser.add_argument("--fct", default=None, help="Explicit path to FCT file")
+    parser.add_argument("--qlen", default=None, help="Explicit path to qlen file")
     args = parser.parse_args()
 
-    plot_dashboard(args.base_dir, args.out)
+    # Pass args to main func using kwargs since signature is positional
+    plot_dashboard(args.base_dir, args.out, fct_file=args.fct, qlen_file=args.qlen)

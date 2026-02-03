@@ -1,0 +1,79 @@
+ENABLE_QCN 0 {0: disable, 1: enable}
+USE_DYNAMIC_PFC_THRESHOLD 0 {0: disable, 1: enable}
+
+PACKET_PAYLOAD_SIZE 1000 {packet size (bytes)}
+
+RX_BUFFER_SIZE 8388608 {NIC RX buffer size (bytes) - default for all nodes}
+RX_BUFFER_PER_QUEUE 1048576 {NIC RX per-queue buffer size (bytes) - default for all nodes}
+RX_PULL_MODE 1 {0: immediate, 1: fixed-rate pull - default for all nodes}
+RX_PULL_RATE 1.0 {fixed-rate pull as fraction of line rate - default for all nodes}
+
+# Per-node overrides: senders (nodes 0,1) immediate pull; receiver (node 2) fixed-rate pull
+RX_PULL_MODE_NODE 0 0 {sender 0: immediate mode to avoid RX buffer occupancy}
+RX_PULL_MODE_NODE 1 0 {sender 1: immediate mode to avoid RX buffer occupancy}
+RX_PULL_MODE_NODE 2 1 {receiver: fixed-rate pull}
+RX_PULL_RATE_NODE 0 1.0 {sender 0: full rate (unused in immediate mode)}
+RX_PULL_RATE_NODE 1 1.0 {sender 1: full rate (unused in immediate mode)}
+RX_PULL_RATE_NODE 2 0.1 {receiver: start with 10% rate}
+
+# Dynamic Schedule: at 1.5s switch to 0.5 rate, at 2.0s switch to 1.0 rate
+# Format: RX_PULL_RATE_SCHEDULE <node_id> <count> <time1> <rate1> <time2> <rate2> ...
+# <count> is the number of (time, rate) pairs that follow.
+RX_PULL_RATE_SCHEDULE 2 4 1 0.05 1.2 0.2 1.4 0.5 1.6 1.0 
+
+TOPOLOGY_FILE mix/topologies/topology_two_senders.txt {input file: topology}
+FLOW_FILE mix/flows/flow_two_senders_long.txt {input file: flow to generate}
+TRACE_FILE mix/inputs/trace.txt {input file: nodes to monitor packet-level events}
+TRACE_OUTPUT_FILE ../results/data/mix_dynamic_pull.tr {output file: packet-level events}
+FCT_OUTPUT_FILE ../results/data/fct_dynamic_pull.txt {output file: flow completion time}
+PFC_OUTPUT_FILE ../results/data/pfc_dynamic_pull.txt {output file: PFC}
+CWND_OUTPUT_FILE ../results/data/cwnd_dynamic_pull.txt {output file: qp rate/window trace}
+RXBUF_OUTPUT_FILE ../results/data/rxbuf_dynamic_pull.txt {output file: NIC RX buffer bytes}
+
+SIMULATOR_STOP_TIME 6.00 {simulation stop time}
+
+CC_MODE 3 {1: DCQCN, 3: HPCC, 7: TIMELY, 8: DCTCP, 10: HPCC-PINT}
+ALPHA_RESUME_INTERVAL 1 {for DCQCN: interval of update alpha}
+RATE_DECREASE_INTERVAL 4 {for DCQCN: interval of rate decrease}
+CLAMP_TARGET_RATE 0 {for DCQCN: reduce target rate on consecutive decrease}
+RP_TIMER 900 {for DCQCN: interval of rate increase}
+EWMA_GAIN 0.00390625 {for DCQCN/DCTCP: EWMA gain}
+FAST_RECOVERY_TIMES 1 {for DCQCN: number of fast recovery increases}
+RATE_AI 5Mb/s {additive increase (not for DCTCP)}
+RATE_HAI 10Mb/s {hyper additive increase}
+MIN_RATE 10Mb/s {minimum rate}
+DCTCP_RATE_AI 1000Mb/s {additive increase for DCTCP}
+
+ERROR_RATE_PER_LINK 0.0000 {error rate of each link}
+L2_CHUNK_SIZE 4000 {for DCQCN: chunk size}
+L2_ACK_INTERVAL 1 {packets between ACK generation, 1 means per packet}
+L2_BACK_TO_ZERO 0 {0: go-back-0, 1: go-back-N}
+
+HAS_WIN 1 {0: no window, 1: has a window}
+GLOBAL_T 1 {0: per-pair RTT, 1: global max RTT}
+VAR_WIN 1 {0: fixed window, 1: variable window}
+FAST_REACT 1 {0: react per RTT, 1: react per ACK}
+U_TARGET 0.95 {for HPCC: target utilization}
+MI_THRESH 0 {for HPCC: maxStage}
+INT_MULTI 1 {for HPCC: INT scaling}
+MULTI_RATE 0 {for HPCC: 0: single rate, 1: per hop}
+SAMPLE_FEEDBACK 0 {for HPCC: 0: per packet, 1: per RTT or qlen>0}
+PINT_LOG_BASE 1.05 {for HPCC-PINT: log base}
+PINT_PROB 1.0 {for HPCC-PINT: sampling probability}
+
+RATE_BOUND 1 {0: no rate limiter, 1: use rate limiter}
+
+ACK_HIGH_PRIO 0 {0: same priority as data, 1: prioritize ACK}
+
+LINK_DOWN 0 0 0 {a b c: take down link between b and c at time a}
+
+ENABLE_TRACE 1 {dump packet-level events or not}
+ENABLE_CWND_TRACE 1 {dump qp rate/window trace or not}
+
+KMAX_MAP 7 1000000000 16 10000000000 160 20000000000 320 25000000000 400 50000000000 800 100000000000 1600 100000000000 1600 {bandwidth->kmax map}
+KMIN_MAP 7 1000000000 4 10000000000 40 20000000000 80 25000000000 100 50000000000 200 100000000000 400 100000000000 400 {bandwidth->kmin map}
+PMAX_MAP 7 1000000000 0.2 10000000000 0.2 20000000000 0.2 25000000000 0.2 50000000000 0.2 100000000000 0.2 100000000000 0.2 {bandwidth->pmax map}
+BUFFER_SIZE 32 {buffer size per switch (MB)}
+QLEN_MON_FILE ../results/data/qlen_dynamic_pull.txt {output file: queue length}
+QLEN_MON_START 0 {start time of dumping qlen}
+QLEN_MON_END 6000000000 {end time of dumping qlen}

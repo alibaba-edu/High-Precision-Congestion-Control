@@ -104,7 +104,7 @@ def load_plugins():
             continue
         try:
             plugin_module = __import__(name)
-        except ImportError, ex:
+        except ImportError as ex:
             print >> sys.stderr, "Could not load plugin %r: %s" % (filename, str(ex))
             continue
         try:

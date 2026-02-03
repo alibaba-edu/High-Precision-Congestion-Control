@@ -71,7 +71,7 @@ def main(argv):
 
         try:
             from callbacks_list import callback_classes
-        except ImportError, ex:
+        except ImportError as ex:
             print >> sys.stderr, "***************", repr(ex)
             callback_classes = []
         else:

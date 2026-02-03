@@ -100,166 +100,266 @@ def run_plot_script(script_name, description, data_files):
         
         elif "switch_throughput" in script_name:
             # This script needs --trace, --topo, and --flows flags
-            trace_file = DATA_DIR / "mix_two_senders_heavy.tr"
-            topo_file = RESULTS_DIR.parent / "simulation" / "mix" / "topologies" / "topology_two_senders.txt"
-            flows_file = (RESULTS_DIR / ".." / "simulation" / "mix" / "flows" / "flow_two_senders_heavy.txt").resolve()
+            # Find all trace files (excluding pcap or other types if necessary)
+            trace_files = list(DATA_DIR.glob("*.tr"))
             
-            if trace_file.exists() and topo_file.exists() and flows_file.exists():
-                cmd = [sys.executable, str(script_path), 
-                       "--trace", str(trace_file),
-                       "--topo", str(topo_file),
-                       "--flows", str(flows_file),
-                       "--out", str(PLOTS_DIR / "switch_throughput.png")]
-                
-                print(f"Command: {' '.join(cmd)}")
-                result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
-                
-                if result.returncode == 0:
-                    print(f"✓ {description} completed successfully")
-                    if result.stdout:
-                        print(result.stdout)
-                    return True
-                else:
-                    print(f"✗ {description} failed")
-                    if result.stderr:
-                        print(f"Error: {result.stderr[:300]}")
-                    return False
+            if trace_files:
+                for trace_file in trace_files:
+                    # mix_dynamic_pull.tr -> config_dynamic_pull.txt
+                    exp_name = trace_file.stem
+                    # Try to deduce config components from experiment name
+                    # Fallback to standard locations if dynamic deduction fails
+                    
+                    topo_file = RESULTS_DIR.parent / "simulation" / "mix" / "topologies" / "topology_two_senders.txt"
+                    # Try to find a specific topology? For now default is safe or we can try to find config
+                    
+                    flows_file = (RESULTS_DIR / ".." / "simulation" / "mix" / "flows" / "flow_two_senders_long.txt").resolve()
+                    if not flows_file.exists():
+                         flows_file = (RESULTS_DIR / ".." / "simulation" / "mix" / "flows" / "flow_two_senders_heavy.txt").resolve()
+
+                    if trace_file.exists():
+                        cmd = [sys.executable, str(script_path), 
+                               "--trace", str(trace_file),
+                               "--out", str(PLOTS_DIR / f"switch_throughput_{exp_name}.png")]
+                        
+                        # Infer config file
+                        config_name = f"config_{exp_name}.txt"
+                        config_file = RESULTS_DIR.parent / "simulation" / "mix" / "configs" / config_name
+                        if config_file.exists():
+                            cmd.extend(["--config", str(config_file)])
+                        
+                        if topo_file.exists():
+                             cmd.extend(["--topo", str(topo_file)])
+                        if flows_file.exists():
+                             cmd.extend(["--flows", str(flows_file)])
+                        
+                        print(f"Command: {' '.join(cmd)}")
+                        result = subprocess.run(cmd, capture_output=True, text=True, timeout=300) # Increased timeout for big traces
+                        
+                        if result.returncode == 0:
+                            print(f"✓ {description} ({trace_file.name}) completed successfully")
+                            if result.stdout:
+                                print(result.stdout)
+                        else:
+                            print(f"✗ {description} ({trace_file.name}) failed")
+                            if result.stderr:
+                                print(f"Error: {result.stderr[:300]}")
+                            return False
+                return True
             else:
-                missing = []
-                if not trace_file.exists():
-                    missing.append("trace")
-                if not topo_file.exists():
-                    missing.append("topology")
-                if not flows_file.exists():
-                    missing.append(f"flows ({flows_file})")
-                print(f"⚠️  Skipping {description}: Missing files: {', '.join(missing)}")
+                print(f"⚠️  Skipping {description}: No trace files found")
                 return False
 
         elif "cwnd_rtt_analysis" in script_name:
             # This script generates CWND/RTT analysis dashboard
-            cwnd_file = DATA_DIR / "cwnd_two_senders_heavy.txt"
-            config_file = RESULTS_DIR.parent / "simulation" / "mix" / "configs" / "config_two_senders.txt"
-            topo_file = RESULTS_DIR.parent / "simulation" / "mix" / "topologies" / "topology_two_senders.txt"
+            # Find all cwnd files
+            cwnd_files = list(DATA_DIR.glob("cwnd_*.txt"))
             
-            if cwnd_file.exists():
-                cmd = [sys.executable, str(script_path), 
-                           str(cwnd_file),
-                           str(PLOTS_DIR / "cwnd_rtt_analysis.png"),
-                           str(config_file),
-                           str(topo_file)]
-                
-                print(f"Command: {' '.join(cmd)}")
-                result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
-                
-                if result.returncode == 0:
-                    print(f"✓ {description} completed successfully")
-                    if result.stdout:
-                        print(result.stdout)
-                    return True
-                else:
-                    print(f"✗ {description} failed")
-                    if result.stderr:
-                        print(f"Error: {result.stderr[:300]}")
-                    return False
+            if cwnd_files:
+                for cwnd_file in cwnd_files:
+                    exp_name = cwnd_file.stem.replace("cwnd_", "")
+                    
+                    config_name = f"config_{exp_name}.txt"
+                    config_file = RESULTS_DIR.parent / "simulation" / "mix" / "configs" / config_name
+                    # Default topo
+                    topo_file = RESULTS_DIR.parent / "simulation" / "mix" / "topologies" / "topology_two_senders.txt"
+                    
+                    if not config_file.exists():
+                         # Fallback for dynamic pull naming convention if different
+                         config_file = RESULTS_DIR.parent / "simulation" / "mix" / "configs" / "config_two_senders_per_node.txt"
+
+                    cmd = [sys.executable, str(script_path), 
+                               str(cwnd_file),
+                               str(PLOTS_DIR / f"cwnd_rtt_analysis_{exp_name}.png")]
+                    
+                    if config_file.exists():
+                        cmd.append(str(config_file))
+                    if topo_file.exists():
+                        cmd.append(str(topo_file))
+                    
+                    print(f"Command: {' '.join(cmd)}")
+                    result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+                    
+                    if result.returncode == 0:
+                        print(f"✓ {description} ({cwnd_file.name}) completed successfully")
+                        if result.stdout:
+                            print(result.stdout)
+                    else:
+                        print(f"✗ {description} ({cwnd_file.name}) failed")
+                        if result.stderr:
+                            print(f"Error: {result.stderr[:300]}")
+                        return False
+                return True
             else:
-                print(f"⚠️  Skipping {description}: CWND data file not found ({cwnd_file})")
+                print(f"⚠️  Skipping {description}: No CWND data file found")
                 return False
 
         elif "queue_metrics" in script_name:
             # This script needs --qlen, optional --pfc, and --out-dir
-            qlen_file = DATA_DIR / "qlen_two_senders_heavy.txt"
-            pfc_file = DATA_DIR / "pfc_two_senders_heavy.txt"
+            # Find all qlen files
+            qlen_files = list(DATA_DIR.glob("qlen_*.txt"))
             
-            if qlen_file.exists():
-                cmd = [sys.executable, str(script_path), 
-                       "--qlen", str(qlen_file),
-                       "--out-dir", str(PLOTS_DIR)]
-                
-                if pfc_file.exists():
-                    cmd.extend(["--pfc", str(pfc_file)])
+            if qlen_files:
+                for qlen_file in qlen_files:
+                    exp_name = qlen_file.stem.replace("qlen_", "")
+                    pfc_file = DATA_DIR / f"pfc_{exp_name}.txt"
                     
-                print(f"Command: {' '.join(cmd)}")
-                result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
-                
-                if result.returncode == 0:
-                    print(f"✓ {description} completed successfully")
-                    if result.stdout:
-                        print(result.stdout)
-                    return True
+                    # Infer config file
+                    config_name = f"config_{exp_name}.txt"
+                    config_file = RESULTS_DIR.parent / "simulation" / "mix" / "configs" / config_name
+
+                    cmd = [sys.executable, str(script_path), 
+                           "--qlen", str(qlen_file),
+                           "--out-dir", str(PLOTS_DIR)]
+                    
+                    if pfc_file.exists():
+                        cmd.extend(["--pfc", str(pfc_file)])
+
+                    if config_file.exists():
+                        cmd.extend(["--config", str(config_file)])
+                        
+                    print(f"Command: {' '.join(cmd)}")
+                    result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+                    
+                    if result.returncode == 0:
+                        print(f"✓ {description} ({qlen_file.name}) completed successfully")
+                        if result.stdout:
+                            print(result.stdout)
+                    else:
+                        print(f"✗ {description} ({qlen_file.name}) failed")
+                        if result.stderr:
+                             print(f"Error: {result.stderr[:300]}")
+                             return False
+                return True
+            else:
+                 print(f"⚠️  Skipping {description}: No qlen files found")
+                 return False
         
         elif "plot_rx_buffer" in script_name or "rx_buffer" in script_name:
             # This script needs RX buffer trace
-            rxbuf_file = DATA_DIR / "rxbuf_two_senders_heavy.txt"
-            if rxbuf_file.exists():
-                cmd = [sys.executable, str(script_path), str(rxbuf_file),
-                       "--out", str(PLOTS_DIR / "rx_buffer.png")]
-                print(f"Command: {' '.join(cmd)}")
-                result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
-                if result.returncode == 0:
-                    print(f"✓ {description} completed successfully")
-                    if result.stdout:
-                        print(result.stdout)
-                    return True
-                else:
-                    print(f"✗ {description} failed")
-                    if result.stderr:
-                        print(f"Error: {result.stderr[:300]}")
-                    return False
+            # Find all rxbuf files
+            rxbuf_files = list(DATA_DIR.glob("rxbuf_*.txt"))
+            
+            if rxbuf_files:
+                for rxbuf_file in rxbuf_files:
+                    # Infer config file
+                    # rxbuf_dynamic_pull.txt -> config_dynamic_pull.txt
+                    exp_name = rxbuf_file.stem.replace("rxbuf_", "")
+                    config_name = f"config_{exp_name}.txt"
+                    config_file = RESULTS_DIR.parent / "simulation" / "mix" / "configs" / config_name
+                    
+                    cmd = [sys.executable, str(script_path), str(rxbuf_file),
+                           "--out", str(PLOTS_DIR / f"rx_buffer_{exp_name}.png")]
+                    
+                    if config_file.exists():
+                        cmd.extend(["--config", str(config_file)])
+                        
+                    print(f"Command: {' '.join(cmd)}")
+                    result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+                    if result.returncode == 0:
+                        print(f"✓ {description} ({rxbuf_file.name}) completed successfully")
+                        if result.stdout:
+                            print(result.stdout)
+                    else:
+                        print(f"✗ {description} ({rxbuf_file.name}) failed")
+                        if result.stderr:
+                            print(f"Error: {result.stderr[:300]}")
+                        return False
+                return True
             else:
-                print(f"⚠️  Skipping {description}: RX buffer file not found ({rxbuf_file})")
+                print(f"⚠️  Skipping {description}: No RX buffer file found")
                 return False
 
         elif "plot_fct" in script_name:
              # FCT Plot
-             fct_file = DATA_DIR / "fct_two_senders_heavy.txt"
-             if fct_file.exists():
-                cmd = [sys.executable, str(script_path), str(fct_file),
-                       "--out", str(PLOTS_DIR / "fct.png")]
-                print(f"Command: {' '.join(cmd)}")
-                result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
-                if result.returncode == 0:
-                    print(f"✓ {description} completed successfully")
-                    if result.stdout:
-                         print(result.stdout)
-                    return True
-                else:
-                    print(f"✗ {description} failed")
-                    if result.stderr:
-                         print(f"Error: {result.stderr[:300]}")
-                    return False
-        
-
+             # Find all fct files
+             fct_files = list(DATA_DIR.glob("fct_*.txt"))
+             if fct_files:
+                 for fct_file in fct_files:
+                     exp_name = fct_file.stem.replace("fct_", "")
+                     cmd = [sys.executable, str(script_path), str(fct_file),
+                            "--out", str(PLOTS_DIR / f"fct_{exp_name}.png")]
+                     print(f"Command: {' '.join(cmd)}")
+                     result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+                     if result.returncode == 0:
+                         print(f"✓ {description} ({fct_file.name}) completed successfully")
+                         if result.stdout:
+                             print(result.stdout)
+                     else:
+                         print(f"✗ {description} ({fct_file.name}) failed")
+                         if result.stderr:
+                             print(f"Error: {result.stderr[:300]}")
+                 return True
+             else:
+                 print(f"⚠️  Skipping {description}: No FCT file found")
+                 return False
 
         elif "packet_drops" in script_name or "drop" in script_name:
             # This script needs packet drop trace AND pfc trace for unified plot
-            drop_file = DATA_DIR / "drop_two_senders_heavy.txt"
-            pfc_file = DATA_DIR / "pfc_two_senders_heavy.txt"
+            # Find all drop files
+            drop_files = list(DATA_DIR.glob("drop_*.txt"))
             
-            if drop_file.exists() or pfc_file.exists():
-                cmd = [sys.executable, str(script_path), 
-                       "-o", str(PLOTS_DIR / "reliability_analysis.png")]
-                
-                if drop_file.exists():
-                    cmd.extend(["--drops", str(drop_file)])
-                
-                if pfc_file.exists():
-                    cmd.extend(["--pfc", str(pfc_file)])
+            if drop_files:
+                for drop_file in drop_files:
+                    exp_name = drop_file.stem.replace("drop_", "")
+                    pfc_file = DATA_DIR / f"pfc_{exp_name}.txt"
                     
-                print(f"Command: {' '.join(cmd)}")
-                result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
-                if result.returncode == 0:
-                    print(f"✓ {description} completed successfully")
-                    if result.stdout:
-                        print(result.stdout)
-                    return True
-                else:
-                    print(f"✗ {description} failed")
-                    if result.stderr:
-                        print(f"Error: {result.stderr[:300]}")
-                    return False
+                    cmd = [sys.executable, str(script_path), 
+                           "-o", str(PLOTS_DIR / f"reliability_analysis_{exp_name}.png")]
+                    
+                    cmd.extend(["--drops", str(drop_file)])
+                    
+                    if pfc_file.exists():
+                        cmd.extend(["--pfc", str(pfc_file)])
+                        
+                    print(f"Command: {' '.join(cmd)}")
+                    result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+                    if result.returncode == 0:
+                        print(f"✓ {description} ({drop_file.name}) completed successfully")
+                        if result.stdout:
+                            print(result.stdout)
+                    else:
+                        print(f"✗ {description} ({drop_file.name}) failed")
+                        if result.stderr:
+                            print(f"Error: {result.stderr[:300]}")
+                return True
             else:
-                print(f"⚠️  Skipping {description}: No drop or PFC trace files found")
-                return False
+                print(f"✓ {description}: No drop files found (Clean Run)")
+                return True 
+
+        elif "dashboard" in script_name:
+             # Comprehensive Dashboard
+             # Needs FCT and Qlen files
+             fct_files = list(DATA_DIR.glob("fct_*.txt"))
+             
+             if fct_files:
+                 for fct_file in fct_files:
+                     exp_name = fct_file.stem.replace("fct_", "")
+                     qlen_file = DATA_DIR / f"qlen_{exp_name}.txt"
+                     
+                     cmd = [sys.executable, str(script_path), 
+                            "--out", str(PLOTS_DIR / f"dashboard_{exp_name}.png"),
+                            "--fct", str(fct_file)]
+                     
+                     if qlen_file.exists():
+                         cmd.extend(["--qlen", str(qlen_file)])
+                         
+                     print(f"Command: {' '.join(cmd)}")
+                     result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+                     
+                     if result.returncode == 0:
+                         print(f"✓ {description} ({exp_name}) completed successfully")
+                         if result.stdout:
+                             print(result.stdout)
+                     else:
+                         print(f"✗ {description} ({exp_name}) failed")
+                         if result.stderr:
+                             print(f"Error: {result.stderr[:300]}")
+                             return False
+                 return True
+             else:
+                 print(f"⚠️  Skipping {description}: No FCT files found for dashboard")
+                 return False
 
         
         # Default behavior: try to find matching data file
@@ -335,37 +435,6 @@ def main():
         print(f"{status} {description}")
     
     print(f"\nCompleted: {successful}/{total} scripts")
-    
-    # Move generated plots to plots directory
-    print(f"\n{'='*70}")
-    print("Organizing plots...")
-    print(f"{'='*70}")
-    
-    png_files_moved = 0
-    
-    # Search for PNG files in multiple locations
-    search_paths = [
-        DATA_DIR,
-        RESULTS_DIR / "simulation" / "mix" / "outputs",
-        RESULTS_DIR / "plots",
-    ]
-    
-    for search_path in search_paths:
-        if search_path.exists():
-            for png_file in search_path.glob("*.png"):
-                # Skip if already in plots folder
-                if png_file.parent == PLOTS_DIR:
-                    continue
-                
-                dest = PLOTS_DIR / png_file.name
-                try:
-                    shutil.move(str(png_file), str(dest))
-                    print(f"✓ Moved: {png_file.name}")
-                    png_files_moved += 1
-                except Exception as e:
-                    print(f"✗ Failed to move {png_file.name}: {e}")
-    
-    print(f"\nMoved {png_files_moved} plot file(s) to plots/ directory")
     
     if successful == total:
         print("\n✓ All plotting scripts completed successfully!")

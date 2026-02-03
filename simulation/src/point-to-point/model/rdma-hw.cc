@@ -12,6 +12,11 @@
 #include "ppp-header.h"
 #include "qbb-header.h"
 #include "cn-header.h"
+#include <algorithm>
+#include <fstream>
+
+
+std::ofstream queue_depth_log; /* global log file for queue depth */
 
 namespace ns3{
 
@@ -529,7 +534,7 @@ void RdmaHw::ProcessRxBuffer(uint32_t nic_idx){
 	}
 
 	uint64_t line_rate = dev->GetDataRate().GetBitRate();
-	double rate = line_rate * m_rxPullRate;
+	double rate = line_rate * GetCurrentRxPullRate();
 	if (rate < 1.0)
 		rate = 1.0;
 	double seconds = (p->GetSize() * 8.0) / rate;
@@ -832,6 +837,17 @@ void RdmaHw::HyperIncreaseMlx(Ptr<RdmaQueuePair> q){
  * High Precision CC
  ***********************/
 void RdmaHw::HandleAckHp(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader &ch){
+       if (!queue_depth_log.is_open()) {
+           queue_depth_log.open("queue_depth.csv", std::ios_base::app);
+           queue_depth_log << "Time,QpId,Hop,Qlen" << std::endl;
+       }
+       IntHeader &ih = ch.ack.ih;
+       for (uint32_t i = 0; i < ih.nhop; i++) {
+           queue_depth_log << Simulator::Now().GetSeconds() << "," 
+                          << qp->GetHash() << "," 
+                          << i << "," 
+                          << ih.hop[i].GetQlen() << std::endl;
+       }
 	uint32_t ack_seq = ch.ack.seq;
 	// update rate
 	if (ack_seq > qp->hp.m_lastUpdateSeq){ // if full RTT feedback is ready, do full update
@@ -1193,4 +1209,30 @@ void RdmaHw::UpdateRateHpPint(Ptr<RdmaQueuePair> qp, Ptr<Packet> p, CustomHeader
        }
 }
 
+void RdmaHw::AddRxPullRateSchedule(Time t, double rate){
+	PullRateEvent e;
+	e.time = t;
+	e.rate = rate;
+	m_rxPullRateSchedule.push_back(e);
+	std::sort(m_rxPullRateSchedule.begin(), m_rxPullRateSchedule.end(), 
+		[](const PullRateEvent &a, const PullRateEvent &b) -> bool {
+		return a.time < b.time;
+	});
 }
+
+double RdmaHw::GetCurrentRxPullRate(){
+	double rate = m_rxPullRate;
+	Time now = Simulator::Now();
+	for(auto &e : m_rxPullRateSchedule){
+		if(e.time <= now){
+			rate = e.rate;
+		}else{
+			break;
+		}
+	}
+	return rate;
+}
+
+}
+
+

@@ -262,9 +262,15 @@ def plot_topology(topo_file, output_file='topology.png', flows_file=None):
         msg_colors = []
         for n in sub_G.nodes():
             if n < num_hosts:
-                msg_colors.append('dodgerblue' if n in active_nodes_from_flows else 'lightblue')
+                if active_nodes_from_flows is not None:
+                    msg_colors.append('dodgerblue' if n in active_nodes_from_flows else 'lightblue')
+                else:
+                    msg_colors.append('lightblue')
             else:
-                msg_colors.append('crimson' if n in active_nodes_from_flows else 'lightcoral')
+                if active_nodes_from_flows is not None:
+                    msg_colors.append('crimson' if n in active_nodes_from_flows else 'lightcoral')
+                else:
+                    msg_colors.append('lightcoral')
         
         nx.draw_networkx_nodes(sub_G, pos_sub, ax=ax, node_color=msg_colors,
                               node_size=600, edgecolors='black', linewidths=1.5)

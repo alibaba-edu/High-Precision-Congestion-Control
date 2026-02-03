@@ -252,7 +252,7 @@ namespace ns3 {
 	void
 		QbbNetDevice::TransmitComplete(void)
 	{
-		// NS_LOG_FUNCTION(this); // Removed due to compiler ambiguity
+		NS_LOG_FUNCTION(this);
 		NS_ASSERT_MSG(m_txMachineState == BUSY, "Must be BUSY if transmitting");
 		m_txMachineState = READY;
 		NS_ASSERT_MSG(m_currentPkt != 0, "QbbNetDevice::TransmitComplete(): m_currentPkt zero");
@@ -398,6 +398,9 @@ namespace ns3 {
 					qIndex = ch.cnp.qIndex;
 				}else if (ch.l3Prot == 0xFD || ch.l3Prot == 0xFC){ // NACK/ACK
 					qIndex = ch.ack.pg;
+				}
+
+				if (m_node->GetNodeType() == 0){ // NIC
 				}
 
 				if (m_rxPullMode == 0 && !m_rdmaReceiveCb.IsNull()){

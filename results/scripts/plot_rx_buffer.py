@@ -30,6 +30,38 @@ def parse_config(config_file):
     return None
 
 
+def parse_schedules(config_file):
+    """Parse config file to extract RX_PULL_RATE_SCHEDULE."""
+    schedules = {}
+    if not os.path.exists(config_file):
+        return schedules
+    
+    with open(config_file, 'r') as f:
+        for line in f:
+            line = line.strip()
+            # Handle comments
+            if line.startswith('#'):
+                continue
+            if 'RX_PULL_RATE_SCHEDULE' in line:
+                parts = line.split()
+                # Format: RX_PULL_RATE_SCHEDULE <node_id> <count> <time1> <rate1> ...
+                if len(parts) >= 3 and parts[0] == 'RX_PULL_RATE_SCHEDULE':
+                    try:
+                        node_id = int(parts[1])
+                        count = int(parts[2])
+                        schedule = []
+                        idx = 3
+                        for _ in range(count):
+                            if idx + 1 < len(parts):
+                                t = float(parts[idx])
+                                r = float(parts[idx+1])
+                                schedule.append((t, r))
+                                idx += 2
+                        schedules[node_id] = schedule
+                    except ValueError:
+                        pass
+    return schedules
+
 def plot_rx_buffer(filename, output_file=None, config_file=None):
     data = defaultdict(lambda: {"t": [], "bytes": []})
     with open(filename, "r") as f:
@@ -60,10 +92,12 @@ def plot_rx_buffer(filename, output_file=None, config_file=None):
             
     # Get max buffer limit
     max_buffer_per_queue = 1048576  # default value (1MB)
+    schedules = {}
     if config_file:
         parsed_value = parse_config(config_file)
         if parsed_value is not None:
             max_buffer_per_queue = parsed_value
+        schedules = parse_schedules(config_file)
 
     # Determine scale factor and unit
     # Use the larger of data max or limit to guide scaling, but prefer data readability
@@ -114,6 +148,18 @@ def plot_rx_buffer(filename, output_file=None, config_file=None):
     scaled_limit = max_buffer_per_queue / scale
     plt.axhline(y=scaled_limit, color='red', linestyle='--', linewidth=2, 
                 label=f'Max buffer/queue ({scaled_limit:.2f} {unit})', alpha=0.7)
+
+    # Add vertical lines for pulling rate schedule
+    colors = ['green', 'purple', 'orange', 'brown'] # Cycle colors for different nodes if needed
+    color_idx = 0
+    for node_id, schedule in schedules.items():
+        # Check if this node is in the plotted data (ignoring interface index)
+        if any(d_node == node_id for d_node, _ in data.keys()):
+            for time, rate in schedule:
+                plt.axvline(x=time, color='gray', linestyle=':', alpha=0.6)
+                # Annotate the rate
+                plt.text(time, plt.ylim()[1] * 0.95, f' t={time}s\nRate={rate}', rotation=90, verticalalignment='top', fontsize=8, color='black', fontweight='bold')
+
 
     plt.xlabel("Time (s)")
     plt.ylabel(f"RX buffer ({unit})")

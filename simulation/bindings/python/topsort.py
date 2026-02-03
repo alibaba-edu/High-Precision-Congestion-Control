@@ -142,7 +142,7 @@ def topsort_levels(pairlist):
     >>> try:
     ...     for level in iter(topsort_levels( dependency_pairs )):
     ...         print level
-    ... except CycleError, exc:
+    ... except CycleError as exc:
     ...     print 'CycleError:', exc
     [1]
     [2]

@@ -58,7 +58,7 @@ def configure(conf):
         conf.msg("Checking for NSC location", False)
         conf.report_optional_feature("nsc", "Network Simulation Cradle", False,
                                      "NSC not found (see option --with-nsc)")
-	return
+    return
     
     if Options.platform in ['linux', 'freebsd']:
         arch = os.uname()[4]
@@ -306,7 +306,7 @@ def build(bld):
         'model/tcp-tx-buffer.h',
         'model/tcp-rx-buffer.h',
         'model/rtt-estimator.h',
-		'model/rdma.h',
+        'model/rdma.h',
        ]
 
     if bld.env['NSC_ENABLED']:

@@ -1,59 +1,213 @@
-# project ns (3.18) configured on Mon Feb  2 13:34:40 2026 by
-# waf 1.7.11 (abi 98, python 20712f0 on linux2)
-# using ./waf configure --disable-python --enable-modules=core,network,internet,point-to-point,applications,stats,flow-monitor,mobility
+# project ns (3.18) configured on Tue Feb  3 19:27:41 2026 by
+# waf 1.7.11 (abi 98, python 30c03f0 on linux)
+# using waf_bypass.py configure --enable-examples
 #
 ----------------------------------------
 Setting top to
-/workspace/simulation
+/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation
 ----------------------------------------
 Setting out to
-/workspace/simulation/build
+/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build
 ----------------------------------------
 Checking for 'gcc' (c compiler)
-find program=['gcc', 'cc'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='CC' -> '/usr/bin/gcc'
-find program=['ar'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='AR' -> '/usr/bin/ar'
+find program=['gcc', 'cc'] paths=['/root/.antigravity-server/bin/7a8657542180fb8440c8dcc20d83285fe11360ed/bin/remote-cli', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/usr/lib/wsl/lib', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/ddns', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbe', '/mnt/c/Users/itama/AppData/Local/Programs/Microsoft VS Code/bin', '/mnt/c/Users/itama/AppData/Local/Programs/Antigravity/bin', '/snap/bin'] var='CC' -> '/usr/bin/gcc'
+find program=['ar'] paths=['/root/.antigravity-server/bin/7a8657542180fb8440c8dcc20d83285fe11360ed/bin/remote-cli', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/usr/lib/wsl/lib', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/ddns', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbe', '/mnt/c/Users/itama/AppData/Local/Programs/Microsoft VS Code/bin', '/mnt/c/Users/itama/AppData/Local/Programs/Antigravity/bin', '/snap/bin'] var='AR' -> '/usr/bin/ar'
 /usr/bin/gcc
 ----------------------------------------
 Checking for 'g++' (c++ compiler)
-find program=['g++', 'c++'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='CXX' -> '/usr/bin/g++'
+find program=['g++', 'c++'] paths=['/root/.antigravity-server/bin/7a8657542180fb8440c8dcc20d83285fe11360ed/bin/remote-cli', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/usr/lib/wsl/lib', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/ddns', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbe', '/mnt/c/Users/itama/AppData/Local/Programs/Microsoft VS Code/bin', '/mnt/c/Users/itama/AppData/Local/Programs/Antigravity/bin', '/snap/bin'] var='CXX' -> '/usr/bin/g++'
 (tool ar is already loaded, skipping)
 /usr/bin/g++
----------------------------------------------------------
-Checking for compilation flag -Wl,--soname=foo... support
+------------------------------------------------------
+Checking for compilation flag -Wl,--soname=foo support
 ==>
 #include <stdio.h>
 int main() { return 0; }
 
 <==
-[1/2] [32mcxx: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/test.cc -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o
+[1/2] [32mcxx: build/.conf_check_afb930a3226d60497e678325a3c01a7b/test.cc -> build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/test.cc.1.o
 [0m
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-Wl,--soname=foo', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cc', '-c', '-o', 'test.cc.1.o']
-[2/2] [33mcxxprogram: build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/test.cc.1.o -> build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-Wl,--soname=foo', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cc', '-c', '-o', 'test.cc.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/test.cc.1.o -> build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/testprog
 [0m
-['/usr/bin/g++', 'test.cc.1.o', '-o', '/workspace/simulation/build/.conf_check_fe0ca542f39064c5a14ee41a2e983996/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cc.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 ok
----------------------------------------------------------
-Checking boost includes
-from /workspace/simulation/src: headers not found, please provide a --boost-includes argument (see help)
+------------------------------------------------------
+Checking for program python
 not found
----------------------------------------------------------
-Checking boost includes
-from /workspace/simulation/src: headers not found, please provide a --boost-includes argument (see help)
+find program=['python'] paths=['/root/.antigravity-server/bin/7a8657542180fb8440c8dcc20d83285fe11360ed/bin/remote-cli', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/usr/lib/wsl/lib', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/ddns', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbe', '/mnt/c/Users/itama/AppData/Local/Programs/Microsoft VS Code/bin', '/mnt/c/Users/itama/AppData/Local/Programs/Antigravity/bin', '/snap/bin'] var='PYTHON' -> ''
+from /home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/bindings/python: Could not find the program python
+['/usr/bin/python3', '-c', 'import sys\nfor x in sys.version_info: print(str(x))']
+out: 3
+12
+3
+final
+0
+
+['/usr/bin/python3', '-c', "from distutils.sysconfig import get_config_var, get_python_lib\n\nprint(repr(get_python_lib(standard_lib=0, prefix='/usr/local') or ''))"]
+out: '/usr/local/lib/python3/dist-packages'
+
+'/usr/local/lib/python3/dist-packages'
+
+['/usr/bin/python3', '-c', "from distutils.sysconfig import get_config_var, get_python_lib\n\nprint(repr(get_python_lib(plat_specific=1, standard_lib=0, prefix='/usr/local') or ''))"]
+out: '/usr/local/lib/python3/dist-packages'
+
+'/usr/local/lib/python3/dist-packages'
+
+------------------------------------------------------
+Checking for python version
+(3, 12, 3, 'final', 0)
+['/usr/bin/python3', '-c', "from distutils.sysconfig import get_config_var, get_python_lib\n\nprint(repr(get_config_var('prefix') or ''))\nprint(repr(get_config_var('SO') or ''))\nprint(repr(get_config_var('LDFLAGS') or ''))\nprint(repr(get_config_var('LIBDIR') or ''))\nprint(repr(get_config_var('LIBPL') or ''))\nprint(repr(get_config_var('INCLUDEPY') or ''))\nprint(repr(get_config_var('Py_ENABLE_SHARED') or ''))\nprint(repr(get_config_var('MACOSX_DEPLOYMENT_TARGET') or ''))\nprint(repr(get_config_var('LDSHARED') or ''))\nprint(repr(get_config_var('CFLAGS') or ''))"]
+out: '/usr'
+''
+'-Wl,-Bsymbolic-functions  -Wl,-z,relro -g -fwrapv -O2   '
+'/usr/lib/x86_64-linux-gnu'
+'/usr/lib/python3.12/config-3.12-x86_64-linux-gnu'
+'/usr/include/python3.12'
+1
+''
+'x86_64-linux-gnu-gcc -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-Bsymbolic-functions  -Wl,-z,relro -g -fwrapv -O2   '
+'-fno-strict-overflow -Wsign-compare -DNDEBUG -g -O2 -Wall'
+
+err: <string>:4: DeprecationWarning: SO is deprecated, use EXT_SUFFIX
+
+'/usr'
+''
+'-Wl,-Bsymbolic-functions  -Wl,-z,relro -g -fwrapv -O2   '
+'/usr/lib/x86_64-linux-gnu'
+'/usr/lib/python3.12/config-3.12-x86_64-linux-gnu'
+'/usr/include/python3.12'
+1
+''
+'x86_64-linux-gnu-gcc -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-Bsymbolic-functions  -Wl,-z,relro -g -fwrapv -O2   '
+'-fno-strict-overflow -Wsign-compare -DNDEBUG -g -O2 -Wall'
+
+Configuration returned from ['/usr/bin/python3']:
+"prefix = '/usr'\nSO = ''\nLDFLAGS = '-Wl,-Bsymbolic-functions  -Wl,-z,relro -g -fwrapv -O2   '\nLIBDIR = '/usr/lib/x86_64-linux-gnu'\nLIBPL = '/usr/lib/python3.12/config-3.12-x86_64-linux-gnu'\nINCLUDEPY = '/usr/include/python3.12'\nPy_ENABLE_SHARED = 1\nMACOSX_DEPLOYMENT_TARGET = ''\nLDSHARED = 'x86_64-linux-gnu-gcc -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-Bsymbolic-functions  -Wl,-z,relro -g -fwrapv -O2   '\nCFLAGS = '-fno-strict-overflow -Wsign-compare -DNDEBUG -g -O2 -Wall'"
+
+
+
+# try again with -L$python_LIBDIR: ['/usr/lib/x86_64-linux-gnu']
+
+------------------------------------------------------
+Checking for library python3.12 in LIBDIR
+==>
+
+int main(int argc, char **argv) {
+	(void)argc; (void)argv;
+	return 0;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_bf91f9748e14402d811d787c87ce4a11/test.cpp -> build/.conf_check_bf91f9748e14402d811d787c87ce4a11/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-fwrapv', '-fno-strict-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DPYTHONDIR="/usr/local/lib/python3/dist-packages"', '-DPYTHONARCHDIR="/usr/local/lib/python3/dist-packages"', '-DNDEBUG', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_bf91f9748e14402d811d787c87ce4a11/testbuild/test.cpp.1.o -> build/.conf_check_bf91f9748e14402d811d787c87ce4a11/testbuild/testprog
+[0m
+['/usr/bin/g++', '-Wl,-Bsymbolic-functions', '-Wl,-z,relro', 'test.cpp.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_bf91f9748e14402d811d787c87ce4a11/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-L/usr/lib/x86_64-linux-gnu', '-lpython3.12']
+yes
+----------------------------------------------------------------------------------------------------
+Checking for program /usr/bin/python3-config,python3.12-config,python-config-3.12,python3.12m-config
+/usr/bin/python3-config
+find program=['/usr/bin/python3-config', 'python3.12-config', 'python-config-3.12', 'python3.12m-config'] paths=['/root/.antigravity-server/bin/7a8657542180fb8440c8dcc20d83285fe11360ed/bin/remote-cli', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/usr/lib/wsl/lib', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/ddns', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbe', '/mnt/c/Users/itama/AppData/Local/Programs/Microsoft VS Code/bin', '/mnt/c/Users/itama/AppData/Local/Programs/Antigravity/bin', '/snap/bin'] var='PYTHON_CONFIG' -> '/usr/bin/python3-config'
+['/usr/bin/python3-config', '--includes']
+out: -I/usr/include/python3.12 -I/usr/include/python3.12
+
+Include path for Python extensions (found via python-config --includes): ['/usr/include/python3.12']
+
+----------------------------------------------------------------------------------------------------
+Checking for header Python.h
+==>
+
+#include <Python.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
+	void Py_Initialize(void);
+	void Py_Finalize(void);
+#ifdef __cplusplus
+}
+#endif
+int main(int argc, char **argv)
+{
+   (void)argc; (void)argv;
+   Py_Initialize();
+   Py_Finalize();
+   return 0;
+}
+
+<==
+[1/2] [32mcxx: build/.conf_check_757b50ffae40e1d15144b47182a46336/test.cpp -> build/.conf_check_757b50ffae40e1d15144b47182a46336/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-fwrapv', '-fno-strict-overflow', '-fno-strict-aliasing', '-I/usr/include/python3.12', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DPYTHONDIR="/usr/local/lib/python3/dist-packages"', '-DPYTHONARCHDIR="/usr/local/lib/python3/dist-packages"', '-DNDEBUG', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_757b50ffae40e1d15144b47182a46336/testbuild/test.cpp.1.o -> build/.conf_check_757b50ffae40e1d15144b47182a46336/testbuild/testprog
+[0m
+['/usr/bin/g++', '-Wl,-Bsymbolic-functions', '-Wl,-z,relro', 'test.cpp.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_757b50ffae40e1d15144b47182a46336/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-L/usr/lib/x86_64-linux-gnu', '-lpython3.12']
+yes
+----------------------------------------------------------------------------------------------------
+Checking for compilation flag -fvisibility=hidden support
+==>
+#include <stdio.h>
+int main() { return 0; }
+
+<==
+[1/2] [32mcxx: build/.conf_check_afb930a3226d60497e678325a3c01a7b/test.cc -> build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/test.cc.1.o
+[0m
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-fvisibility=hidden', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DPYTHONDIR="/usr/local/lib/python3/dist-packages"', '-DPYTHONARCHDIR="/usr/local/lib/python3/dist-packages"', '-DHAVE_PYTHON_H=1', '../test.cc', '-c', '-o', 'test.cc.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/test.cc.1.o -> build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cc.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+ok
+----------------------------------------------------------------------------------------------------
+Checking for compilation flag -Wno-array-bounds support
+==>
+#include <stdio.h>
+int main() { return 0; }
+
+<==
+[1/2] [32mcxx: build/.conf_check_afb930a3226d60497e678325a3c01a7b/test.cc -> build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/test.cc.1.o
+[0m
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-Wno-array-bounds', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DPYTHONDIR="/usr/local/lib/python3/dist-packages"', '-DPYTHONARCHDIR="/usr/local/lib/python3/dist-packages"', '-DHAVE_PYTHON_H=1', '../test.cc', '-c', '-o', 'test.cc.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/test.cc.1.o -> build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cc.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+ok
+----------------------------------------------------------------------------------------------------
+Checking for pybindgen location
+../pybindgen (guessed)
+----------------------------------------------------------------------------------------------------
+Python module pybindgen
+['/usr/bin/python3', '-c', "\nimport pybindgen as current_module\nversion = getattr(current_module, '__version__', None)\nif version is not None:\n    print(str(version))\nelse:\n    print('unknown version')\n"]
+err: Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+  File "/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/pybindgen/pybindgen/__init__.py", line 2, in <module>
+    from typehandlers.base import ReturnValue, Parameter
+ModuleNotFoundError: No module named 'typehandlers'
+
 not found
----------------------------------------------------------
+from /home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/bindings/python: Could not find the python module 'pybindgen'
+----------------------------------------------------------------------------------------------------
+Checking boost includes
+from /home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/src: headers not found, please provide a --boost-includes argument (see help)
+not found
+----------------------------------------------------------------------------------------------------
+Checking boost includes
+from /home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/src: headers not found, please provide a --boost-includes argument (see help)
+not found
+----------------------------------------------------------------------------------------------------
 Checking for click location
 not found
----------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Checking for program pkg-config
 not found
-find program=['pkg-config'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='PKGCONFIG' -> ''
-from /workspace/simulation/src/config-store: Could not find the program pkg-config
----------------------------------------------------------
+find program=['pkg-config'] paths=['/root/.antigravity-server/bin/7a8657542180fb8440c8dcc20d83285fe11360ed/bin/remote-cli', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/usr/lib/wsl/lib', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/ddns', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbe', '/mnt/c/Users/itama/AppData/Local/Programs/Microsoft VS Code/bin', '/mnt/c/Users/itama/AppData/Local/Programs/Antigravity/bin', '/snap/bin'] var='PKGCONFIG' -> ''
+from /home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/src/config-store: Could not find the program pkg-config
+----------------------------------------------------------------------------------------------------
 Checking for program pkg-config
 not found
-find program=['pkg-config'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='PKGCONFIG' -> ''
-from /workspace/simulation/src/config-store: Could not find the program pkg-config
----------------------------------------------------------
+find program=['pkg-config'] paths=['/root/.antigravity-server/bin/7a8657542180fb8440c8dcc20d83285fe11360ed/bin/remote-cli', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/usr/lib/wsl/lib', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/ddns', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbe', '/mnt/c/Users/itama/AppData/Local/Programs/Microsoft VS Code/bin', '/mnt/c/Users/itama/AppData/Local/Programs/Antigravity/bin', '/snap/bin'] var='PKGCONFIG' -> ''
+from /home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/src/config-store: Could not find the program pkg-config
+----------------------------------------------------------------------------------------------------
 Checking for type uint128_t
 ==>
 #include <stdint.h>
@@ -66,39 +220,39 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] [32mcxx: build/.conf_check_656b178ce7442053dff90315b31a1cc5/test.cpp -> build/.conf_check_656b178ce7442053dff90315b31a1cc5/testbuild/test.cpp.1.o
+[1/2] [32mcxx: build/.conf_check_6f54c04c0d927cf2a14a0bc303fd0955/test.cpp -> build/.conf_check_6f54c04c0d927cf2a14a0bc303fd0955/testbuild/test.cpp.1.o
 [0m
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-err: ../test.cpp: In function 'int main(int, char**)':
-../test.cpp:5:7: error: 'uint128_t' was not declared in this scope; did you mean 'uint32_t'?
-    5 |  if ((uint128_t *) 0) return 0;
-      |       ^~~~~~~~~
-      |       uint32_t
-../test.cpp:5:18: error: expected primary-expression before ')' token
-    5 |  if ((uint128_t *) 0) return 0;
-      |                  ^
-../test.cpp:5:19: error: expected ')' before numeric constant
-    5 |  if ((uint128_t *) 0) return 0;
-      |     ~             ^~
-      |                   )
-../test.cpp:6:14: error: 'uint128_t' was not declared in this scope; did you mean 'uint32_t'?
-    6 |  if (sizeof (uint128_t)) return 0;
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+err: ../test.cpp: In function ‘int main(int, char**)’:
+../test.cpp:5:14: error: ‘uint128_t’ was not declared in this scope; did you mean ‘uint8_t’?
+    5 |         if ((uint128_t *) 0) return 0;
       |              ^~~~~~~~~
-      |              uint32_t
+      |              uint8_t
+../test.cpp:5:25: error: expected primary-expression before ‘)’ token
+    5 |         if ((uint128_t *) 0) return 0;
+      |                         ^
+../test.cpp:5:26: error: expected ‘)’ before numeric constant
+    5 |         if ((uint128_t *) 0) return 0;
+      |            ~             ^~
+      |                          )
+../test.cpp:6:21: error: ‘uint128_t’ was not declared in this scope; did you mean ‘uint8_t’?
+    6 |         if (sizeof (uint128_t)) return 0;
+      |                     ^~~~~~~~~
+      |                     uint8_t
 
-from /workspace/simulation/src/core: Test does not build: Traceback (most recent call last):
-  File "/workspace/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Tools/c_config.py", line 459, in run_c_code
+from /home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/src/core: Test does not build: Traceback (most recent call last):
+  File "/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Tools/c_config.py", line 459, in run_c_code
     bld.compile()
-  File "/workspace/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Build.py", line 188, in compile
+  File "/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Build.py", line 188, in compile
     raise Errors.BuildError(self.producer.error)
-BuildError: Build failed
+waflib.Errors.BuildError: Build failed
  -> task in 'testprog' failed (exit status 1): 
-	{task 134192621989968: cxx test.cpp -> test.cpp.1.o}
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+	{task 134373308755328: cxx test.cpp -> test.cpp.1.o}
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
 
 not found
-from /workspace/simulation/src/core: The configuration failed
----------------------------------------------------------
+from /home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/src/core: The configuration failed
+----------------------------------------------------------------------------------------------------
 Checking for type __uint128_t
 ==>
 #include <stdint.h>
@@ -111,17 +265,17 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] [32mcxx: build/.conf_check_ace1886511f08627ee2e4ca020806295/test.cpp -> build/.conf_check_ace1886511f08627ee2e4ca020806295/testbuild/test.cpp.1.o
+[1/2] [32mcxx: build/.conf_check_8a7f03b9487540d70995aa36241e3579/test.cpp -> build/.conf_check_8a7f03b9487540d70995aa36241e3579/testbuild/test.cpp.1.o
 [0m
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] [33mcxxprogram: build/.conf_check_ace1886511f08627ee2e4ca020806295/testbuild/test.cpp.1.o -> build/.conf_check_ace1886511f08627ee2e4ca020806295/testbuild/testprog
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_8a7f03b9487540d70995aa36241e3579/testbuild/test.cpp.1.o -> build/.conf_check_8a7f03b9487540d70995aa36241e3579/testbuild/testprog
 [0m
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_ace1886511f08627ee2e4ca020806295/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_8a7f03b9487540d70995aa36241e3579/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
----------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Checking high precision time implementation
 128-bit integer
----------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Checking for header stdint.h
 ==>
 #include <stdint.h>
@@ -132,14 +286,14 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] [32mcxx: build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/test.cpp -> build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/test.cpp.1.o
+[1/2] [32mcxx: build/.conf_check_bfb6358721a9218702bc59bb7e2daddd/test.cpp -> build/.conf_check_bfb6358721a9218702bc59bb7e2daddd/testbuild/test.cpp.1.o
 [0m
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] [33mcxxprogram: build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/test.cpp.1.o -> build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/testprog
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_bfb6358721a9218702bc59bb7e2daddd/testbuild/test.cpp.1.o -> build/.conf_check_bfb6358721a9218702bc59bb7e2daddd/testbuild/testprog
 [0m
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_bfb6358721a9218702bc59bb7e2daddd/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
----------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Checking for header inttypes.h
 ==>
 #include <inttypes.h>
@@ -150,14 +304,14 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] [32mcxx: build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/test.cpp -> build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/test.cpp.1.o
+[1/2] [32mcxx: build/.conf_check_5be8a5e55df6049110ed30a1c7e2c43d/test.cpp -> build/.conf_check_5be8a5e55df6049110ed30a1c7e2c43d/testbuild/test.cpp.1.o
 [0m
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] [33mcxxprogram: build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/test.cpp.1.o -> build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/testprog
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_5be8a5e55df6049110ed30a1c7e2c43d/testbuild/test.cpp.1.o -> build/.conf_check_5be8a5e55df6049110ed30a1c7e2c43d/testbuild/testprog
 [0m
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_5be8a5e55df6049110ed30a1c7e2c43d/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
----------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Checking for header sys/inttypes.h
 ==>
 #include <sys/inttypes.h>
@@ -168,27 +322,27 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] [32mcxx: build/.conf_check_61ecbfef21667d45a28decabe37fdf64/test.cpp -> build/.conf_check_61ecbfef21667d45a28decabe37fdf64/testbuild/test.cpp.1.o
+[1/2] [32mcxx: build/.conf_check_102ecbb653cc63c876144926538f2e66/test.cpp -> build/.conf_check_102ecbb653cc63c876144926538f2e66/testbuild/test.cpp.1.o
 [0m
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
 err: ../test.cpp:1:10: fatal error: sys/inttypes.h: No such file or directory
     1 | #include <sys/inttypes.h>
       |          ^~~~~~~~~~~~~~~~
 compilation terminated.
 
-from /workspace/simulation/src/core: Test does not build: Traceback (most recent call last):
-  File "/workspace/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Tools/c_config.py", line 459, in run_c_code
+from /home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/src/core: Test does not build: Traceback (most recent call last):
+  File "/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Tools/c_config.py", line 459, in run_c_code
     bld.compile()
-  File "/workspace/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Build.py", line 188, in compile
+  File "/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Build.py", line 188, in compile
     raise Errors.BuildError(self.producer.error)
-BuildError: Build failed
+waflib.Errors.BuildError: Build failed
  -> task in 'testprog' failed (exit status 1): 
-	{task 134192621346896: cxx test.cpp -> test.cpp.1.o}
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+	{task 134373320221152: cxx test.cpp -> test.cpp.1.o}
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
 
 not found
-from /workspace/simulation/src/core: The configuration failed
----------------------------------------------------------
+from /home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/src/core: The configuration failed
+----------------------------------------------------------------------------------------------------
 Checking for header sys/types.h
 ==>
 #include <sys/types.h>
@@ -199,14 +353,14 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] [32mcxx: build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/test.cpp -> build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/testbuild/test.cpp.1.o
+[1/2] [32mcxx: build/.conf_check_7357b6e1e2bb379828d3b74d6d7eb2b0/test.cpp -> build/.conf_check_7357b6e1e2bb379828d3b74d6d7eb2b0/testbuild/test.cpp.1.o
 [0m
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] [33mcxxprogram: build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/testbuild/test.cpp.1.o -> build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/testbuild/testprog
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_7357b6e1e2bb379828d3b74d6d7eb2b0/testbuild/test.cpp.1.o -> build/.conf_check_7357b6e1e2bb379828d3b74d6d7eb2b0/testbuild/testprog
 [0m
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_8d38681417ac64f5b5b7d4ca87b0e4f3/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_7357b6e1e2bb379828d3b74d6d7eb2b0/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
----------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Checking for header sys/stat.h
 ==>
 #include <sys/stat.h>
@@ -217,14 +371,14 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] [32mcxx: build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/test.cpp -> build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/testbuild/test.cpp.1.o
+[1/2] [32mcxx: build/.conf_check_02066fdbb622263ce56df0548422846b/test.cpp -> build/.conf_check_02066fdbb622263ce56df0548422846b/testbuild/test.cpp.1.o
 [0m
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] [33mcxxprogram: build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/testbuild/test.cpp.1.o -> build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/testbuild/testprog
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_02066fdbb622263ce56df0548422846b/testbuild/test.cpp.1.o -> build/.conf_check_02066fdbb622263ce56df0548422846b/testbuild/testprog
 [0m
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_8dd79274749d59bf459dfbeb1200c7d7/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_02066fdbb622263ce56df0548422846b/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
----------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Checking for header dirent.h
 ==>
 #include <dirent.h>
@@ -235,14 +389,14 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] [32mcxx: build/.conf_check_c94d96928742c001335a0559791a93d8/test.cpp -> build/.conf_check_c94d96928742c001335a0559791a93d8/testbuild/test.cpp.1.o
+[1/2] [32mcxx: build/.conf_check_713e60a8bbf765d3a14c0ac4ed5cbadd/test.cpp -> build/.conf_check_713e60a8bbf765d3a14c0ac4ed5cbadd/testbuild/test.cpp.1.o
 [0m
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] [33mcxxprogram: build/.conf_check_c94d96928742c001335a0559791a93d8/testbuild/test.cpp.1.o -> build/.conf_check_c94d96928742c001335a0559791a93d8/testbuild/testprog
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_713e60a8bbf765d3a14c0ac4ed5cbadd/testbuild/test.cpp.1.o -> build/.conf_check_713e60a8bbf765d3a14c0ac4ed5cbadd/testbuild/testprog
 [0m
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_c94d96928742c001335a0559791a93d8/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_713e60a8bbf765d3a14c0ac4ed5cbadd/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
----------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Checking for header stdlib.h
 ==>
 #include <stdlib.h>
@@ -253,14 +407,14 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] [32mcxx: build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/test.cpp -> build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/testbuild/test.cpp.1.o
+[1/2] [32mcxx: build/.conf_check_9ed22713f4e780794977aaec5f8e26b6/test.cpp -> build/.conf_check_9ed22713f4e780794977aaec5f8e26b6/testbuild/test.cpp.1.o
 [0m
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] [33mcxxprogram: build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/testbuild/test.cpp.1.o -> build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/testbuild/testprog
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_9ed22713f4e780794977aaec5f8e26b6/testbuild/test.cpp.1.o -> build/.conf_check_9ed22713f4e780794977aaec5f8e26b6/testbuild/testprog
 [0m
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_3a82ef2f96ebcc67f6086c98d2e6291e/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_9ed22713f4e780794977aaec5f8e26b6/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
----------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Checking for header signal.h
 ==>
 #include <signal.h>
@@ -271,14 +425,14 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] [32mcxx: build/.conf_check_48955ac54d2136a572805353a7b9b62d/test.cpp -> build/.conf_check_48955ac54d2136a572805353a7b9b62d/testbuild/test.cpp.1.o
+[1/2] [32mcxx: build/.conf_check_712878d277a11b193081900d720049fb/test.cpp -> build/.conf_check_712878d277a11b193081900d720049fb/testbuild/test.cpp.1.o
 [0m
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] [33mcxxprogram: build/.conf_check_48955ac54d2136a572805353a7b9b62d/testbuild/test.cpp.1.o -> build/.conf_check_48955ac54d2136a572805353a7b9b62d/testbuild/testprog
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_712878d277a11b193081900d720049fb/testbuild/test.cpp.1.o -> build/.conf_check_712878d277a11b193081900d720049fb/testbuild/testprog
 [0m
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_48955ac54d2136a572805353a7b9b62d/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_712878d277a11b193081900d720049fb/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
----------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Checking for header pthread.h
 ==>
 
@@ -291,14 +445,14 @@ int main ()
 }
 
 <==
-[1/2] [32mcxx: build/.conf_check_2be466e82e703a744ee152afe2b58299/test.cpp -> build/.conf_check_2be466e82e703a744ee152afe2b58299/testbuild/test.cpp.1.o
+[1/2] [32mcxx: build/.conf_check_f138f9636d7a93284cd6e9ed050dab43/test.cpp -> build/.conf_check_f138f9636d7a93284cd6e9ed050dab43/testbuild/test.cpp.1.o
 [0m
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-pthread', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] [33mcxxprogram: build/.conf_check_2be466e82e703a744ee152afe2b58299/testbuild/test.cpp.1.o -> build/.conf_check_2be466e82e703a744ee152afe2b58299/testbuild/testprog
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-pthread', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_f138f9636d7a93284cd6e9ed050dab43/testbuild/test.cpp.1.o -> build/.conf_check_f138f9636d7a93284cd6e9ed050dab43/testbuild/testprog
 [0m
-['/usr/bin/g++', '-pthread', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_2be466e82e703a744ee152afe2b58299/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', '-pthread', 'test.cpp.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_f138f9636d7a93284cd6e9ed050dab43/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
----------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Checking for header stdint.h
 ==>
 #include <stdint.h>
@@ -309,14 +463,14 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] [32mcxx: build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/test.cpp -> build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/test.cpp.1.o
+[1/2] [32mcxx: build/.conf_check_bfb6358721a9218702bc59bb7e2daddd/test.cpp -> build/.conf_check_bfb6358721a9218702bc59bb7e2daddd/testbuild/test.cpp.1.o
 [0m
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] [33mcxxprogram: build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/test.cpp.1.o -> build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/testprog
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_bfb6358721a9218702bc59bb7e2daddd/testbuild/test.cpp.1.o -> build/.conf_check_bfb6358721a9218702bc59bb7e2daddd/testbuild/testprog
 [0m
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_fa0c4ec9c63ac505501cc0863d9bdc48/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_bfb6358721a9218702bc59bb7e2daddd/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
----------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Checking for header inttypes.h
 ==>
 #include <inttypes.h>
@@ -327,14 +481,14 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] [32mcxx: build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/test.cpp -> build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/test.cpp.1.o
+[1/2] [32mcxx: build/.conf_check_5be8a5e55df6049110ed30a1c7e2c43d/test.cpp -> build/.conf_check_5be8a5e55df6049110ed30a1c7e2c43d/testbuild/test.cpp.1.o
 [0m
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] [33mcxxprogram: build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/test.cpp.1.o -> build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/testprog
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_5be8a5e55df6049110ed30a1c7e2c43d/testbuild/test.cpp.1.o -> build/.conf_check_5be8a5e55df6049110ed30a1c7e2c43d/testbuild/testprog
 [0m
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_7c67b81911f8bf0aede92c843d0e47cf/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_5be8a5e55df6049110ed30a1c7e2c43d/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
----------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Checking for header sys/inttypes.h
 ==>
 #include <sys/inttypes.h>
@@ -345,27 +499,27 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] [32mcxx: build/.conf_check_61ecbfef21667d45a28decabe37fdf64/test.cpp -> build/.conf_check_61ecbfef21667d45a28decabe37fdf64/testbuild/test.cpp.1.o
+[1/2] [32mcxx: build/.conf_check_102ecbb653cc63c876144926538f2e66/test.cpp -> build/.conf_check_102ecbb653cc63c876144926538f2e66/testbuild/test.cpp.1.o
 [0m
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
 err: ../test.cpp:1:10: fatal error: sys/inttypes.h: No such file or directory
     1 | #include <sys/inttypes.h>
       |          ^~~~~~~~~~~~~~~~
 compilation terminated.
 
-from /workspace/simulation/src/core: Test does not build: Traceback (most recent call last):
-  File "/workspace/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Tools/c_config.py", line 459, in run_c_code
+from /home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/src/core: Test does not build: Traceback (most recent call last):
+  File "/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Tools/c_config.py", line 459, in run_c_code
     bld.compile()
-  File "/workspace/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Build.py", line 188, in compile
+  File "/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/.waf-1.7.11-edc6ccb516c5e3f9b892efc9f53a610f/waflib/Build.py", line 188, in compile
     raise Errors.BuildError(self.producer.error)
-BuildError: Build failed
+waflib.Errors.BuildError: Build failed
  -> task in 'testprog' failed (exit status 1): 
-	{task 134192622012496: cxx test.cpp -> test.cpp.1.o}
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+	{task 134373308428320: cxx test.cpp -> test.cpp.1.o}
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
 
 not found
-from /workspace/simulation/src/core: The configuration failed
----------------------------------------------------------
+from /home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/src/core: The configuration failed
+----------------------------------------------------------------------------------------------------
 Checking for library rt
 ==>
 
@@ -375,14 +529,14 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] [32mcxx: build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/test.cpp -> build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/testbuild/test.cpp.1.o
+[1/2] [32mcxx: build/.conf_check_7c39e8fb77f92a146de139d0a7ff81fa/test.cpp -> build/.conf_check_7c39e8fb77f92a146de139d0a7ff81fa/testbuild/test.cpp.1.o
 [0m
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-pthread', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] [33mcxxprogram: build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/testbuild/test.cpp.1.o -> build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/testbuild/testprog
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-pthread', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_7c39e8fb77f92a146de139d0a7ff81fa/testbuild/test.cpp.1.o -> build/.conf_check_7c39e8fb77f92a146de139d0a7ff81fa/testbuild/testprog
 [0m
-['/usr/bin/g++', '-pthread', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_5ef57bc0d8aa3565949b6ce1186fd4a7/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-lrt']
+['/usr/bin/g++', '-pthread', 'test.cpp.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_7c39e8fb77f92a146de139d0a7ff81fa/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-lrt']
 yes
----------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Checking for header netpacket/packet.h
 ==>
 #include <netpacket/packet.h>
@@ -393,22 +547,22 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] [32mcxx: build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/test.cpp -> build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/testbuild/test.cpp.1.o
+[1/2] [32mcxx: build/.conf_check_add407bb67ac8aa7bee72d4248449e2b/test.cpp -> build/.conf_check_add407bb67ac8aa7bee72d4248449e2b/testbuild/test.cpp.1.o
 [0m
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] [33mcxxprogram: build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/testbuild/test.cpp.1.o -> build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/testbuild/testprog
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_add407bb67ac8aa7bee72d4248449e2b/testbuild/test.cpp.1.o -> build/.conf_check_add407bb67ac8aa7bee72d4248449e2b/testbuild/testprog
 [0m
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_f00bb2460dc7019f64c1a347be5879fa/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_add407bb67ac8aa7bee72d4248449e2b/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
----------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Checking for NSC location
 not found
----------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Checking for program pkg-config
 not found
-find program=['pkg-config'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='PKGCONFIG' -> ''
-from /workspace/simulation/src/stats: Could not find the program pkg-config
----------------------------------------------------------
+find program=['pkg-config'] paths=['/root/.antigravity-server/bin/7a8657542180fb8440c8dcc20d83285fe11360ed/bin/remote-cli', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/usr/lib/wsl/lib', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/ddns', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbe', '/mnt/c/Users/itama/AppData/Local/Programs/Microsoft VS Code/bin', '/mnt/c/Users/itama/AppData/Local/Programs/Antigravity/bin', '/snap/bin'] var='PKGCONFIG' -> ''
+from /home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/src/stats: Could not find the program pkg-config
+----------------------------------------------------------------------------------------------------
 Checking for header linux/if_tun.h
 ==>
 #include <linux/if_tun.h>
@@ -419,72 +573,113 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] [32mcxx: build/.conf_check_79f849e1774b3cde8897857e178c7c8c/test.cpp -> build/.conf_check_79f849e1774b3cde8897857e178c7c8c/testbuild/test.cpp.1.o
+[1/2] [32mcxx: build/.conf_check_ad37ec6bf29971b14af326b8977ba66c/test.cpp -> build/.conf_check_ad37ec6bf29971b14af326b8977ba66c/testbuild/test.cpp.1.o
 [0m
-['/usr/bin/g++', '-Wno-error', '-Wno-format-overflow', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
-[2/2] [33mcxxprogram: build/.conf_check_79f849e1774b3cde8897857e178c7c8c/testbuild/test.cpp.1.o -> build/.conf_check_79f849e1774b3cde8897857e178c7c8c/testbuild/testprog
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_ad37ec6bf29971b14af326b8977ba66c/testbuild/test.cpp.1.o -> build/.conf_check_ad37ec6bf29971b14af326b8977ba66c/testbuild/testprog
 [0m
-['/usr/bin/g++', 'test.cpp.1.o', '-o', '/workspace/simulation/build/.conf_check_79f849e1774b3cde8897857e178c7c8c/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_ad37ec6bf29971b14af326b8977ba66c/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
----------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Checking for program sudo
-not found
-find program=['sudo'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='SUDO' -> ''
-from /workspace/simulation: Could not find the program sudo
----------------------------------------------------------
+/usr/bin/sudo
+find program=['sudo'] paths=['/root/.antigravity-server/bin/7a8657542180fb8440c8dcc20d83285fe11360ed/bin/remote-cli', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/usr/lib/wsl/lib', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/ddns', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbe', '/mnt/c/Users/itama/AppData/Local/Programs/Microsoft VS Code/bin', '/mnt/c/Users/itama/AppData/Local/Programs/Antigravity/bin', '/snap/bin'] var='SUDO' -> '/usr/bin/sudo'
+----------------------------------------------------------------------------------------------------
 Checking for program valgrind
 not found
-find program=['valgrind'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='VALGRIND' -> ''
-from /workspace/simulation: Could not find the program valgrind
----------------------------------------------------------
+find program=['valgrind'] paths=['/root/.antigravity-server/bin/7a8657542180fb8440c8dcc20d83285fe11360ed/bin/remote-cli', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/usr/lib/wsl/lib', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/ddns', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbe', '/mnt/c/Users/itama/AppData/Local/Programs/Microsoft VS Code/bin', '/mnt/c/Users/itama/AppData/Local/Programs/Antigravity/bin', '/snap/bin'] var='VALGRIND' -> ''
+from /home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation: Could not find the program valgrind
+----------------------------------------------------------------------------------------------------
 Checking for program pkg-config
 not found
-find program=['pkg-config'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='PKGCONFIG' -> ''
-from /workspace/simulation: Could not find the program pkg-config
-----------------------------------------------------------------
+find program=['pkg-config'] paths=['/root/.antigravity-server/bin/7a8657542180fb8440c8dcc20d83285fe11360ed/bin/remote-cli', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/usr/lib/wsl/lib', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/ddns', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbe', '/mnt/c/Users/itama/AppData/Local/Programs/Microsoft VS Code/bin', '/mnt/c/Users/itama/AppData/Local/Programs/Antigravity/bin', '/snap/bin'] var='PKGCONFIG' -> ''
+from /home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation: Could not find the program pkg-config
+----------------------------------------------------------------------------------------------------
 Checking for compilation flag -Wno-error=deprecated-d... support
 ==>
 #include <stdio.h>
 int main() { return 0; }
 
 <==
-[1/2] [32mc: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/test.c -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o
+[1/2] [32mcxx: build/.conf_check_afb930a3226d60497e678325a3c01a7b/test.cc -> build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/test.cc.1.o
+[0m
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-Wno-error=deprecated-declarations', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '-DHAVE_IF_TUN_H=1', '../test.cc', '-c', '-o', 'test.cc.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/test.cc.1.o -> build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cc.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+ok
+----------------------------------------------------------------------------------------------------
+Checking for compilation flag -Wno-error=deprecated-d... support
+==>
+#include <stdio.h>
+int main() { return 0; }
+
+<==
+[1/2] [32mc: build/.conf_check_aad29cf72070fbb910fe7c6755e8f215/test.c -> build/.conf_check_aad29cf72070fbb910fe7c6755e8f215/testbuild/test.c.1.o
 [0m
 ['/usr/bin/gcc', '-Wno-error=deprecated-declarations', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '-DHAVE_IF_TUN_H=1', '../test.c', '-c', '-o', 'test.c.1.o']
-[2/2] [33mcprogram: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog
+[2/2] [33mcprogram: build/.conf_check_aad29cf72070fbb910fe7c6755e8f215/testbuild/test.c.1.o -> build/.conf_check_aad29cf72070fbb910fe7c6755e8f215/testbuild/testprog
 [0m
-['/usr/bin/gcc', 'test.c.1.o', '-o', '/workspace/simulation/build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/gcc', 'test.c.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_aad29cf72070fbb910fe7c6755e8f215/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 ok
-----------------------------------------------------------------
-Checking for compilation flag -fstrict-aliasing... support
+----------------------------------------------------------------------------------------------------
+Checking for compilation flag -fstrict-aliasing support
 ==>
 #include <stdio.h>
 int main() { return 0; }
 
 <==
-[1/2] [32mc: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/test.c -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o
+[1/2] [32mcxx: build/.conf_check_afb930a3226d60497e678325a3c01a7b/test.cc -> build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/test.cc.1.o
+[0m
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-Wno-error=deprecated-declarations', '-fstrict-aliasing', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '-DHAVE_IF_TUN_H=1', '../test.cc', '-c', '-o', 'test.cc.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/test.cc.1.o -> build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cc.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+ok
+----------------------------------------------------------------------------------------------------
+Checking for compilation flag -fstrict-aliasing support
+==>
+#include <stdio.h>
+int main() { return 0; }
+
+<==
+[1/2] [32mc: build/.conf_check_aad29cf72070fbb910fe7c6755e8f215/test.c -> build/.conf_check_aad29cf72070fbb910fe7c6755e8f215/testbuild/test.c.1.o
 [0m
 ['/usr/bin/gcc', '-fstrict-aliasing', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '-DHAVE_IF_TUN_H=1', '../test.c', '-c', '-o', 'test.c.1.o']
-[2/2] [33mcprogram: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog
+[2/2] [33mcprogram: build/.conf_check_aad29cf72070fbb910fe7c6755e8f215/testbuild/test.c.1.o -> build/.conf_check_aad29cf72070fbb910fe7c6755e8f215/testbuild/testprog
 [0m
-['/usr/bin/gcc', 'test.c.1.o', '-o', '/workspace/simulation/build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/gcc', 'test.c.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_aad29cf72070fbb910fe7c6755e8f215/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 ok
-----------------------------------------------------------------
-Checking for compilation flag -Wstrict-aliasing... support
+----------------------------------------------------------------------------------------------------
+Checking for compilation flag -Wstrict-aliasing support
 ==>
 #include <stdio.h>
 int main() { return 0; }
 
 <==
-[1/2] [32mc: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/test.c -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o
+[1/2] [32mcxx: build/.conf_check_afb930a3226d60497e678325a3c01a7b/test.cc -> build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/test.cc.1.o
+[0m
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-std=gnu++11', '-Wno-error=deprecated-declarations', '-fstrict-aliasing', '-Wstrict-aliasing', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '-DHAVE_IF_TUN_H=1', '../test.cc', '-c', '-o', 'test.cc.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/test.cc.1.o -> build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cc.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_afb930a3226d60497e678325a3c01a7b/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+ok
+----------------------------------------------------------------------------------------------------
+Checking for compilation flag -Wstrict-aliasing support
+==>
+#include <stdio.h>
+int main() { return 0; }
+
+<==
+[1/2] [32mc: build/.conf_check_aad29cf72070fbb910fe7c6755e8f215/test.c -> build/.conf_check_aad29cf72070fbb910fe7c6755e8f215/testbuild/test.c.1.o
 [0m
 ['/usr/bin/gcc', '-Wstrict-aliasing', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_PACKET_H=1', '-DHAVE_IF_TUN_H=1', '../test.c', '-c', '-o', 'test.c.1.o']
-[2/2] [33mcprogram: build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/test.c.1.o -> build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog
+[2/2] [33mcprogram: build/.conf_check_aad29cf72070fbb910fe7c6755e8f215/testbuild/test.c.1.o -> build/.conf_check_aad29cf72070fbb910fe7c6755e8f215/testbuild/testprog
 [0m
-['/usr/bin/gcc', 'test.c.1.o', '-o', '/workspace/simulation/build/.conf_check_d8a2c40aecfb7c8eac7dd03fcbfb1110/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/gcc', 'test.c.1.o', '-o', '/home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation/build/.conf_check_aad29cf72070fbb910fe7c6755e8f215/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 ok
-----------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Checking for program doxygen
 not found
-find program=['doxygen'] paths=['/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin'] var='DOXYGEN' -> ''
-from /workspace/simulation: Could not find the program doxygen
+find program=['doxygen'] paths=['/root/.antigravity-server/bin/7a8657542180fb8440c8dcc20d83285fe11360ed/bin/remote-cli', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/usr/lib/wsl/lib', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/ddns', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbem', '/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/', '/mnt/c/WINDOWS/System32/OpenSSH/', '/mnt/c/Program Files/Git/cmd', '/mnt/c/Program Files/Docker/Docker/resources/bin', '/mnt/c/Users/itama/AppData/Local/Programs/cursor/resources/app/bin', '/mnt/c/wget', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path', '/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath', '/mnt/c/Windows/system32', '/mnt/c/Windows', '/mnt/c/Windows/System32/Wbem', '/mnt/c/Windows/System32/WindowsPowerShell/v1.0/', '/mnt/c/Windows/System32/OpenSSH/', '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common', '/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR', '/mnt/c/WINDOWS/system32', '/mnt/c/WINDOWS', '/mnt/c/WINDOWS/System32/Wbe', '/mnt/c/Users/itama/AppData/Local/Programs/Microsoft VS Code/bin', '/mnt/c/Users/itama/AppData/Local/Programs/Antigravity/bin', '/snap/bin'] var='DOXYGEN' -> ''
+from /home/itamar/WSL_Clones/High-Precision-Congestion-Control-Plus/simulation: Could not find the program doxygen

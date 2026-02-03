@@ -101,6 +101,7 @@ std::map<uint32_t, double> per_node_rx_pull_rate;
 uint32_t qlen_dump_interval = 100000000, qlen_mon_interval = 100;
 uint64_t qlen_mon_start = 2000000000, qlen_mon_end = 2100000000;
 string qlen_mon_file;
+std::map<uint32_t, std::vector<std::pair<double, double>>> per_node_rx_pull_rate_schedule;
 
 unordered_map<uint64_t, uint32_t> rate2kmax, rate2kmin;
 unordered_map<uint64_t, double> rate2pmax;
@@ -304,6 +305,7 @@ void monitor_buffer(FILE* qlen_output, NodeContainer *n){
 				fprintf(qlen_output, "\n");
 			}
 		fflush(qlen_output);
+		queue_result.clear();
 	}
 	if (Simulator::Now().GetTimeStep() < qlen_mon_end)
 		Simulator::Schedule(NanoSeconds(qlen_mon_interval), &monitor_buffer, qlen_output, n);
@@ -448,6 +450,12 @@ int main(int argc, char *argv[])
 		{
 			std::string key;
 			conf >> key;
+
+			if (key.size() > 0 && key[0] == '#') {
+				std::string line;
+				std::getline(conf, line);
+				continue;
+			}
 
 			//std::cout << conf.cur << "\n";
 
@@ -770,6 +778,18 @@ int main(int argc, char *argv[])
 				conf >> node_id >> rate;
 				per_node_rx_pull_rate[node_id] = rate;
 				std::cout << "RX_PULL_RATE_NODE " << node_id << "\t\t" << rate << '\n';
+			}else if (key.compare("RX_PULL_RATE_SCHEDULE") == 0){
+				uint32_t node_id;
+				int count;
+				conf >> node_id >> count;
+				std::cout << "RX_PULL_RATE_SCHEDULE Node " << node_id << " count " << count;
+				for (int i=0; i<count; i++){
+					double t, r;
+					conf >> t >> r;
+					per_node_rx_pull_rate_schedule[node_id].push_back({t, r});
+					std::cout << " " << t << " " << r;
+				}
+				std::cout << '\n';
 			}else if (key.compare("QLEN_MON_FILE") == 0){
 				conf >> qlen_mon_file;
 				std::cout << "QLEN_MON_FILE\t\t\t\t" << qlen_mon_file << '\n';
@@ -1127,6 +1147,15 @@ int main(int argc, char *argv[])
 				rdmaHw->SetAttribute("RxPullRate", DoubleValue(per_node_rx_pull_rate[node_id]));
 				std::cout << "Node " << node_id << ": Applied RxPullRate=" << per_node_rx_pull_rate[node_id] << '\n';
 			}
+			
+			// Apply rate schedule
+			if (per_node_rx_pull_rate_schedule.find(node_id) != per_node_rx_pull_rate_schedule.end()){
+				for (auto &sched : per_node_rx_pull_rate_schedule[node_id]){
+					rdmaHw->AddRxPullRateSchedule(Seconds(sched.first), sched.second);
+				}
+				std::cout << "Node " << node_id << ": Applied RxPullRateSchedule with " << per_node_rx_pull_rate_schedule[node_id].size() << " entries\n";
+			}
+
 			
 			// create and install RdmaDriver
 			Ptr<RdmaDriver> rdma = CreateObject<RdmaDriver>();

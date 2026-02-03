@@ -270,7 +270,7 @@ class Task(TaskBase):
 		try:return self.cache_sig
 		except AttributeError:pass
 		self.m=Utils.md5()
-		self.m.update(self.hcode)
+		self.m.update(self.hcode.encode())
 		self.sig_explicit_deps()
 		self.sig_vars()
 		if self.scan:

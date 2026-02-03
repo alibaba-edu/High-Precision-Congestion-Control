@@ -590,7 +590,7 @@ def get_cc_version(conf,cc,gcc=False,icc=False):
 	env=conf.env.env or None
 	try:
 		p=Utils.subprocess.Popen(cmd,stdin=Utils.subprocess.PIPE,stdout=Utils.subprocess.PIPE,stderr=Utils.subprocess.PIPE,env=env)
-		p.stdin.write('\n')
+		p.stdin.write(b'\n')
 		out=p.communicate()[0]
 	except Exception:
 		conf.fatal('Could not determine the compiler version %r'%cmd)

@@ -95,7 +95,7 @@ class Parallel(object):
 				self.outstanding+=self.frozen
 				self.frozen=[]
 			elif not self.count:
-				self.outstanding.extend(self.biter.next())
+				self.outstanding.extend(next(self.biter))
 				self.total=self.bld.total()
 				break
 	def add_more_tasks(self,tsk):

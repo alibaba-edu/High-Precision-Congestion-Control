@@ -46,6 +46,14 @@ public:
 	std::vector<EventId> m_rxPullEvents;
 	std::vector<bool> m_rxPullActive;
 
+	struct PullRateEvent {
+		Time time;
+		double rate;
+	};
+	std::vector<PullRateEvent> m_rxPullRateSchedule;
+	void AddRxPullRateSchedule(Time t, double rate);
+	double GetCurrentRxPullRate();
+
 	// trace: rate/window updates per qp
 	TracedCallback<Ptr<RdmaQueuePair>, uint64_t, uint64_t> m_traceQpRate;
 

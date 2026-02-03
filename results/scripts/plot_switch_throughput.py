@@ -181,8 +181,41 @@ def _infer_switch_for_receiver(port_map, dst_node):
     return candidates[0]
 
 
+def _parse_schedules(config_file):
+    """Parse config file to extract RX_PULL_RATE_SCHEDULE."""
+    schedules = {}
+    if not config_file or not Path(config_file).exists():
+        return schedules
+    
+    with open(config_file, 'r') as f:
+        for line in f:
+            line = line.strip()
+            # Handle comments
+            if line.startswith('#'):
+                continue
+            if 'RX_PULL_RATE_SCHEDULE' in line:
+                parts = line.split()
+                # Format: RX_PULL_RATE_SCHEDULE <node_id> <count> <time1> <rate1> ...
+                if len(parts) >= 3 and parts[0] == 'RX_PULL_RATE_SCHEDULE':
+                    try:
+                        node_id = int(parts[1])
+                        count = int(parts[2])
+                        schedule = []
+                        idx = 3
+                        for _ in range(count):
+                            if idx + 1 < len(parts):
+                                t = float(parts[idx])
+                                r = float(parts[idx+1])
+                                schedule.append((t, r))
+                                idx += 2
+                        schedules[node_id] = schedule
+                    except ValueError:
+                        pass
+    return schedules
+
+
 def plot_switch_throughput(trace_path, out_path, bin_ms, topo_path=None, flow_path=None,
-                           sw_node=None, dst_node=None):
+                           sw_node=None, dst_node=None, config_path=None):
     trace_path = Path(trace_path)
     if not trace_path.exists():
         raise FileNotFoundError(trace_path)
@@ -212,15 +245,30 @@ def plot_switch_throughput(trace_path, out_path, bin_ms, topo_path=None, flow_pa
         switch_nodes.add(tr.node)
         if tr.event != 2:  # Dequ
             continue
-        if t0 is None:
-            t0 = tr.time
-        idx = (tr.time - t0) // bin_ns
+        # Use absolute time for binning (no t0 shift)
+        idx = tr.time // bin_ns
         bytes_per_bin_switch[idx][tr.node] += int(tr.size)
 
         if sw_node is not None and dst_node is not None and intf_map is not None:
             dst_intf = intf_map.get((sw_node, dst_node))
             if dst_intf is not None and tr.node == sw_node and tr.intf == dst_intf:
                 bytes_per_bin_port[idx] += int(tr.size)
+
+    
+    # helper for plotting lines
+    def _draw_lines(ax, schedules):
+        # determine y-limit to place text
+        ylim = ax.get_ylim()
+        ymax = ylim[1]
+        for node_id, schedule in schedules.items():
+             for time, rate in schedule:
+                 ax.axvline(x=time, color='gray', linestyle=':', alpha=0.8, linewidth=1.5)
+                 ax.text(time, ymax * 0.98, f' t={time}s\nRate={rate}', rotation=90, width=100,
+                         verticalalignment='top', fontsize=8, color='black', alpha=0.7)
+
+    schedules = {}
+    if config_path:
+        schedules = _parse_schedules(config_path)
 
     if sw_node is not None and dst_node is not None and port_map is not None and intf_map is not None:
         if dst_node not in port_map.get(sw_node, []):
@@ -252,6 +300,7 @@ def plot_switch_throughput(trace_path, out_path, bin_ms, topo_path=None, flow_pa
         ax1.set_ylabel("Throughput (Gbps)")
         ax1.set_title(f"Switch {sw_node} -> Node {dst_node} Throughput")
         ax1.grid(True, alpha=0.3)
+        if schedules: _draw_lines(ax1, schedules)
 
         ax2 = plt.subplot(2, 1, 2)
         ax2.plot(times, util, linewidth=1.3, color="orange")
@@ -259,6 +308,7 @@ def plot_switch_throughput(trace_path, out_path, bin_ms, topo_path=None, flow_pa
         ax2.set_ylabel("Utilization (%)")
         ax2.set_title(f"Switch {sw_node} -> Node {dst_node} Utilization")
         ax2.grid(True, alpha=0.3)
+        if schedules: _draw_lines(ax2, schedules)
 
         plt.tight_layout()
         plt.savefig(out_path, dpi=150)
@@ -302,6 +352,7 @@ def plot_switch_throughput(trace_path, out_path, bin_ms, topo_path=None, flow_pa
     ax1.set_ylabel("Avg throughput (Gbps)")
     ax1.set_title("Average Switch Throughput Over Time")
     ax1.grid(True, alpha=0.3)
+    if schedules: _draw_lines(ax1, schedules)
 
     ax2 = plt.subplot(2, 1, 2)
     ax2.plot(times, avg_util, linewidth=1.3, color="orange")
@@ -309,6 +360,7 @@ def plot_switch_throughput(trace_path, out_path, bin_ms, topo_path=None, flow_pa
     ax2.set_ylabel("Avg utilization (%)")
     ax2.set_title("Average Switch Utilization Over Time")
     ax2.grid(True, alpha=0.3)
+    if schedules: _draw_lines(ax2, schedules)
 
     plt.tight_layout()
     plt.savefig(out_path, dpi=150)
@@ -324,6 +376,7 @@ def main():
     parser.add_argument("--dst-node", type=int, help="Receiver node id (port target)")
     parser.add_argument("--bin-ms", type=float, default=1.0, help="Time bin size in ms")
     parser.add_argument("--out", default="results/plots/avg_switch_throughput_util.png", help="Output plot path")
+    parser.add_argument("--config", default=None, help="Path to config file (for schedule)")
     args = parser.parse_args()
 
     plot_switch_throughput(
@@ -334,6 +387,7 @@ def main():
         flow_path=args.flows,
         sw_node=args.sw_node,
         dst_node=args.dst_node,
+        config_path=args.config
     )
 
 

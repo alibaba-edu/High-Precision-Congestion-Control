@@ -93,7 +93,7 @@ echo LIB=%%LIB%%;%%LIBPATH%%
 	try:
 		try:
 			conf.cmd_and_log(cxx+['/help'],env=env)
-		except Exception ,e:
+		except Exception as e:
 			debug('msvc: get_msvc_version: %r %r %r -> failure'%(compiler,version,target))
 			debug(str(e))
 			conf.fatal('msvc: cannot run the compiler (in get_msvc_version)')
@@ -248,7 +248,7 @@ def gather_winphone_targets(conf,versions,version,vc_path,vsvars):
 	for target,realtarget in all_msvc_platforms[::-1]:
 		try:
 			targets.append((target,(realtarget,conf.get_msvc_version('winphone',version,target,vsvars))))
-		except conf.errors.ConfigurationError ,e:
+		except conf.errors.ConfigurationError as e:
 			pass
 	if targets:
 		versions.append(('winphone '+version,targets))
@@ -365,7 +365,7 @@ def gather_intel_composer_versions(conf,versions):
 				if os.path.isfile(batch_file):
 					try:
 						targets.append((target,(arch,conf.get_msvc_version('intel',version,target,batch_file))))
-					except conf.errors.ConfigurationError ,e:
+					except conf.errors.ConfigurationError as e:
 						pass
 				compilervars_warning_attr='_compilervars_warning_key'
 				if version[0:2]=='13'and getattr(conf,compilervars_warning_attr,True):

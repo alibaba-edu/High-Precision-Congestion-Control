@@ -2,7 +2,7 @@
 # encoding: utf-8
 # WARNING! Do not edit! http://waf.googlecode.com/git/docs/wafbook/single.html#_obtaining_the_waf_file
 
-import os,sys,imp,types
+import os,sys,types
 from waflib.Tools import ccroot
 from waflib import Utils,Configure
 from waflib.Logs import debug
@@ -15,7 +15,7 @@ def configure(conf):
 		conf.start_msg('Checking for %r (c compiler)'%compiler)
 		try:
 			conf.load(compiler)
-		except conf.errors.ConfigurationError ,e:
+		except conf.errors.ConfigurationError as e:
 			conf.env.revert()
 			conf.end_msg(False)
 			debug('compiler_c: %r'%e)

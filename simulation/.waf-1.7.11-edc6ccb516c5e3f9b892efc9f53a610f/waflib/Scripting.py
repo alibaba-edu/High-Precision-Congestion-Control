@@ -85,24 +85,24 @@ def waf_entry_point(current_directory,version,wafdir):
 		sys.exit(1)
 	try:
 		set_main_module(Context.run_dir+os.sep+Context.WSCRIPT_FILE)
-	except Errors.WafError ,e:
+	except Errors.WafError as e:
 		Logs.pprint('RED',e.verbose_msg)
 		Logs.error(str(e))
 		sys.exit(1)
-	except Exception ,e:
+	except Exception as e:
 		Logs.error('Waf: The wscript in %r is unreadable'%Context.run_dir,e)
 		traceback.print_exc(file=sys.stdout)
 		sys.exit(2)
 	try:
 		run_commands()
-	except Errors.WafError ,e:
+	except Errors.WafError as e:
 		if Logs.verbose>1:
 			Logs.pprint('RED',e.verbose_msg)
 		Logs.error(e.msg)
 		sys.exit(1)
 	except SystemExit:
 		raise
-	except Exception ,e:
+	except Exception as e:
 		traceback.print_exc(file=sys.stdout)
 		sys.exit(2)
 	except KeyboardInterrupt:
@@ -191,7 +191,7 @@ def distclean(ctx):
 					shutil.rmtree(proj['out_dir'])
 				except IOError:
 					pass
-				except OSError ,e:
+				except OSError as e:
 					if e.errno!=errno.ENOENT:
 						Logs.warn('project %r cannot be removed'%proj[Context.OUT])
 			else:
@@ -199,7 +199,7 @@ def distclean(ctx):
 			for k in(proj['out_dir'],proj['top_dir'],proj['run_dir']):
 				try:
 					os.remove(os.path.join(k,Options.lockfile))
-				except OSError ,e:
+				except OSError as e:
 					if e.errno!=errno.ENOENT:
 						Logs.warn('file %r cannot be removed'%f)
 		if f.startswith('.waf')and not Options.commands:

@@ -174,14 +174,14 @@ class ConfigurationContext(Context.Context):
 			module=None
 			try:
 				module=Context.load_tool(tool,tooldir)
-			except ImportError ,e:
+			except ImportError as e:
 				if Options.options.download:
 					module=download_tool(tool,ctx=self)
 					if not module:
 						self.fatal('Could not load the Waf tool %r or download a suitable replacement from the repository (sys.path %r)\n%s'%(tool,sys.path,e))
 				else:
 					self.fatal('Could not load the Waf tool %r from %r (try the --download option?):\n%s'%(tool,sys.path,e))
-			except Exception ,e:
+			except Exception as e:
 				self.to_log('imp %r (%r & %r)'%(tool,tooldir,funs))
 				self.to_log(Utils.ex_stack())
 				raise
@@ -204,7 +204,7 @@ class ConfigurationContext(Context.Context):
 			if not f:self.fatal("No such method '%s'."%x)
 			try:
 				f()
-			except Exception ,e:
+			except Exception as e:
 				ret=self.err_handler(x,e)
 				if ret==BREAK:
 					break

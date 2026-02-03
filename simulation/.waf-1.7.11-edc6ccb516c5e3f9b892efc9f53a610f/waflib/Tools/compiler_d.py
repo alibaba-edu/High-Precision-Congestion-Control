@@ -2,7 +2,7 @@
 # encoding: utf-8
 # WARNING! Do not edit! http://waf.googlecode.com/git/docs/wafbook/single.html#_obtaining_the_waf_file
 
-import os,sys,imp,types
+import os,sys,types
 from waflib import Utils,Configure,Options,Logs
 def configure(conf):
 	for compiler in conf.options.dcheck.split(','):
@@ -10,7 +10,7 @@ def configure(conf):
 		conf.start_msg('Checking for %r (d compiler)'%compiler)
 		try:
 			conf.load(compiler)
-		except conf.errors.ConfigurationError ,e:
+		except conf.errors.ConfigurationError as e:
 			conf.env.revert()
 			conf.end_msg(False)
 			Logs.debug('compiler_d: %r'%e)

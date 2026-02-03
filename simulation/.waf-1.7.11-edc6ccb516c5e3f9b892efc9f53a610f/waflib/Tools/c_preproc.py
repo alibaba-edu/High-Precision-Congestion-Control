@@ -584,7 +584,7 @@ class c_parser(object):
 				elif token=='pragma':
 					if re_pragma_once.match(line.lower()):
 						self.ban_includes.add(self.current_file)
-			except Exception ,e:
+			except Exception as e:
 				if Logs.verbose:
 					debug('preproc: line parsing failed (%s): %s %s',e,line,Utils.ex_stack())
 def scan(task):

@@ -279,7 +279,7 @@ class Node(object):
 					if maxdepth:
 						for k in node.ant_iter(accept=accept,maxdepth=maxdepth-1,pats=npats,dir=dir,src=src,remove=remove):
 							yield k
-		raise StopIteration
+		return
 	def ant_glob(self,*k,**kw):
 		src=kw.get('src',True)
 		dir=kw.get('dir',False)
@@ -303,7 +303,7 @@ class Node(object):
 						k='^%s$'%k
 						try:
 							accu.append(re.compile(k,flags=reflags))
-						except Exception ,e:
+						except Exception as e:
 							raise Errors.WafError("Invalid pattern: %s"%k,e)
 				ret.append(accu)
 			return ret

@@ -23,7 +23,7 @@ import os
 env_var_rx = re.compile(r"^([a-zA-Z0-9_]+)=(\S+)$")
 
 def debug(message):
-    print >> sys.stderr, message
+    print(message, file=sys.stderr)
 
 
 if sys.platform == 'win32':
@@ -295,7 +295,7 @@ class Pipeline(object):
                 try:
                     retval = self._exec_piped_commands(piped_commands)
                     if verbose:
-                        print "%s: exit code %i" % (' '.join(piped_commands_display), retval)
+                        print("%s: exit code %i" % (' '.join(piped_commands_display), retval))
                 finally:
                     for f in files_to_close:
                         if f is not dev_null:
@@ -318,10 +318,10 @@ class Pipeline(object):
                         files_to_close = []
                     if this_retval == 0:
                         if verbose:
-                            print "%s: exit code %i (|| is short-circuited)" % (' '.join(piped_commands_display), retval)
+                            print("%s: exit code %i (|| is short-circuited)" % (' '.join(piped_commands_display), retval))
                         return this_retval
                     if verbose:
-                        print "%s: exit code %i (|| proceeds)" % (' '.join(piped_commands_display), retval)
+                        print("%s: exit code %i (|| proceeds)" % (' '.join(piped_commands_display), retval))
                     state = BEGIN
                     piped_commands = []
                     piped_commands_display = []
@@ -336,10 +336,10 @@ class Pipeline(object):
                         files_to_close = []
                     if this_retval != 0:
                         if verbose:
-                            print "%s: exit code %i (&& is short-circuited)" % (' '.join(piped_commands_display), retval)
+                            print("%s: exit code %i (&& is short-circuited)" % (' '.join(piped_commands_display), retval))
                         return this_retval
                     if verbose:
-                        print "%s: exit code %i (&& proceeds)" % (' '.join(piped_commands_display), retval)
+                        print("%s: exit code %i (&& proceeds)" % (' '.join(piped_commands_display), retval))
                     state = BEGIN
                     piped_commands = []
                     piped_commands_display = []
@@ -349,7 +349,7 @@ class Pipeline(object):
 def _main():
     pipeline = Pipeline()
     pipeline.parse('./foo.py 2>&1 < xxx | cat && ls')
-    print pipeline.run()
+    print(pipeline.run())
 
 if __name__ == '__main__':
     _main()

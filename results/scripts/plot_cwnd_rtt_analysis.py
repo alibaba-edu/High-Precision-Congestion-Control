@@ -226,6 +226,47 @@ def _compute_host_delay_us(pkt_size_bytes, line_rate_bps, rx_pull_rate):
     return max(extra * 1e6, 0.0)
 
 
+
+def _parse_schedules(config_file):
+    """Parse config file to extract RX_PULL_RATE_SCHEDULE."""
+    schedules = {}
+    if not config_file or not Path(config_file).exists():
+        return schedules
+    
+    with open(config_file, 'r') as f:
+        for line in f:
+            line = line.strip()
+            if line.startswith('#'): continue
+            if 'RX_PULL_RATE_SCHEDULE' in line:
+                parts = line.split()
+                if len(parts) >= 3 and parts[0] == 'RX_PULL_RATE_SCHEDULE':
+                    try:
+                        node_id = int(parts[1])
+                        count = int(parts[2])
+                        schedule = []
+                        idx = 3
+                        for _ in range(count):
+                            if idx + 1 < len(parts):
+                                t = float(parts[idx])
+                                r = float(parts[idx+1])
+                                schedule.append((t, r))
+                                idx += 2
+                        schedules[node_id] = schedule
+                    except ValueError: pass
+    return schedules
+
+# helper for plotting lines
+def _draw_lines(ax, schedules):
+    # determine y-limit to place text
+    ylim = ax.get_ylim()
+    ymax = ylim[1]
+    for node_id, schedule in schedules.items():
+            for time, rate in schedule:
+                ax.axvline(x=time, color='gray', linestyle=':', alpha=0.8, linewidth=1.5)
+                ax.text(time, ymax * 0.98, f' t={time}s\nRate={rate}', rotation=90, 
+                        verticalalignment='top', fontsize=8, color='black', alpha=0.7)
+
+
 def plot_cwnd_rtt_analysis(cwnd_file, output_file, config_path=None, topo_path=None):
     """Generate comprehensive CWND/Rate/RTT analysis dashboard."""
     
@@ -244,6 +285,9 @@ def plot_cwnd_rtt_analysis(cwnd_file, output_file, config_path=None, topo_path=N
     rtt = _calculate_rtt_from_cwnd_data(cwnd_file)
     rtt_us = rtt * 1e6 if rtt else None
     
+    # Parse schedules
+    schedules = _parse_schedules(config_path) if config_path else {}
+
     # Prepare data
     max_win = max([max(data["win"]) for data in flows.values() if data["win"]])
     
@@ -291,6 +335,7 @@ def plot_cwnd_rtt_analysis(cwnd_file, output_file, config_path=None, topo_path=N
     ax1.grid(True, alpha=0.3)
     ax1.legend(loc='best', fontsize=9)
     ax1.set_ylim([0, max_win / win_scale * 1.25])
+    if schedules: _draw_lines(ax1, schedules)
     
     # Rate vs Time (senders only - nodes 0 and 1)
     ax2 = plt.subplot(312)
@@ -326,6 +371,7 @@ def plot_cwnd_rtt_analysis(cwnd_file, output_file, config_path=None, topo_path=N
     # Set y-axis limit to 1.1 * line_rate
     if line_rate_bps:
         ax2.set_ylim([0, line_rate_gbps * 1.1])
+    if schedules: _draw_lines(ax2, schedules)
     
     # RTT vs Time (all flows)
     ax3 = plt.subplot(313)
@@ -357,6 +403,7 @@ def plot_cwnd_rtt_analysis(cwnd_file, output_file, config_path=None, topo_path=N
     ax3.set_title('Round Trip Time Over Time', fontsize=12, fontweight='bold', pad=10)
     ax3.grid(True, alpha=0.3)
     ax3.legend(loc='best', fontsize=9)
+    if schedules: _draw_lines(ax3, schedules)
 
     
     plt.tight_layout(rect=[0, 0, 1, 0.95])

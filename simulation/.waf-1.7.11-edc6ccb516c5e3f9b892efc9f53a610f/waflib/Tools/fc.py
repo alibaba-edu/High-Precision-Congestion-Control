@@ -106,7 +106,7 @@ class fcprogram_test(fcprogram):
 		kw['output']=0
 		try:
 			(bld.out,bld.err)=bld.cmd_and_log(cmd,**kw)
-		except Exception ,e:
+		except Exception as e:
 			return-1
 		if bld.out:
 			bld.to_log("out: %s\n"%bld.out)

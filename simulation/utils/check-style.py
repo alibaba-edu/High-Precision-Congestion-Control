@@ -433,6 +433,6 @@ def run_as_main():
 if __name__ == '__main__':
 #    try:
         run_as_main()
-#    except Exception, e:
+#    except Exception as e:
 #        sys.stderr.write(str(e) + '\n')
 #        sys.exit(1)

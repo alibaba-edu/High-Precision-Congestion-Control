@@ -19,6 +19,10 @@ This is a fork of the original HPCC Alibaba repository that explores improvement
 
 These extensions aim to improve performance in scenarios where end-host (receiver) congestion is a bottleneck, potentially achieving better flow completion times and overall network utilization.
 
+4. **Dynamic Pulling Rate** - Allows the receiver's pulling rate to be dynamically scheduled during the simulation. This is useful for simulating varying receiver processing capabilities over time.
+   - Configured via `RX_PULL_RATE_SCHEDULE` in the simulation configuration file.
+
+
 ## Installation & Setup
 
 ### Prerequisites

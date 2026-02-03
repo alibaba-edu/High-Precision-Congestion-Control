@@ -2,7 +2,7 @@
 # encoding: utf-8
 # WARNING! Do not edit! http://waf.googlecode.com/git/docs/wafbook/single.html#_obtaining_the_waf_file
 
-import os,sys,imp,types
+import os,sys,types
 from waflib import Utils,Configure,Options,Logs,Errors
 from waflib.Tools import fc
 fc_compiler={'win32':['gfortran','ifort'],'darwin':['gfortran','g95','ifort'],'linux':['gfortran','g95','ifort'],'java':['gfortran','g95','ifort'],'default':['gfortran'],'aix':['gfortran']}
@@ -19,7 +19,7 @@ def configure(conf):
 		conf.start_msg('Checking for %r (fortran compiler)'%compiler)
 		try:
 			conf.load(compiler)
-		except conf.errors.ConfigurationError ,e:
+		except conf.errors.ConfigurationError as e:
 			conf.env.revert()
 			conf.end_msg(False)
 			Logs.debug('compiler_fortran: %r'%e)

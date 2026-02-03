@@ -25,8 +25,8 @@ def build(bld):
         'helper/udp-client-server-helper.cc',
         'helper/udp-echo-helper.cc',
         'helper/v4ping-helper.cc',
-		'model/rdma-client.cc',
-		'helper/rdma-client-helper.cc',
+        'model/rdma-client.cc',
+        'helper/rdma-client-helper.cc',
         ]
 
     applications_test = bld.create_ns3_module_test_library('applications')
@@ -59,8 +59,8 @@ def build(bld):
         'helper/udp-client-server-helper.h',
         'helper/udp-echo-helper.h',
         'helper/v4ping-helper.h',
-		'model/rdma-client.h',
-		'helper/rdma-client-helper.h',
+        'model/rdma-client.h',
+        'helper/rdma-client-helper.h',
         ]
 
     bld.ns3_python_bindings()
